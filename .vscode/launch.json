@@ -1,0 +1,15 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-DetallSublimApp<detall-sublim>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.detallsublim.app.DetallSublimApp",
+      "projectName": "detall-sublim",
+      "args": "--spring.profiles.active=dev",
+      "envFile": "${workspaceFolder}/.env",
+      "console": "internalConsole"
+    }
+  ]
+}
