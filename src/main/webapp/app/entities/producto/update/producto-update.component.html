@@ -1,0 +1,168 @@
+<section class="admin-form-page">
+  <div class="ds-container">
+    <div class="admin-back">
+      <a routerLink="/producto" class="admin-back-btn">← Volver a productos</a>
+    </div>
+
+    <div class="admin-form-card">
+      <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+        <h2 id="jhi-producto-heading" data-cy="ProductoCreateUpdateHeading" jhiTranslate="detallSublimApp.producto.home.createOrEditLabel">
+          Crear o editar Producto
+        </h2>
+
+        <div>
+          <jhi-alert-error />
+
+          @if (editForm.controls.id.value !== null) {
+            <div class="mb-3">
+              <label class="form-label" for="field_id" jhiTranslate="detallSublimApp.producto.id">ID</label>
+              <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+            </div>
+          }
+
+          @let nombreRef = editForm.get('nombre')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_nombre" jhiTranslate="detallSublimApp.producto.nombre">Nombre</label>
+            <input type="text" class="form-control" name="nombre" id="field_nombre" data-cy="nombre" formControlName="nombre" />
+            @if (nombreRef.invalid && (nombreRef.dirty || nombreRef.touched)) {
+              <div>
+                @if (editForm.get('nombre')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="field_descripcion" jhiTranslate="detallSublimApp.producto.descripcion">Descripcion</label>
+            <textarea
+              class="form-control"
+              name="descripcion"
+              id="field_descripcion"
+              data-cy="descripcion"
+              formControlName="descripcion"
+            ></textarea>
+          </div>
+
+          @let precioBaseRef = editForm.get('precioBase')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_precioBase" jhiTranslate="detallSublimApp.producto.precioBase">Precio Base</label>
+            <input
+              type="number"
+              class="form-control"
+              name="precioBase"
+              id="field_precioBase"
+              data-cy="precioBase"
+              formControlName="precioBase"
+            />
+            @if (precioBaseRef.invalid && (precioBaseRef.dirty || precioBaseRef.touched)) {
+              <div>
+                @if (editForm.get('precioBase')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+                @if (editForm.get('precioBase')?.errors?.min) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.min" [translateValues]="{ min: '0' }"
+                    >Este campo debe ser mayor que 0.</small
+                  >
+                }
+                <small
+                  class="form-text text-danger"
+                  [hidden]="!editForm.get('precioBase')?.errors?.number"
+                  jhiTranslate="entity.validation.number"
+                  >Este campo debe ser un número.</small
+                >
+              </div>
+            }
+          </div>
+
+          @let personalizableRef = editForm.get('personalizable')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_personalizable" jhiTranslate="detallSublimApp.producto.personalizable"
+              >Personalizable</label
+            >
+            <input
+              type="checkbox"
+              class="form-check"
+              name="personalizable"
+              id="field_personalizable"
+              data-cy="personalizable"
+              formControlName="personalizable"
+            />
+            @if (personalizableRef.invalid && (personalizableRef.dirty || personalizableRef.touched)) {
+              <div>
+                @if (editForm.get('personalizable')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="field_plazoEstimadoDias" jhiTranslate="detallSublimApp.producto.plazoEstimadoDias"
+              >Plazo Estimado Dias</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="plazoEstimadoDias"
+              id="field_plazoEstimadoDias"
+              data-cy="plazoEstimadoDias"
+              formControlName="plazoEstimadoDias"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="field_imagenUrl" jhiTranslate="detallSublimApp.producto.imagenUrl">Imagen Url</label>
+            <input type="text" class="form-control" name="imagenUrl" id="field_imagenUrl" data-cy="imagenUrl" formControlName="imagenUrl" />
+          </div>
+
+          @let activoRef = editForm.get('activo')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_activo" jhiTranslate="detallSublimApp.producto.activo">Activo</label>
+            <input type="checkbox" class="form-check" name="activo" id="field_activo" data-cy="activo" formControlName="activo" />
+            @if (activoRef.invalid && (activoRef.dirty || activoRef.touched)) {
+              <div>
+                @if (editForm.get('activo')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="field_categoria" jhiTranslate="detallSublimApp.producto.categoria">Categoria</label>
+            <select
+              class="form-control"
+              id="field_categoria"
+              data-cy="categoria"
+              name="categoria"
+              formControlName="categoria"
+              [compareWith]="compareCategoria"
+            >
+              <option [ngValue]="null"></option>
+              @for (categoriaOption of categoriasSharedCollection; track $index) {
+                <option [ngValue]="categoriaOption">{{ categoriaOption.nombre }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+          </button>
+
+          <button
+            type="submit"
+            id="save-entity"
+            data-cy="entityCreateSaveButton"
+            [disabled]="editForm.invalid || isSaving"
+            class="btn btn-primary"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

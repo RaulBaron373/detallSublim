@@ -1,0 +1,50 @@
+<section class="admin-form-page">
+  <div class="ds-container">
+    <!-- VOLVER -->
+    <div class="admin-back">
+      <a routerLink="/categoria" class="admin-back-btn">← Volver a categorías</a>
+    </div>
+
+    @if (categoria(); as c) {
+      <div class="category-view-card">
+        <!-- HEADER -->
+        <div class="category-view-header">
+          <h1>{{ c.nombre }}</h1>
+
+          <span class="status-badge" [ngClass]="c.activa ? 'status-finished' : 'status-cancelled'">
+            {{ c.activa ? 'Activa' : 'Inactiva' }}
+          </span>
+        </div>
+
+        <!-- CONTENIDO -->
+        <div class="category-view-content">
+          <div class="info-block">
+            <h4>Descripción</h4>
+            <p>
+              {{ c.descripcion || 'Sin descripción' }}
+            </p>
+          </div>
+
+          <div class="info-row">
+            <div>
+              <h5>ID</h5>
+              <p>#{{ c.id }}</p>
+            </div>
+
+            <div>
+              <h5>Estado</h5>
+              <p>{{ c.activa ? 'Activa' : 'Inactiva' }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ACCIONES -->
+        <div class="category-view-actions">
+          <button (click)="previousState()" class="btn admin-btn-light">Volver</button>
+
+          <button [routerLink]="['/categoria', c.id, 'edit']" class="ds-btn ds-btn-primary">Editar</button>
+        </div>
+      </div>
+    }
+  </div>
+</section>

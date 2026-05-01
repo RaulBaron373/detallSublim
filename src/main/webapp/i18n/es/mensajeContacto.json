@@ -1,0 +1,30 @@
+{
+  "detallSublimApp": {
+    "mensajeContacto": {
+      "home": {
+        "title": "Mensaje Contactos",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Mensaje Contacto",
+        "createOrEditLabel": "Crear o editar Mensaje Contacto",
+        "notFound": "Ningún Mensaje Contactos encontrado"
+      },
+      "created": "Un nuevo Mensaje Contacto ha sido creado con el identificador {{ param }}",
+      "updated": "Un Mensaje Contacto ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Mensaje Contacto ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Mensaje Contacto {{ id }}?"
+      },
+      "detail": {
+        "title": "Mensaje Contacto"
+      },
+      "id": "ID",
+      "nombre": "Nombre",
+      "email": "Email",
+      "telefono": "Telefono",
+      "asunto": "Asunto",
+      "mensaje": "Mensaje",
+      "fechaEnvio": "Fecha Envio",
+      "atendido": "Atendido"
+    }
+  }
+}

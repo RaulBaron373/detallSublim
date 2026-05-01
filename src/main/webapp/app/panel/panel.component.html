@@ -1,0 +1,60 @@
+<section class="panel-page">
+  <div class="ds-container">
+    <!-- HEADER -->
+    <div class="panel-header">
+      <h1>Panel de administración</h1>
+      <p>Gestión interna de Detall Sublim</p>
+    </div>
+
+    <!-- MÉTRICAS -->
+    <div class="panel-stats">
+      <div class="panel-stat-card">
+        <h3>Solicitudes pendientes</h3>
+        <p class="stat-value">{{ solicitudesPendientes }}</p>
+      </div>
+
+      <div class="panel-stat-card">
+        <h3>Mensajes sin atender</h3>
+        <p class="stat-value">{{ mensajesPendientes }}</p>
+      </div>
+
+      <div class="panel-stat-card">
+        <h3>Productos activos</h3>
+        <p class="stat-value">{{ productosActivos }}</p>
+      </div>
+    </div>
+
+    <!-- ACCESOS -->
+    <div class="panel-grid">
+      <a routerLink="/producto" class="panel-card">
+        <h3>Productos</h3>
+        <p>Gestionar productos del catálogo</p>
+      </a>
+
+      <a routerLink="/categoria" class="panel-card">
+        <h3>Categorías</h3>
+        <p>Organizar categorías</p>
+      </a>
+
+      <a routerLink="/solicitud-presupuesto" class="panel-card">
+        <h3>Solicitudes</h3>
+        <p>Ver solicitudes de presupuesto</p>
+      </a>
+
+      <a routerLink="/mensaje-contacto" class="panel-card">
+        <h3>Mensajes</h3>
+        <p>Revisar contactos recibidos</p>
+      </a>
+
+      <a routerLink="/admin/user-management" class="panel-card">
+        <h3>Administración</h3>
+        <p>Gestión de usuarios</p>
+      </a>
+
+      <button class="panel-card logout" (click)="logout()">
+        <h3>Cerrar sesión</h3>
+        <p>Salir del panel</p>
+      </button>
+    </div>
+  </div>
+</section>

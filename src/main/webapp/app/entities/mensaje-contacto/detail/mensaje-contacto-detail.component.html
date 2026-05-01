@@ -1,0 +1,61 @@
+<section class="admin-form-page">
+  <div class="ds-container">
+    <!-- VOLVER -->
+    <div class="admin-back">
+      <a routerLink="/mensaje-contacto" class="admin-back-btn"> ← Volver a mensajes </a>
+    </div>
+
+    @if (mensajeContacto(); as m) {
+      <div class="message-view-card">
+        <!-- HEADER -->
+        <div class="message-view-header">
+          <div>
+            <h1>{{ m.asunto }}</h1>
+            <p class="message-subtitle">{{ m.nombre }} · {{ m.email }}</p>
+          </div>
+
+          <span class="status-badge" [ngClass]="m.atendido ? 'status-finished' : 'status-pending'">
+            {{ m.atendido ? 'Atendido' : 'Pendiente' }}
+          </span>
+        </div>
+
+        <!-- INFO -->
+        <div class="message-view-grid">
+          <div class="message-section">
+            <h4>Datos del cliente</h4>
+            <p><strong>Nombre:</strong> {{ m.nombre }}</p>
+            <p><strong>Email:</strong> {{ m.email }}</p>
+            <p><strong>Teléfono:</strong> {{ m.telefono || '-' }}</p>
+            <p><strong>Fecha:</strong> {{ m.fechaEnvio | formatMediumDatetime }}</p>
+          </div>
+
+          <div class="message-section">
+            <h4>Estado</h4>
+            <p><strong>ID:</strong> #{{ m.id }}</p>
+            <p><strong>Atendido:</strong> {{ m.atendido ? 'Sí' : 'No' }}</p>
+          </div>
+        </div>
+
+        <!-- MENSAJE -->
+        <div class="message-section message-content-box">
+          <h4>Mensaje recibido</h4>
+          <p>{{ m.mensaje }}</p>
+        </div>
+
+        <!-- RESPUESTA -->
+        <div class="message-reply-box">
+          <h4>Responder al cliente</h4>
+
+          <textarea class="form-control" rows="4" [(ngModel)]="respuesta" placeholder="Escribe aquí la respuesta al cliente..."></textarea>
+
+          <button type="button" class="ds-btn ds-btn-primary mt-3" (click)="enviarRespuesta()">Enviar respuesta</button>
+        </div>
+
+        <!-- ACCIONES -->
+        <div class="message-view-actions">
+          <button (click)="previousState()" class="btn admin-btn-light">← Volver</button>
+        </div>
+      </div>
+    }
+  </div>
+</section>

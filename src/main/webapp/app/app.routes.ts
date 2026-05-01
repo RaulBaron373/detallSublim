@@ -12,6 +12,41 @@ const routes: Routes = [
     title: 'home.title',
   },
   {
+    path: 'quienes-somos',
+    loadComponent: () => import('./public-pages/about/about.component').then(m => m.AboutComponent),
+    title: 'Quiénes somos',
+  },
+  {
+    path: 'servicios',
+    loadComponent: () => import('./public-pages/services/services.component').then(m => m.ServicesComponent),
+    title: 'Servicios',
+  },
+  {
+    path: 'catalogo',
+    loadComponent: () => import('./public-pages/catalog/catalog.component').then(m => m.CatalogComponent),
+    title: 'Catálogo',
+  },
+  {
+    path: 'tecnologias',
+    loadComponent: () => import('./public-pages/technologies/technologies.component').then(m => m.TechnologiesComponent),
+    title: 'Tecnologías',
+  },
+  {
+    path: 'contacto',
+    loadComponent: () => import('./public-pages/contact/contact.component').then(m => m.ContactComponent),
+    title: 'Contacto',
+  },
+  {
+    path: 'solicitar-presupuesto',
+    loadComponent: () => import('./public-pages/quote-request/quote-request.component').then(m => m.QuoteRequestComponent),
+    title: 'Solicitud de presupuesto',
+  },
+  {
+    path: 'panel',
+    loadComponent: () => import('./panel/panel.component').then(m => m.PanelComponent),
+    canActivate: [UserRouteAccessService],
+  },
+  {
     path: '',
     loadComponent: () => import('./layouts/navbar/navbar.component'),
     outlet: 'navbar',

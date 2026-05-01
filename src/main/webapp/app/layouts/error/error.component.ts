@@ -3,11 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import SharedModule from 'app/shared/shared.module';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'jhi-error',
   templateUrl: './error.component.html',
-  imports: [SharedModule],
+  imports: [SharedModule, RouterLink],
 })
 export default class ErrorComponent implements OnInit, OnDestroy {
   errorMessage = signal<string | undefined>(undefined);

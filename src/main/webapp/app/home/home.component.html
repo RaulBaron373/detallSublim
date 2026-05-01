@@ -1,82 +1,228 @@
-<div class="row">
-  <div class="col-md-3">
-    <span class="hipster img-fluid rounded"></span>
+<section class="ds-hero">
+  <div class="ds-hero-wrapper">
+    <div class="ds-container ds-hero-grid">
+      <div class="ds-hero-content">
+        <div class="ds-badge">
+          <span>✦</span>
+          <span>Personalización Premium</span>
+        </div>
+
+        <h1 class="ds-hero-title">
+          Personaliza
+          <span class="ds-gradient-text">lo que quieras</span>
+        </h1>
+
+        <p class="ds-hero-description">
+          Transformamos productos ordinarios en piezas únicas con acabados profesionales para particulares, eventos y empresas.
+        </p>
+
+        <div class="ds-hero-actions">
+          <a routerLink="/solicitar-presupuesto" class="ds-btn ds-btn-primary"> Solicita tu presupuesto </a>
+
+          <a routerLink="/catalogo" class="ds-btn ds-btn-secondary"> Ver productos </a>
+        </div>
+
+        <div class="ds-hero-stats">
+          <div class="ds-stat">
+            <strong>500+</strong>
+            <span>Clientes felices</span>
+          </div>
+          <div class="ds-stat">
+            <strong>1000+</strong>
+            <span>Productos creados</span>
+          </div>
+          <div class="ds-stat">
+            <strong>100%</strong>
+            <span>Compromiso</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-hero-visual">
+        <div class="ds-hero-logo-card">
+          <img src="content/images/logo-detall-sublim-color.png" alt="Logo Detall Sublim" />
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="col-md-9">
-    <h1 class="display-4"><span jhiTranslate="home.title">¡Bienvenido, Java Hipster!</span> (Detall Sublim)</h1>
+  <div class="ds-hero-glow ds-hero-glow-pink"></div>
+  <div class="ds-hero-glow ds-hero-glow-cyan"></div>
+</section>
 
-    <p class="lead" jhiTranslate="home.subtitle">Esta es su página de inicio</p>
-
-    <div>
-      @if (account() !== null) {
-        <div class="alert alert-success">
-          @if (account(); as accountRef) {
-            <span id="home-logged-message" jhiTranslate="home.logged.message" [translateValues]="{ username: accountRef.login }"
-              >Está conectado como &quot;{{ accountRef.login }}&quot;.</span
-            >
-          }
-        </div>
-      } @else {
-        <div class="alert alert-warning">
-          <span jhiTranslate="global.messages.info.authenticated.prefix">Si desea </span>
-          <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">iniciar sesión</a
-          ><span jhiTranslate="global.messages.info.authenticated.suffix"
-            >, puede intentar con las cuentas predeterminadas:<br />- Administrador (usuario=&quot;admin&quot; y
-            contraseña=&quot;admin&quot;) <br />- Usuario (usuario=&quot;user&quot; y contraseña=&quot;user&quot;).</span
-          >
-        </div>
-
-        <div class="alert alert-warning">
-          <span jhiTranslate="global.messages.info.register.noaccount">¿Aún no tienes una cuenta?</span>&nbsp;
-          <a class="alert-link" routerLink="/account/register" jhiTranslate="global.messages.info.register.link">Crea una cuenta</a>
-        </div>
-      }
+<section class="ds-technologies ds-bg-soft-cyan">
+  <div class="ds-container">
+    <div class="ds-tech-header">
+      <h2 class="ds-section-title">Nuestras Tecnologías</h2>
+      <p class="ds-section-subtitle">
+        Utilizamos técnicas avanzadas para conseguir acabados duraderos, profesionales y adaptados a cada producto.
+      </p>
     </div>
 
-    <p jhiTranslate="home.question">Si tiene preguntas sobre JHipster:</p>
+    <div class="ds-tech-grid">
+      <article class="ds-tech-card">
+        <div class="ds-tech-icon ds-tech-icon-pink">✦</div>
+        <h3>Sublimación</h3>
+        <p>Ideal para tazas, camisetas y otros artículos con impresión a todo color, gran definición y excelente durabilidad.</p>
+      </article>
 
-    <ul>
-      <li>
-        <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.homepage"
-          >Página de inicio de JHipster</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://stackoverflow.com/tags/jhipster/info"
-          target="_blank"
-          rel="noopener noreferrer"
-          jhiTranslate="home.link.stackoverflow"
-          >JHipster en Stack Overflow</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/jhipster/generator-jhipster/issues?state=open"
-          target="_blank"
-          rel="noopener noreferrer"
-          jhiTranslate="home.link.bugtracker"
-          >JHipster seguimiento de errores</a
-        >
-      </li>
-      <li>
-        <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.chat"
-          >Sala de chat pública de JHipster</a
-        >
-      </li>
-      <li>
-        <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.follow"
-          >contacto &#64;jhipster en Twitter</a
-        >
-      </li>
-    </ul>
+      <article class="ds-tech-card">
+        <div class="ds-tech-icon ds-tech-icon-cyan">▣</div>
+        <h3>Impresión DTG</h3>
+        <p>Perfecta para prendas textiles con diseños detallados, colores vivos y resultados profesionales en pequeñas tiradas.</p>
+      </article>
 
-    <p>
-      <span jhiTranslate="home.like">Si te gusta JHipster, danos una estrella en</span>
-      <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.github"
-        >GitHub</a
-      >!
-    </p>
+      <article class="ds-tech-card">
+        <div class="ds-tech-icon ds-tech-icon-yellow">◌</div>
+        <h3>Serigrafía</h3>
+        <p>Una opción muy resistente para pedidos grandes, especialmente útil en ropa laboral, merchandising y eventos.</p>
+      </article>
+
+      <article class="ds-tech-card">
+        <div class="ds-tech-icon ds-tech-icon-pink-soft">⚡</div>
+        <h3>Láser</h3>
+        <p>Grabado y corte de precisión para materiales como madera, metal o plástico, con un acabado limpio y elegante.</p>
+      </article>
+    </div>
+
+    <div class="ds-tech-highlight">
+      <div class="ds-tech-highlight-text">
+        <h3>Equipamiento de última generación</h3>
+        <p>Apostamos por herramientas modernas y procesos de trabajo cuidados para ofrecer resultados consistentes y de alta calidad.</p>
+        <p>Te ayudamos a elegir la técnica más adecuada según el producto, la cantidad y el tipo de personalización que necesites.</p>
+      </div>
+
+      <div class="ds-tech-stats">
+        <div class="ds-tech-stat-card ds-tech-stat-pink">
+          <strong>99%</strong>
+          <span>Satisfacción</span>
+        </div>
+        <div class="ds-tech-stat-card ds-tech-stat-cyan">
+          <strong>24h</strong>
+          <span>Respuesta rápida</span>
+        </div>
+        <div class="ds-tech-stat-card ds-tech-stat-yellow">
+          <strong>1000+</strong>
+          <span>Proyectos</span>
+        </div>
+        <div class="ds-tech-stat-card ds-tech-stat-pink-soft">
+          <strong>4</strong>
+          <span>Técnicas</span>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
+
+<section class="ds-products">
+  <div class="ds-container">
+    <div class="ds-products-header">
+      <h2 class="ds-section-title">Productos destacados</h2>
+      <p class="ds-section-subtitle">
+        Descubre algunas de las opciones más solicitadas para regalos, eventos, promociones y pedidos de empresa.
+      </p>
+    </div>
+
+    <div class="ds-products-grid">
+      <article class="ds-product-card">
+        <div class="ds-product-image-wrapper">
+          <img
+            class="ds-product-image"
+            src="https://images.unsplash.com/photo-1514228742587-6b1558fcf93a?auto=format&fit=crop&w=900&q=80"
+            alt="Taza personalizada"
+          />
+        </div>
+        <div class="ds-product-content">
+          <h3>Tazas personalizadas</h3>
+          <p>Ideales para regalos, merchandising y detalles corporativos con impresión a todo color.</p>
+          <span class="ds-product-price">Desde 5,50 €</span>
+        </div>
+      </article>
+
+      <article class="ds-product-card">
+        <div class="ds-product-image-wrapper">
+          <img
+            class="ds-product-image"
+            src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80"
+            alt="Camiseta personalizada"
+          />
+        </div>
+        <div class="ds-product-content">
+          <h3>Camisetas personalizadas</h3>
+          <p>Perfectas para equipos, eventos, promociones y ropa laboral con distintas técnicas de impresión.</p>
+          <span class="ds-product-price">Desde 8,90 €</span>
+        </div>
+      </article>
+
+      <article class="ds-product-card">
+        <div class="ds-product-image-wrapper">
+          <img
+            class="ds-product-image"
+            src="https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=900&q=80"
+            alt="Gorra personalizada"
+          />
+        </div>
+        <div class="ds-product-content">
+          <h3>Gorras personalizadas</h3>
+          <p>Una opción muy visual para promociones, uniformidad y campañas de marca.</p>
+          <span class="ds-product-price">Desde 6,75 €</span>
+        </div>
+      </article>
+    </div>
+
+    <div class="ds-products-cta">
+      <a routerLink="/catalogo" class="ds-btn ds-btn-primary">Ver catálogo completo</a>
+    </div>
+  </div>
+</section>
+
+<section class="ds-final-cta">
+  <div class="ds-container">
+    <div class="ds-final-cta-box">
+      <div class="ds-final-cta-content">
+        <span class="ds-final-cta-tag">Hablemos de tu idea</span>
+
+        <h2 class="ds-final-cta-title">
+          Convierte tu proyecto en un
+          <span class="ds-gradient-text">producto único</span>
+        </h2>
+
+        <p class="ds-final-cta-description">
+          Ya sea para un pedido personal, un evento o un trabajo para empresa, te ayudamos a encontrar la mejor solución de personalización
+          según tus necesidades.
+        </p>
+
+        <div class="ds-final-cta-actions">
+          <a routerLink="/solicitar-presupuesto" class="ds-btn ds-btn-primary"> Solicitar presupuesto </a>
+
+          <a routerLink="/contacto" class="ds-btn ds-btn-outline"> Contactar ahora </a>
+        </div>
+      </div>
+
+      <div class="ds-final-cta-side">
+        <div class="ds-final-contact-card">
+          <h3>Contacto rápido</h3>
+
+          <ul class="ds-final-contact-list">
+            <li>
+              <strong>Email:</strong>
+              <span>info&#64;detallsublim.com</span>
+            </li>
+            <li>
+              <strong>Teléfono:</strong>
+              <span>+34 600 000 000</span>
+            </li>
+            <li>
+              <strong>Atención:</strong>
+              <span>Respuesta personalizada</span>
+            </li>
+            <li>
+              <strong>Pedidos:</strong>
+              <span>Particulares y empresas</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

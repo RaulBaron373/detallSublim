@@ -1,0 +1,227 @@
+<section class="admin-page">
+  <div class="admin-back">
+    <a routerLink="/panel" class="admin-back-btn">← Volver al panel</a>
+  </div>
+  <div class="admin-page-header">
+    <div>
+      <span class="admin-page-tag">Panel interno</span>
+      <h1 data-cy="SolicitudPresupuestoHeading">Solicitudes de presupuesto</h1>
+      <p class="admin-page-subtitle">
+        Gestiona las solicitudes recibidas, revisa su estado y accede rápidamente al detalle de cada petición.
+      </p>
+    </div>
+
+    <div class="admin-page-actions">
+      <button class="btn btn-light admin-btn-light" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span>Actualizar</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="ds-btn ds-btn-primary"
+        [routerLink]="['/solicitud-presupuesto/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span>Nueva solicitud</span>
+      </button>
+    </div>
+  </div>
+
+  <jhi-alert-error />
+  <jhi-alert />
+
+  @if (solicitudPresupuestos().length === 0) {
+    <div class="admin-empty-state" id="no-result">
+      <h3>No hay solicitudes registradas</h3>
+      <p>Todavía no se ha recibido ninguna solicitud de presupuesto.</p>
+    </div>
+  } @else {
+    <div class="admin-table-card">
+      <div class="table-responsive admin-table-wrapper" id="entities">
+        <table class="table admin-table" aria-describedby="page-heading">
+          <thead>
+            <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+              <th scope="col" jhiSortBy="id">
+                <div class="th-content">
+                  <span>ID</span>
+                  <fa-icon icon="sort"></fa-icon>
+                </div>
+              </th>
+
+              <th scope="col" jhiSortBy="nombreCliente">
+                <div class="th-content">
+                  <span>Cliente</span>
+                  <fa-icon icon="sort"></fa-icon>
+                </div>
+              </th>
+
+              <th scope="col" jhiSortBy="email">
+                <div class="th-content">
+                  <span>Email</span>
+                  <fa-icon icon="sort"></fa-icon>
+                </div>
+              </th>
+
+              <th scope="col" jhiSortBy="telefono">
+                <div class="th-content">
+                  <span>Teléfono</span>
+                  <fa-icon icon="sort"></fa-icon>
+                </div>
+              </th>
+
+              <th scope="col" jhiSortBy="nombreEmpresa">
+                <div class="th-content">
+                  <span>Empresa</span>
+                  <fa-icon icon="sort"></fa-icon>
+                </div>
+              </th>
+
+              <th scope="col" jhiSortBy="cantidad">
+                <div class="th-content">
+                  <span>Cantidad</span>
+                  <fa-icon icon="sort"></fa-icon>
+                </div>
+              </th>
+
+              <th scope="col" jhiSortBy="fechaSolicitud">
+                <div class="th-content">
+                  <span>Fecha</span>
+                  <fa-icon icon="sort"></fa-icon>
+                </div>
+              </th>
+
+              <th scope="col" jhiSortBy="estado">
+                <div class="th-content">
+                  <span>Estado</span>
+                  <fa-icon icon="sort"></fa-icon>
+                </div>
+              </th>
+
+              <th scope="col" jhiSortBy="producto.nombre">
+                <div class="th-content">
+                  <span>Producto</span>
+                  <fa-icon icon="sort"></fa-icon>
+                </div>
+              </th>
+
+              <th scope="col" class="text-end">
+                <div class="th-content justify-end">
+                  <span>Acciones</span>
+                </div>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (solicitudPresupuesto of solicitudPresupuestos(); track trackId(solicitudPresupuesto)) {
+              <tr data-cy="entityTable">
+                <td>
+                  <a [routerLink]="['/solicitud-presupuesto', solicitudPresupuesto.id, 'view']" class="table-link-id">
+                    #{{ solicitudPresupuesto.id }}
+                  </a>
+                </td>
+
+                <td>
+                  <div class="cell-main">
+                    <strong>{{ solicitudPresupuesto.nombreCliente }}</strong>
+                  </div>
+                </td>
+
+                <td>{{ solicitudPresupuesto.email }}</td>
+                <td>{{ solicitudPresupuesto.telefono }}</td>
+                <td>{{ solicitudPresupuesto.nombreEmpresa || '-' }}</td>
+                <td>{{ solicitudPresupuesto.cantidad || '-' }}</td>
+                <td>{{ solicitudPresupuesto.fechaSolicitud | formatMediumDatetime }}</td>
+
+                <td>
+                  <span
+                    class="status-badge"
+                    [ngClass]="{
+                      'status-pending': solicitudPresupuesto.estado === 'PENDIENTE',
+                      'status-accepted': solicitudPresupuesto.estado === 'ACEPTADO',
+                      'status-finished': solicitudPresupuesto.estado === 'FINALIZADO',
+                      'status-cancelled': solicitudPresupuesto.estado === 'RECHAZADO',
+                    }"
+                  >
+                    <span [jhiTranslate]="'detallSublimApp.EstadoSolicitud.' + (solicitudPresupuesto.estado ?? 'null')">
+                      {{
+                        {
+                          null: '',
+                          PENDIENTE: 'PENDIENTE',
+                          ACEPTADO: 'ACEPTADO',
+                          FINALIZADO: 'FINALIZADO',
+                          RECHAZADO: 'RECHAZADO',
+                        }[solicitudPresupuesto.estado ?? 'null']
+                      }}
+                    </span>
+                  </span>
+                </td>
+
+                <td>
+                  @if (solicitudPresupuesto.producto) {
+                    <a [routerLink]="['/producto', solicitudPresupuesto.producto.id, 'view']" class="table-link">
+                      {{ solicitudPresupuesto.producto.nombre }}
+                    </a>
+                  } @else {
+                    <span>-</span>
+                  }
+                </td>
+
+                <td class="text-end">
+                  <div class="admin-action-buttons">
+                    <a
+                      [routerLink]="['/solicitud-presupuesto', solicitudPresupuesto.id, 'view']"
+                      class="btn btn-sm admin-btn-view"
+                      data-cy="entityDetailsButton"
+                    >
+                      <fa-icon icon="eye"></fa-icon>
+                    </a>
+
+                    <a
+                      [routerLink]="['/solicitud-presupuesto', solicitudPresupuesto.id, 'edit']"
+                      class="btn btn-sm admin-btn-edit"
+                      data-cy="entityEditButton"
+                    >
+                      <fa-icon icon="pencil-alt"></fa-icon>
+                    </a>
+
+                    <button
+                      type="button"
+                      (click)="delete(solicitudPresupuesto)"
+                      class="btn btn-sm admin-btn-delete"
+                      data-cy="entityDeleteButton"
+                    >
+                      <fa-icon icon="times"></fa-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+
+  @if (solicitudPresupuestos().length > 0) {
+    <div class="admin-pagination-block">
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page, totalItems, itemsPerPage }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</section>

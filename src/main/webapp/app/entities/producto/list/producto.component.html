@@ -1,0 +1,124 @@
+<section class="admin-page">
+  <div class="admin-back">
+    <a routerLink="/panel" class="admin-back-btn">← Volver al panel</a>
+  </div>
+  <div class="admin-page-header">
+    <div>
+      <span class="admin-page-tag">Panel interno</span>
+      <h1 data-cy="ProductoHeading">Productos</h1>
+      <p class="admin-page-subtitle">Gestiona el catálogo de productos disponibles en la web.</p>
+    </div>
+
+    <div class="admin-page-actions">
+      <button class="btn btn-light admin-btn-light" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span>Actualizar</span>
+      </button>
+
+      <button class="ds-btn ds-btn-primary" [routerLink]="['/producto/new']">
+        <fa-icon icon="plus"></fa-icon>
+        <span>Nuevo producto</span>
+      </button>
+    </div>
+  </div>
+
+  <jhi-alert-error />
+  <jhi-alert />
+
+  @if (productos().length === 0) {
+    <div class="admin-empty-state">
+      <h3>No hay productos</h3>
+      <p>No se han creado productos todavía.</p>
+    </div>
+  } @else {
+    <div class="admin-table-card">
+      <div class="table-responsive admin-table-wrapper">
+        <table class="table admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Precio</th>
+              <th>Personalizable</th>
+              <th>Plazo</th>
+              <th>Estado</th>
+              <th>Categoría</th>
+              <th class="text-end">Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (producto of productos(); track trackId(producto)) {
+              <tr>
+                <td>
+                  <span class="table-link-id">#{{ producto.id }}</span>
+                </td>
+
+                <td>
+                  <img [src]="producto.imagenUrl || 'assets/images/placeholder.png'" alt="producto" class="producto-img" />
+                </td>
+
+                <td>
+                  <strong>{{ producto.nombre }}</strong>
+                  <div class="producto-desc">
+                    {{ producto.descripcion }}
+                  </div>
+                </td>
+
+                <td class="producto-precio">{{ producto.precioBase | number: '1.2-2' }} €</td>
+
+                <td>
+                  <span class="status-badge" [ngClass]="producto.personalizable ? 'status-finished' : 'status-pending'">
+                    {{ producto.personalizable ? 'Sí' : 'No' }}
+                  </span>
+                </td>
+
+                <td>{{ producto.plazoEstimadoDias }} días</td>
+
+                <td>
+                  <span class="status-badge" [ngClass]="producto.activo ? 'status-finished' : 'status-inactive'">
+                    {{ producto.activo ? 'Activo' : 'Inactivo' }}
+                  </span>
+                </td>
+
+                <td>
+                  {{ producto.categoria?.nombre || '-' }}
+                </td>
+
+                <td class="text-end">
+                  <div class="admin-action-buttons">
+                    <a [routerLink]="['/producto', producto.id, 'view']" class="btn admin-btn-view">
+                      <fa-icon icon="eye"></fa-icon>
+                    </a>
+
+                    <a [routerLink]="['/producto', producto.id, 'edit']" class="btn admin-btn-edit">
+                      <fa-icon icon="pencil-alt"></fa-icon>
+                    </a>
+
+                    <button (click)="delete(producto)" class="btn admin-btn-delete">
+                      <fa-icon icon="times"></fa-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+
+  @if (productos().length > 0) {
+    <div class="admin-pagination-block">
+      <jhi-item-count [params]="{ page, totalItems, itemsPerPage }" />
+
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  }
+</section>

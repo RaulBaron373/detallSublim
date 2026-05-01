@@ -41,7 +41,11 @@ public class CacheConfiguration {
             createCache(cm, com.detallsublim.app.repository.UserRepository.USERS_BY_LOGIN_CACHE);
             createCache(cm, com.detallsublim.app.repository.UserRepository.USERS_BY_EMAIL_CACHE);
             createCache(cm, com.detallsublim.app.domain.Authority.class.getName());
-            // jhipster-needle-ehcache-add-entry
+            createCache(cm, com.detallsublim.app.domain.Categoria.class.getName());
+            createCache(cm, com.detallsublim.app.domain.Producto.class.getName());
+            createCache(cm, com.detallsublim.app.domain.SolicitudPresupuesto.class.getName());
+            createCache(cm, com.detallsublim.app.domain.MensajeContacto.class.getName());
+            // jhipster-needle-ehcache-add-entry - JHipster will add cache entries here
         };
     }
 

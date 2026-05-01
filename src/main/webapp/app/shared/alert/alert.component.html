@@ -1,11 +1,11 @@
-<div class="alerts" role="alert">
+<div class="ds-alerts">
   @for (alert of alerts(); track $index) {
-    <div [ngClass]="setClasses(alert)">
-      @if (alert.message) {
-        <ngb-alert [type]="alert.type" (closed)="close(alert)">
-          <pre [innerHTML]="alert.message"></pre>
-        </ngb-alert>
-      }
+    <div class="ds-alert" [ngClass]="'ds-alert-' + alert.type">
+      <div class="ds-alert-content">
+        <span class="ds-alert-message" [innerHTML]="alert.message"></span>
+      </div>
+
+      <button class="ds-alert-close" (click)="close(alert)">✕</button>
     </div>
   }
 </div>

@@ -1,0 +1,299 @@
+/* =========================
+    ANIMACIONES DECORATIVAS
+========================= */
+@keyframes blobFloat {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(24px, -32px) scale(1.06);
+  }
+  66% {
+    transform: translate(-18px, 18px) scale(0.96);
+  }
+}
+
+/* =========================
+    PÁGINA GENERAL
+========================= */
+.about-page {
+  position: relative;
+  overflow: hidden;
+  padding: 10rem 0 6rem;
+  background: linear-gradient(135deg, rgba(216, 75, 138, 0.06) 0%, rgba(0, 217, 192, 0.06) 50%, rgba(248, 213, 69, 0.06) 100%);
+}
+
+/* Fondo decorativo */
+.about-background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.about-blob {
+  position: absolute;
+  width: 22rem;
+  height: 22rem;
+  border-radius: 999px;
+  filter: blur(70px);
+  opacity: 0.18;
+  animation: blobFloat 10s ease-in-out infinite;
+}
+
+.about-blob-pink {
+  top: 2rem;
+  right: 6%;
+  background: rgba(216, 75, 138, 0.55);
+}
+
+.about-blob-cyan {
+  top: 12rem;
+  left: 5%;
+  background: rgba(0, 217, 192, 0.45);
+  animation-delay: 2s;
+}
+
+.about-blob-yellow {
+  bottom: 4rem;
+  left: 40%;
+  background: rgba(248, 213, 69, 0.4);
+  animation-delay: 4s;
+}
+
+/* =========================
+    CABECERA
+========================= */
+.about-header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.about-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1rem;
+  margin-bottom: 1.25rem;
+  border-radius: 999px;
+  background: rgba(216, 75, 138, 0.1);
+  border: 1px solid rgba(216, 75, 138, 0.18);
+  color: var(--ds-color-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.about-header h1 {
+  margin-bottom: 1rem;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 1.05;
+}
+
+.about-subtitle {
+  max-width: 760px;
+  margin: 0 auto;
+  font-size: 1.08rem;
+  line-height: 1.8;
+}
+
+/* =========================
+    BLOQUE INTRO
+========================= */
+.about-intro {
+  position: relative;
+  z-index: 2;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 1.8rem;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
+}
+
+.about-intro-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.2rem;
+}
+
+.about-block h2 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.about-block p {
+  margin-bottom: 0;
+  line-height: 1.85;
+  font-size: 1.03rem;
+}
+
+/* =========================
+    VALORES
+========================= */
+.about-values {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 3rem;
+}
+
+.about-values-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 2.5rem;
+}
+
+.about-values-header h2 {
+  margin-bottom: 0.8rem;
+  font-size: 2.2rem;
+}
+
+.about-values-header p {
+  margin-bottom: 0;
+}
+
+.about-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.about-card {
+  padding: 2rem 1.6rem;
+  border-radius: 1.6rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid transparent;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
+}
+
+.about-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 24px 55px rgba(0, 0, 0, 0.12);
+}
+
+.about-card h3 {
+  margin-bottom: 0.85rem;
+  font-size: 1.35rem;
+}
+
+.about-card p {
+  margin-bottom: 0;
+  line-height: 1.75;
+}
+
+.about-card.pink {
+  background: linear-gradient(135deg, rgba(216, 75, 138, 0.14), rgba(255, 255, 255, 0.78));
+  border-color: rgba(216, 75, 138, 0.16);
+}
+
+.about-card.cyan {
+  background: linear-gradient(135deg, rgba(0, 217, 192, 0.14), rgba(255, 255, 255, 0.78));
+  border-color: rgba(0, 217, 192, 0.16);
+}
+
+.about-card.yellow {
+  background: linear-gradient(135deg, rgba(248, 213, 69, 0.16), rgba(255, 255, 255, 0.8));
+  border-color: rgba(248, 213, 69, 0.18);
+}
+
+.about-card .icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  margin-bottom: 1.1rem;
+  border-radius: 999px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  transition: transform 0.25s ease;
+}
+
+.about-card:hover .icon {
+  transform: scale(1.08);
+}
+
+.about-card.pink .icon {
+  background: rgba(216, 75, 138, 0.18);
+  color: var(--ds-color-primary);
+}
+
+.about-card.cyan .icon {
+  background: rgba(0, 217, 192, 0.18);
+  color: var(--ds-color-secondary);
+}
+
+.about-card.yellow .icon {
+  background: rgba(248, 213, 69, 0.24);
+  color: #c9a400;
+}
+
+/* =========================
+    CLIENTES
+========================= */
+.about-clients {
+  position: relative;
+  z-index: 2;
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 1.8rem;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
+  text-align: left;
+}
+
+.about-clients h2 {
+  margin-bottom: 1rem;
+  font-size: 2.1rem;
+}
+
+.about-clients p:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================
+    RESPONSIVE
+========================= */
+@media (max-width: 991.98px) {
+  .about-intro-content {
+    grid-template-columns: 1fr;
+  }
+
+  .about-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .about-blob {
+    width: 16rem;
+    height: 16rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .about-page {
+    padding: 3rem 0 4rem;
+  }
+
+  .about-header h1 {
+    font-size: 2.3rem;
+  }
+
+  .about-intro,
+  .about-clients {
+    padding: 1.5rem;
+  }
+
+  .about-block h2,
+  .about-values-header h2,
+  .about-clients h2 {
+    font-size: 1.7rem;
+  }
+}

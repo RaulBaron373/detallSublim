@@ -1,0 +1,85 @@
+<section class="admin-form-page">
+  <div class="ds-container">
+    <!-- VOLVER -->
+    <div class="admin-back">
+      <a routerLink="/solicitud-presupuesto" class="admin-back-btn"> ← Volver a solicitudes </a>
+    </div>
+
+    @if (solicitudPresupuesto(); as s) {
+      <div class="request-view-card">
+        <!-- HEADER -->
+        <div class="request-view-header">
+          <div>
+            <h1>{{ s.nombreCliente }}</h1>
+            <p class="request-subtitle">{{ s.email }} · {{ s.telefono }}</p>
+          </div>
+
+          <span
+            class="status-badge"
+            [ngClass]="{
+              'status-pending': s.estado === 'PENDIENTE',
+              'status-finished': s.estado === 'ACEPTADO' || s.estado === 'FINALIZADO',
+              'status-cancelled': s.estado === 'RECHAZADO',
+            }"
+          >
+            {{ s.estado }}
+          </span>
+        </div>
+
+        <!-- GRID -->
+        <div class="request-view-grid">
+          <!-- INFO CLIENTE -->
+          <div class="request-section">
+            <h4>Cliente</h4>
+
+            <p><strong>Nombre:</strong> {{ s.nombreCliente }}</p>
+            <p><strong>Email:</strong> {{ s.email }}</p>
+            <p><strong>Teléfono:</strong> {{ s.telefono }}</p>
+
+            @if (s.nombreEmpresa) {
+              <p><strong>Empresa:</strong> {{ s.nombreEmpresa }}</p>
+            }
+          </div>
+
+          <!-- INFO PEDIDO -->
+          <div class="request-section">
+            <h4>Pedido</h4>
+
+            <p><strong>Cantidad:</strong> {{ s.cantidad }}</p>
+            <p><strong>Fecha:</strong> {{ s.fechaSolicitud | formatMediumDatetime }}</p>
+
+            @if (s.producto) {
+              <p>
+                <strong>Producto:</strong>
+                <a [routerLink]="['/producto', s.producto.id, 'view']">
+                  {{ s.producto.nombre }}
+                </a>
+              </p>
+            }
+          </div>
+        </div>
+
+        <!-- DESCRIPCIÓN -->
+        <div class="request-section">
+          <h4>Descripción</h4>
+          <p>{{ s.descripcion }}</p>
+        </div>
+
+        <!-- OBSERVACIONES -->
+        @if (s.observacionesInternas) {
+          <div class="request-section internal-note">
+            <h4>Observaciones internas</h4>
+            <p>{{ s.observacionesInternas }}</p>
+          </div>
+        }
+
+        <!-- ACCIONES -->
+        <div class="request-view-actions">
+          <button (click)="previousState()" class="btn admin-btn-light">Volver</button>
+
+          <button [routerLink]="['/solicitud-presupuesto', s.id, 'edit']" class="ds-btn ds-btn-primary">Editar</button>
+        </div>
+      </div>
+    }
+  </div>
+</section>

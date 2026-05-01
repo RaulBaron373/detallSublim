@@ -1,0 +1,145 @@
+<section class="admin-form-page">
+  <div class="ds-container">
+    <div class="admin-back">
+      <a routerLink="/mensaje-contacto" class="admin-back-btn">← Volver a mensajes</a>
+    </div>
+
+    <div class="admin-form-card">
+      <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+        <h2
+          id="jhi-mensaje-contacto-heading"
+          data-cy="MensajeContactoCreateUpdateHeading"
+          jhiTranslate="detallSublimApp.mensajeContacto.home.createOrEditLabel"
+        >
+          Crear o editar Mensaje Contacto
+        </h2>
+
+        <div>
+          <jhi-alert-error />
+
+          @if (editForm.controls.id.value !== null) {
+            <div class="mb-3">
+              <label class="form-label" for="field_id" jhiTranslate="detallSublimApp.mensajeContacto.id">ID</label>
+              <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+            </div>
+          }
+
+          @let nombreRef = editForm.get('nombre')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_nombre" jhiTranslate="detallSublimApp.mensajeContacto.nombre">Nombre</label>
+            <input type="text" class="form-control" name="nombre" id="field_nombre" data-cy="nombre" formControlName="nombre" />
+            @if (nombreRef.invalid && (nombreRef.dirty || nombreRef.touched)) {
+              <div>
+                @if (editForm.get('nombre')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+              </div>
+            }
+          </div>
+
+          @let emailRef = editForm.get('email')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_email" jhiTranslate="detallSublimApp.mensajeContacto.email">Email</label>
+            <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+            @if (emailRef.invalid && (emailRef.dirty || emailRef.touched)) {
+              <div>
+                @if (editForm.get('email')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="field_telefono" jhiTranslate="detallSublimApp.mensajeContacto.telefono">Telefono</label>
+            <input type="text" class="form-control" name="telefono" id="field_telefono" data-cy="telefono" formControlName="telefono" />
+          </div>
+
+          @let asuntoRef = editForm.get('asunto')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_asunto" jhiTranslate="detallSublimApp.mensajeContacto.asunto">Asunto</label>
+            <input type="text" class="form-control" name="asunto" id="field_asunto" data-cy="asunto" formControlName="asunto" />
+            @if (asuntoRef.invalid && (asuntoRef.dirty || asuntoRef.touched)) {
+              <div>
+                @if (editForm.get('asunto')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+              </div>
+            }
+          </div>
+
+          @let mensajeRef = editForm.get('mensaje')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_mensaje" jhiTranslate="detallSublimApp.mensajeContacto.mensaje">Mensaje</label>
+            <textarea class="form-control" name="mensaje" id="field_mensaje" data-cy="mensaje" formControlName="mensaje"></textarea>
+            @if (mensajeRef.invalid && (mensajeRef.dirty || mensajeRef.touched)) {
+              <div>
+                @if (editForm.get('mensaje')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+              </div>
+            }
+          </div>
+
+          @let fechaEnvioRef = editForm.get('fechaEnvio')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_fechaEnvio" jhiTranslate="detallSublimApp.mensajeContacto.fechaEnvio">Fecha Envio</label>
+            <div class="d-flex">
+              <input
+                id="field_fechaEnvio"
+                data-cy="fechaEnvio"
+                type="datetime-local"
+                class="form-control"
+                name="fechaEnvio"
+                formControlName="fechaEnvio"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+            </div>
+            @if (fechaEnvioRef.invalid && (fechaEnvioRef.dirty || fechaEnvioRef.touched)) {
+              <div>
+                @if (editForm.get('fechaEnvio')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+                <small
+                  class="form-text text-danger"
+                  [hidden]="!editForm.get('fechaEnvio')?.errors?.datetimelocal"
+                  jhiTranslate="entity.validation.datetimelocal"
+                  >Este campo debe ser una fecha y hora.</small
+                >
+              </div>
+            }
+          </div>
+
+          @let atendidoRef = editForm.get('atendido')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_atendido" jhiTranslate="detallSublimApp.mensajeContacto.atendido">Atendido</label>
+            <input type="checkbox" class="form-check" name="atendido" id="field_atendido" data-cy="atendido" formControlName="atendido" />
+            @if (atendidoRef.invalid && (atendidoRef.dirty || atendidoRef.touched)) {
+              <div>
+                @if (editForm.get('atendido')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <div>
+          <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+          </button>
+
+          <button
+            type="submit"
+            id="save-entity"
+            data-cy="entityCreateSaveButton"
+            [disabled]="editForm.invalid || isSaving"
+            class="btn btn-primary"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

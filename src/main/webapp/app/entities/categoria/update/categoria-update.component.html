@@ -1,0 +1,83 @@
+<section class="admin-form-page">
+  <div class="ds-container">
+    <div class="admin-back">
+      <a routerLink="/categoria" class="admin-back-btn">← Volver a categorías</a>
+    </div>
+
+    <div class="admin-form-card">
+      <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+        <h2
+          id="jhi-categoria-heading"
+          data-cy="CategoriaCreateUpdateHeading"
+          jhiTranslate="detallSublimApp.categoria.home.createOrEditLabel"
+        >
+          Crear o editar Categoria
+        </h2>
+
+        <div>
+          <jhi-alert-error />
+
+          @if (editForm.controls.id.value !== null) {
+            <div class="mb-3">
+              <label class="form-label" for="field_id" jhiTranslate="detallSublimApp.categoria.id">ID</label>
+              <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+            </div>
+          }
+
+          @let nombreRef = editForm.get('nombre')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_nombre" jhiTranslate="detallSublimApp.categoria.nombre">Nombre</label>
+            <input type="text" class="form-control" name="nombre" id="field_nombre" data-cy="nombre" formControlName="nombre" />
+            @if (nombreRef.invalid && (nombreRef.dirty || nombreRef.touched)) {
+              <div>
+                @if (editForm.get('nombre')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="field_descripcion" jhiTranslate="detallSublimApp.categoria.descripcion">Descripcion</label>
+            <textarea
+              class="form-control"
+              name="descripcion"
+              id="field_descripcion"
+              data-cy="descripcion"
+              formControlName="descripcion"
+            ></textarea>
+          </div>
+
+          @let activaRef = editForm.get('activa')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_activa" jhiTranslate="detallSublimApp.categoria.activa">Activa</label>
+            <input type="checkbox" class="form-check" name="activa" id="field_activa" data-cy="activa" formControlName="activa" />
+            @if (activaRef.invalid && (activaRef.dirty || activaRef.touched)) {
+              <div>
+                @if (editForm.get('activa')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <div>
+          <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+          </button>
+
+          <button
+            type="submit"
+            id="save-entity"
+            data-cy="entityCreateSaveButton"
+            [disabled]="editForm.invalid || isSaving"
+            class="btn btn-primary"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

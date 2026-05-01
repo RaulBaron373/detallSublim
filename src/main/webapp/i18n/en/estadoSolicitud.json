@@ -1,0 +1,11 @@
+{
+  "detallSublimApp": {
+    "EstadoSolicitud": {
+      "null": "",
+      "PENDIENTE": "Pending",
+      "ACEPTADO": "Accepted",
+      "RECHAZADO": "Rejected",
+      "FINALIZADO": "Completed"
+    }
+  }
+}

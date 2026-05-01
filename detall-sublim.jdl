@@ -1,0 +1,56 @@
+enum EstadoSolicitud {
+  PENDIENTE,
+  EN_REVISION,
+  PRESUPUESTADO,
+  ACEPTADO,
+  EN_PRODUCCION,
+  FINALIZADO,
+  CANCELADO
+}
+
+entity Categoria {
+  nombre String required,
+  descripcion TextBlob,
+  activa Boolean required
+}
+
+entity Producto {
+  nombre String required,
+  descripcion TextBlob,
+  precioBase BigDecimal required min(0),
+  personalizable Boolean required,
+  plazoEstimadoDias Integer,
+  imagenUrl String,
+  activo Boolean required
+}
+
+entity SolicitudPresupuesto {
+  nombreCliente String required,
+  email String required,
+  telefono String,
+  nombreEmpresa String,
+  descripcion TextBlob required,
+  cantidad Integer required min(1),
+  fechaSolicitud Instant required,
+  estado EstadoSolicitud required,
+  observacionesInternas TextBlob
+}
+
+entity MensajeContacto {
+  nombre String required,
+  email String required,
+  telefono String,
+  asunto String required,
+  mensaje TextBlob required,
+  fechaEnvio Instant required,
+  atendido Boolean required
+}
+
+relationship ManyToOne {
+  Producto{categoria(nombre)} to Categoria,
+  SolicitudPresupuesto{producto(nombre)} to Producto
+}
+
+dto * with mapstruct
+service all with serviceClass
+paginate Producto, SolicitudPresupuesto, MensajeContacto with pagination

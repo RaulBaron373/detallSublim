@@ -1,0 +1,26 @@
+{
+  "detallSublimApp": {
+    "categoria": {
+      "home": {
+        "title": "Categorias",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Categoria",
+        "createOrEditLabel": "Crear o editar Categoria",
+        "notFound": "Ningún Categorias encontrado"
+      },
+      "created": "Un nuevo Categoria ha sido creado con el identificador {{ param }}",
+      "updated": "Un Categoria ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Categoria ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Categoria {{ id }}?"
+      },
+      "detail": {
+        "title": "Categoria"
+      },
+      "id": "ID",
+      "nombre": "Nombre",
+      "descripcion": "Descripcion",
+      "activa": "Activa"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "detallSublimApp": {
+    "solicitudPresupuesto": {
+      "home": {
+        "title": "Solicitud Presupuestos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Solicitud Presupuesto",
+        "createOrEditLabel": "Create or edit a Solicitud Presupuesto",
+        "notFound": "No Solicitud Presupuestos found"
+      },
+      "created": "A new Solicitud Presupuesto is created with identifier {{ param }}",
+      "updated": "A Solicitud Presupuesto is updated with identifier {{ param }}",
+      "deleted": "A Solicitud Presupuesto is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Solicitud Presupuesto {{ id }}?"
+      },
+      "detail": {
+        "title": "Solicitud Presupuesto"
+      },
+      "id": "ID",
+      "nombreCliente": "Nombre Cliente",
+      "email": "Email",
+      "telefono": "Telefono",
+      "nombreEmpresa": "Nombre Empresa",
+      "descripcion": "Descripcion",
+      "cantidad": "Cantidad",
+      "fechaSolicitud": "Fecha Solicitud",
+      "estado": "Estado",
+      "observacionesInternas": "Observaciones Internas",
+      "producto": "Producto"
+    }
+  }
+}

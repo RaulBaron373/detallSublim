@@ -1,15 +1,21 @@
-<div>
-  <div class="row">
-    <div class="col-md-4">
-      <span class="hipster img-fluid rounded"></span>
-    </div>
+<section class="error-page">
+  <div class="ds-container">
+    <div class="error-card">
+      <div class="error-code">404</div>
 
-    <div class="col-md-8">
-      <h1 jhiTranslate="error.title">¡Página de error!</h1>
+      <h1 class="error-title">Página no encontrada</h1>
+
+      <p class="error-text">La página que estás buscando no existe o ha sido movida.</p>
 
       @if (errorMessage(); as errMessage) {
-        <div class="alert alert-danger">{{ errMessage }}</div>
+        <div class="error-detail">
+          {{ errMessage }}
+        </div>
       }
+
+      <div class="error-actions">
+        <a routerLink="/" class="ds-btn ds-btn-primary"> Ir al inicio </a>
+      </div>
     </div>
   </div>
-</div>
+</section>

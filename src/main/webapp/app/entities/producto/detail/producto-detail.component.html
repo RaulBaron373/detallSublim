@@ -1,0 +1,75 @@
+<section class="admin-form-page">
+  <div class="ds-container">
+    <!-- VOLVER -->
+    <div class="admin-back">
+      <a routerLink="/producto" class="admin-back-btn">← Volver a productos</a>
+    </div>
+
+    @if (producto(); as p) {
+      <div class="product-view-card">
+        <!-- HEADER -->
+        <div class="product-view-header">
+          <h1>{{ p.nombre }}</h1>
+          <span class="status-badge" [ngClass]="p.activo ? 'status-finished' : 'status-cancelled'">
+            {{ p.activo ? 'Activo' : 'Inactivo' }}
+          </span>
+        </div>
+
+        <!-- CONTENIDO -->
+        <div class="product-view-grid">
+          <!-- INFO -->
+          <div class="product-view-info">
+            <div class="info-block">
+              <h4>Descripción</h4>
+              <p>{{ p.descripcion }}</p>
+            </div>
+
+            <div class="info-row">
+              <div>
+                <h5>Precio base</h5>
+                <p>{{ p.precioBase }} €</p>
+              </div>
+
+              <div>
+                <h5>Plazo</h5>
+                <p>{{ p.plazoEstimadoDias }} días</p>
+              </div>
+            </div>
+
+            <div class="info-row">
+              <div>
+                <h5>Personalizable</h5>
+                <p>{{ p.personalizable ? 'Sí' : 'No' }}</p>
+              </div>
+
+              <div>
+                <h5>Categoría</h5>
+                @if (p.categoria) {
+                  <a [routerLink]="['/categoria', p.categoria.id, 'view']">
+                    {{ p.categoria.nombre }}
+                  </a>
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- IMAGEN -->
+          <div class="product-view-image">
+            @if (p.imagenUrl) {
+              <img [src]="p.imagenUrl" alt="producto" />
+            } @else {
+              <div class="image-placeholder">Sin imagen</div>
+            }
+          </div>
+        </div>
+
+        <!-- ACCIONES -->
+        <div class="product-view-actions">
+          <button (click)="previousState()" class="btn admin-btn-light">Volver</button>
+
+          <button [routerLink]="['/producto', p.id, 'edit']" class="ds-btn ds-btn-primary">Editar</button>
+        </div>
+      </div>
+    }
+  </div>
+</section>

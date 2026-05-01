@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity SolicitudPresupuesto.
+    -->
+    <changeSet id="20260414160104-1" author="jhipster">
+        <createTable tableName="solicitud_presupuesto">
+            <column name="id" type="bigint" autoIncrement="true" startWith="1500">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nombre_cliente" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="telefono" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="nombre_empresa" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="descripcion" type="${clobType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="cantidad" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="fecha_solicitud" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="estado" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="observaciones_internas" type="${clobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="producto_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="solicitud_presupuesto" columnName="fecha_solicitud" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <!--
+        Load sample data generated with Faker.js
+        - This data can be easily edited using a CSV editor (or even MS Excel) and
+          is located in the 'src/main/resources/config/liquibase/fake-data' directory
+        - By default this data is applied when running with the JHipster 'dev' profile.
+          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
+          Spring Boot configuration key.
+    -->
+    <changeSet id="20260414160104-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/solicitud_presupuesto.csv"
+                  separator=";"
+                  tableName="solicitud_presupuesto"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="nombre_cliente" type="string"/>
+            <column name="email" type="string"/>
+            <column name="telefono" type="string"/>
+            <column name="nombre_empresa" type="string"/>
+            <column name="descripcion" type="clob"/>
+            <column name="cantidad" type="numeric"/>
+            <column name="fecha_solicitud" type="date"/>
+            <column name="estado" type="string"/>
+            <column name="observaciones_internas" type="clob"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

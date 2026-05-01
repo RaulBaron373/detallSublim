@@ -1,0 +1,227 @@
+<section class="admin-form-page">
+  <div class="ds-container">
+    <div class="admin-back">
+      <a routerLink="/solicitud-presupuesto" class="admin-back-btn">← Volver a solicitudes</a>
+    </div>
+
+    <div class="admin-form-card">
+      <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+        <h2
+          id="jhi-solicitud-presupuesto-heading"
+          data-cy="SolicitudPresupuestoCreateUpdateHeading"
+          jhiTranslate="detallSublimApp.solicitudPresupuesto.home.createOrEditLabel"
+        >
+          Crear o editar Solicitud Presupuesto
+        </h2>
+
+        <div>
+          <jhi-alert-error />
+
+          @if (editForm.controls.id.value !== null) {
+            <div class="mb-3">
+              <label class="form-label" for="field_id" jhiTranslate="detallSublimApp.solicitudPresupuesto.id">ID</label>
+              <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+            </div>
+          }
+
+          @let nombreClienteRef = editForm.get('nombreCliente')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_nombreCliente" jhiTranslate="detallSublimApp.solicitudPresupuesto.nombreCliente"
+              >Nombre Cliente</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="nombreCliente"
+              id="field_nombreCliente"
+              data-cy="nombreCliente"
+              formControlName="nombreCliente"
+            />
+            @if (nombreClienteRef.invalid && (nombreClienteRef.dirty || nombreClienteRef.touched)) {
+              <div>
+                @if (editForm.get('nombreCliente')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+              </div>
+            }
+          </div>
+
+          @let emailRef = editForm.get('email')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_email" jhiTranslate="detallSublimApp.solicitudPresupuesto.email">Email</label>
+            <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+            @if (emailRef.invalid && (emailRef.dirty || emailRef.touched)) {
+              <div>
+                @if (editForm.get('email')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="field_telefono" jhiTranslate="detallSublimApp.solicitudPresupuesto.telefono">Telefono</label>
+            <input type="text" class="form-control" name="telefono" id="field_telefono" data-cy="telefono" formControlName="telefono" />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="field_nombreEmpresa" jhiTranslate="detallSublimApp.solicitudPresupuesto.nombreEmpresa"
+              >Nombre Empresa</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="nombreEmpresa"
+              id="field_nombreEmpresa"
+              data-cy="nombreEmpresa"
+              formControlName="nombreEmpresa"
+            />
+          </div>
+
+          @let descripcionRef = editForm.get('descripcion')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_descripcion" jhiTranslate="detallSublimApp.solicitudPresupuesto.descripcion"
+              >Descripcion</label
+            >
+            <textarea
+              class="form-control"
+              name="descripcion"
+              id="field_descripcion"
+              data-cy="descripcion"
+              formControlName="descripcion"
+            ></textarea>
+            @if (descripcionRef.invalid && (descripcionRef.dirty || descripcionRef.touched)) {
+              <div>
+                @if (editForm.get('descripcion')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+              </div>
+            }
+          </div>
+
+          @let cantidadRef = editForm.get('cantidad')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_cantidad" jhiTranslate="detallSublimApp.solicitudPresupuesto.cantidad">Cantidad</label>
+            <input type="number" class="form-control" name="cantidad" id="field_cantidad" data-cy="cantidad" formControlName="cantidad" />
+            @if (cantidadRef.invalid && (cantidadRef.dirty || cantidadRef.touched)) {
+              <div>
+                @if (editForm.get('cantidad')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+                @if (editForm.get('cantidad')?.errors?.min) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.min" [translateValues]="{ min: '1' }"
+                    >Este campo debe ser mayor que 1.</small
+                  >
+                }
+                <small
+                  class="form-text text-danger"
+                  [hidden]="!editForm.get('cantidad')?.errors?.number"
+                  jhiTranslate="entity.validation.number"
+                  >Este campo debe ser un número.</small
+                >
+              </div>
+            }
+          </div>
+
+          @let fechaSolicitudRef = editForm.get('fechaSolicitud')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_fechaSolicitud" jhiTranslate="detallSublimApp.solicitudPresupuesto.fechaSolicitud"
+              >Fecha Solicitud</label
+            >
+            <div class="d-flex">
+              <input
+                id="field_fechaSolicitud"
+                data-cy="fechaSolicitud"
+                type="datetime-local"
+                class="form-control"
+                name="fechaSolicitud"
+                formControlName="fechaSolicitud"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+            </div>
+            @if (fechaSolicitudRef.invalid && (fechaSolicitudRef.dirty || fechaSolicitudRef.touched)) {
+              <div>
+                @if (editForm.get('fechaSolicitud')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+                <small
+                  class="form-text text-danger"
+                  [hidden]="!editForm.get('fechaSolicitud')?.errors?.datetimelocal"
+                  jhiTranslate="entity.validation.datetimelocal"
+                  >Este campo debe ser una fecha y hora.</small
+                >
+              </div>
+            }
+          </div>
+
+          @let estadoRef = editForm.get('estado')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_estado" jhiTranslate="detallSublimApp.solicitudPresupuesto.estado">Estado</label>
+            <select class="form-control" name="estado" formControlName="estado" id="field_estado" data-cy="estado">
+              <option [ngValue]="null">{{ 'detallSublimApp.EstadoSolicitud.null' | translate }}</option>
+              @for (estadoSolicitud of estadoSolicitudValues; track $index) {
+                <option [value]="estadoSolicitud">{{ 'detallSublimApp.EstadoSolicitud.' + estadoSolicitud | translate }}</option>
+              }
+            </select>
+            @if (estadoRef.invalid && (estadoRef.dirty || estadoRef.touched)) {
+              <div>
+                @if (editForm.get('estado')?.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label
+              class="form-label"
+              for="field_observacionesInternas"
+              jhiTranslate="detallSublimApp.solicitudPresupuesto.observacionesInternas"
+              >Observaciones Internas</label
+            >
+            <textarea
+              class="form-control"
+              name="observacionesInternas"
+              id="field_observacionesInternas"
+              data-cy="observacionesInternas"
+              formControlName="observacionesInternas"
+            ></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="field_producto" jhiTranslate="detallSublimApp.solicitudPresupuesto.producto">Producto</label>
+            <select
+              class="form-control"
+              id="field_producto"
+              data-cy="producto"
+              name="producto"
+              formControlName="producto"
+              [compareWith]="compareProducto"
+            >
+              <option [ngValue]="null"></option>
+              @for (productoOption of productosSharedCollection; track $index) {
+                <option [ngValue]="productoOption">{{ productoOption.nombre }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+          </button>
+
+          <button
+            type="submit"
+            id="save-entity"
+            data-cy="entityCreateSaveButton"
+            [disabled]="editForm.invalid || isSaving"
+            class="btn btn-primary"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

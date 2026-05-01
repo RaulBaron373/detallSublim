@@ -1,5 +1,9 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
+<section class="admin-form-page">
+  <div class="ds-container">
+    <div class="admin-back">
+      <a routerLink="/admin/user-management" class="admin-back-btn">← Volver a administración</a>
+    </div>
+
     <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="myUserLabel" jhiTranslate="userManagement.home.createOrEditLabel">Crear o editar un usuario</h2>
 
@@ -142,4 +146,4 @@
       </button>
     </form>
   </div>
-</div>
+</section>

@@ -6,6 +6,7 @@ import SharedModule from 'app/shared/shared.module';
 import { LANGUAGES } from 'app/config/language.constants';
 import { IUser } from '../user-management.model';
 import { UserManagementService } from '../service/user-management.service';
+import { RouterLink } from '@angular/router';
 
 const userTemplate = {} as IUser;
 
@@ -17,7 +18,7 @@ const newUser: IUser = {
 @Component({
   selector: 'jhi-user-mgmt-update',
   templateUrl: './user-management-update.component.html',
-  imports: [SharedModule, FormsModule, ReactiveFormsModule],
+  imports: [SharedModule, FormsModule, ReactiveFormsModule, RouterLink],
 })
 export default class UserManagementUpdateComponent implements OnInit {
   languages = LANGUAGES;
