@@ -4,6 +4,12 @@
     "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
     "menu": {
       "home": "Home",
+      "about": "About us",
+      "services": "Services",
+      "catalog": "Catalog",
+      "technologies": "Technologies",
+      "contact": "Contact",
+      "quoteRequest": "Request a quote",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
@@ -89,7 +95,63 @@
     "ribbon": {
       "dev": "Development"
     },
-    "item-count": "Showing {{first}} - {{second}} of {{total}} items."
+    "item-count": "Showing {{first}} - {{second}} of {{total}} items.",
+    "public": {
+      "home": {
+        "technologies": {
+          "items": {
+            "sublimation": {
+              "title": "Sublimation",
+              "desc": "Ideal for mugs, T-shirts and other items with full-color printing, high definition and excellent durability."
+            },
+            "dtg": {
+              "title": "DTG Printing",
+              "desc": "Perfect for textile garments with detailed designs, vivid colors and professional results in small runs."
+            },
+            "screenPrinting": {
+              "title": "Screen printing",
+              "desc": "A very durable option for large orders, especially useful for workwear, merchandising and events."
+            },
+            "laser": {
+              "title": "Laser",
+              "desc": "Precision engraving and cutting for materials such as wood, metal or plastic, with a clean and elegant finish."
+            }
+          }
+        },
+        "badge": "Premium Personalization",
+        "heroTitle": "Customize",
+        "heroHighlight": "anything you want",
+        "heroDescription": "We transform ordinary products into unique pieces with professional finishes for individuals, events and companies.",
+        "quoteButton": "Request a quote",
+        "catalogButton": "View products",
+
+        "happyClients": "Happy clients",
+        "createdProducts": "Products created",
+        "commitment": "Commitment",
+
+        "technologiesTitle": "Our Technologies",
+        "technologiesSubtitle": "We use advanced techniques to achieve durable and professional finishes adapted to each product.",
+
+        "featuredProducts": "Featured products",
+        "featuredSubtitle": "Discover some of the most requested options for gifts, events, promotions and business orders.",
+
+        "fullCatalog": "View full catalog",
+
+        "finalTag": "Let's talk about your idea",
+        "finalTitle": "Turn your project into a",
+        "finalHighlight": "unique product",
+
+        "finalDescription": "Whether for a personal order, an event or business work, we help you find the best customization solution according to your needs.",
+
+        "contactNow": "Contact now",
+
+        "quickContact": "Quick contact",
+        "attention": "Attention",
+        "customResponse": "Personalized response",
+        "orders": "Orders",
+        "privateCompanies": "Individuals and companies"
+      }
+    }
   },
   "entity": {
     "action": {

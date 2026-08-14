@@ -648,6 +648,11 @@ p {
   color: #008d7d;
 }
 
+.status-budgeted {
+  background: rgba(59, 130, 246, 0.12);
+  color: #2563eb;
+}
+
 .status-quoted {
   background: rgba(216, 75, 138, 0.12);
   color: var(--ds-color-primary);
@@ -656,11 +661,6 @@ p {
 .status-accepted {
   background: rgba(25, 135, 84, 0.14);
   color: #157347;
-}
-
-.status-production {
-  background: rgba(13, 110, 253, 0.12);
-  color: #0a58ca;
 }
 
 .status-finished {

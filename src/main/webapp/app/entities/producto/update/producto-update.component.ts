@@ -109,6 +109,22 @@ export class ProductoUpdateComponent implements OnInit {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  onImageSelect(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) {
+      return;
+    }
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.editForm.patchValue({
+        imagenUrl: reader.result as string,
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+
   protected loadRelationshipsOptions(): void {
     this.categoriaService
       .query()

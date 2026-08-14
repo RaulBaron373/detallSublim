@@ -4,6 +4,12 @@
     "browsehappy": "Está usando un navegador <strong>no actualizado</strong>. Por favor, <a href=\"http://browsehappy.com/?locale=es\">actualice su navegador</a> para mejorar su experiencia.",
     "menu": {
       "home": "Inicio",
+      "about": "Quiénes somos",
+      "services": "Servicios",
+      "catalog": "Catálogo",
+      "technologies": "Tecnologías",
+      "contact": "Contacto",
+      "quoteRequest": "Solicitar presupuesto",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entidades",
@@ -89,7 +95,63 @@
     "ribbon": {
       "dev": "Development"
     },
-    "item-count": "Mostrando {{first}} - {{second}} de {{total}} elementos."
+    "item-count": "Mostrando {{first}} - {{second}} de {{total}} elementos.",
+    "public": {
+      "home": {
+        "badge": "Personalización Premium",
+        "heroTitle": "Personaliza",
+        "heroHighlight": "lo que quieras",
+        "heroDescription": "Transformamos productos ordinarios en piezas únicas con acabados profesionales para particulares, eventos y empresas.",
+        "quoteButton": "Solicita tu presupuesto",
+        "catalogButton": "Ver productos",
+
+        "happyClients": "Clientes felices",
+        "createdProducts": "Productos creados",
+        "commitment": "Compromiso",
+
+        "technologiesTitle": "Nuestras Tecnologías",
+        "technologiesSubtitle": "Utilizamos técnicas avanzadas para conseguir acabados duraderos, profesionales y adaptados a cada producto.",
+
+        "featuredProducts": "Productos destacados",
+        "featuredSubtitle": "Descubre algunas de las opciones más solicitadas para regalos, eventos, promociones y pedidos de empresa.",
+
+        "fullCatalog": "Ver catálogo completo",
+
+        "finalTag": "Hablemos de tu idea",
+        "finalTitle": "Convierte tu proyecto en un",
+        "finalHighlight": "producto único",
+
+        "finalDescription": "Ya sea para un pedido personal, un evento o un trabajo para empresa, te ayudamos a encontrar la mejor solución de personalización según tus necesidades.",
+
+        "contactNow": "Contactar ahora",
+
+        "quickContact": "Contacto rápido",
+        "attention": "Atención",
+        "customResponse": "Respuesta personalizada",
+        "orders": "Pedidos",
+        "privateCompanies": "Particulares y empresas",
+        "technologies": {
+          "items": {
+            "sublimation": {
+              "title": "Sublimación",
+              "desc": "Ideal para tazas, camisetas y otros artículos con impresión a todo color, gran definición y excelente durabilidad."
+            },
+            "dtg": {
+              "title": "Impresión DTG",
+              "desc": "Perfecta para prendas textiles con diseños detallados, colores vivos y resultados profesionales en pequeñas tiradas."
+            },
+            "screenPrinting": {
+              "title": "Serigrafía",
+              "desc": "Una opción muy resistente para pedidos grandes, especialmente útil en ropa laboral, merchandising y eventos."
+            },
+            "laser": {
+              "title": "Láser",
+              "desc": "Grabado y corte de precisión para materiales como madera, metal o plástico, con un acabado limpio y elegante."
+            }
+          }
+        }
+      }
+    }
   },
   "entity": {
     "action": {

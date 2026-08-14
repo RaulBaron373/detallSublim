@@ -58,6 +58,19 @@ public class SolicitudPresupuesto implements Serializable {
     @Column(name = "observaciones_internas")
     private String observacionesInternas;
 
+    @Column(name = "precio_presupuesto")
+    private Double precioPresupuesto;
+
+    @Column(name = "tiempo_estimado")
+    private String tiempoEstimado;
+
+    @Lob
+    @Column(name = "observaciones_presupuesto")
+    private String observacionesPresupuesto;
+
+    @Column(name = "fecha_envio_presupuesto")
+    private Instant fechaEnvioPresupuesto;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "categoria" }, allowSetters = true)
     private Producto producto;
@@ -194,6 +207,58 @@ public class SolicitudPresupuesto implements Serializable {
         this.observacionesInternas = observacionesInternas;
     }
 
+    public Double getPrecioPresupuesto() {
+        return this.precioPresupuesto;
+    }
+
+    public void setPrecioPresupuesto(Double precioPresupuesto) {
+        this.precioPresupuesto = precioPresupuesto;
+    }
+
+    public SolicitudPresupuesto precioPresupuesto(Double precioPresupuesto) {
+        this.setPrecioPresupuesto(precioPresupuesto);
+        return this;
+    }
+
+    public String getTiempoEstimado() {
+        return this.tiempoEstimado;
+    }
+
+    public void setTiempoEstimado(String tiempoEstimado) {
+        this.tiempoEstimado = tiempoEstimado;
+    }
+
+    public SolicitudPresupuesto tiempoEstimado(String tiempoEstimado) {
+        this.setTiempoEstimado(tiempoEstimado);
+        return this;
+    }
+
+    public String getObservacionesPresupuesto() {
+        return this.observacionesPresupuesto;
+    }
+
+    public void setObservacionesPresupuesto(String observacionesPresupuesto) {
+        this.observacionesPresupuesto = observacionesPresupuesto;
+    }
+
+    public SolicitudPresupuesto observacionesPresupuesto(String observacionesPresupuesto) {
+        this.setObservacionesPresupuesto(observacionesPresupuesto);
+        return this;
+    }
+
+    public Instant getFechaEnvioPresupuesto() {
+        return this.fechaEnvioPresupuesto;
+    }
+
+    public void setFechaEnvioPresupuesto(Instant fechaEnvioPresupuesto) {
+        this.fechaEnvioPresupuesto = fechaEnvioPresupuesto;
+    }
+
+    public SolicitudPresupuesto fechaEnvioPresupuesto(Instant fechaEnvioPresupuesto) {
+        this.setFechaEnvioPresupuesto(fechaEnvioPresupuesto);
+        return this;
+    }
+
     public Producto getProducto() {
         return this.producto;
     }
@@ -240,6 +305,10 @@ public class SolicitudPresupuesto implements Serializable {
             ", fechaSolicitud='" + getFechaSolicitud() + "'" +
             ", estado='" + getEstado() + "'" +
             ", observacionesInternas='" + getObservacionesInternas() + "'" +
+            ", precioPresupuesto=" + getPrecioPresupuesto() +
+            ", tiempoEstimado='" + getTiempoEstimado() + "'" +
+            ", observacionesPresupuesto='" + getObservacionesPresupuesto() + "'" +
+            ", fechaEnvioPresupuesto='" + getFechaEnvioPresupuesto() + "'" +
             "}";
     }
 }

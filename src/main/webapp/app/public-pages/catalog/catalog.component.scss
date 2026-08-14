@@ -299,3 +299,15 @@
     font-size: 1.7rem;
   }
 }
+
+.catalog-no-image {
+  width: 100%;
+  height: 260px;
+  border-radius: 1.5rem;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  font-size: 1rem;
+}

@@ -3,6 +3,7 @@
     "EstadoSolicitud": {
       "null": "",
       "PENDIENTE": "Pendent",
+      "PRESUPUESTADO": "Pressupostat",
       "ACEPTADO": "Acceptat",
       "RECHAZADO": "Rebutjat",
       "FINALIZADO": "Finalitzat"

@@ -3,6 +3,7 @@
     "EstadoSolicitud": {
       "null": "",
       "PENDIENTE": "Pendiente",
+      "PRESUPUESTADO": "Presupuestado",
       "ACEPTADO": "Aceptado",
       "RECHAZADO": "Rechazado",
       "FINALIZADO": "Finalizado"

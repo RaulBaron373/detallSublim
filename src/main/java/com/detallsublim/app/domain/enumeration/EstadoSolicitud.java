@@ -5,6 +5,7 @@ package com.detallsublim.app.domain.enumeration;
  */
 public enum EstadoSolicitud {
     PENDIENTE,
+    PRESUPUESTADO,
     ACEPTADO,
     RECHAZADO,
     FINALIZADO,

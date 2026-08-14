@@ -41,6 +41,15 @@ public class SolicitudPresupuestoDTO implements Serializable {
     @Lob
     private String observacionesInternas;
 
+    private Double precioPresupuesto;
+
+    private String tiempoEstimado;
+
+    @Lob
+    private String observacionesPresupuesto;
+
+    private Instant fechaEnvioPresupuesto;
+
     private ProductoDTO producto;
 
     public Long getId() {
@@ -121,6 +130,38 @@ public class SolicitudPresupuestoDTO implements Serializable {
 
     public void setObservacionesInternas(String observacionesInternas) {
         this.observacionesInternas = observacionesInternas;
+    }
+
+    public Double getPrecioPresupuesto() {
+        return precioPresupuesto;
+    }
+
+    public void setPrecioPresupuesto(Double precioPresupuesto) {
+        this.precioPresupuesto = precioPresupuesto;
+    }
+
+    public String getTiempoEstimado() {
+        return tiempoEstimado;
+    }
+
+    public void setTiempoEstimado(String tiempoEstimado) {
+        this.tiempoEstimado = tiempoEstimado;
+    }
+
+    public String getObservacionesPresupuesto() {
+        return observacionesPresupuesto;
+    }
+
+    public void setObservacionesPresupuesto(String observacionesPresupuesto) {
+        this.observacionesPresupuesto = observacionesPresupuesto;
+    }
+
+    public Instant getFechaEnvioPresupuesto() {
+        return fechaEnvioPresupuesto;
+    }
+
+    public void setFechaEnvioPresupuesto(Instant fechaEnvioPresupuesto) {
+        this.fechaEnvioPresupuesto = fechaEnvioPresupuesto;
     }
 
     public ProductoDTO getProducto() {

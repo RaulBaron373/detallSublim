@@ -51,10 +51,13 @@ spring:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
   mail:
-    host: localhost
-    port: 25
-    username:
-    password:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:
@@ -91,7 +94,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: [REDACTED-JWT]
+        base64-secret: ${JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET:}
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

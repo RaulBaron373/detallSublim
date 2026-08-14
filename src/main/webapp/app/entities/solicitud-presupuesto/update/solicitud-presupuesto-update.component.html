@@ -188,6 +188,45 @@
             ></textarea>
           </div>
 
+          @if (editForm.get('estado')?.value === 'PRESUPUESTADO') {
+            <div class="mb-3">
+              <label class="form-label" for="field_precioPresupuesto"> Precio del presupuesto (€) </label>
+
+              <input
+                type="number"
+                class="form-control"
+                name="precioPresupuesto"
+                id="field_precioPresupuesto"
+                formControlName="precioPresupuesto"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="field_tiempoEstimado"> Tiempo estimado </label>
+
+              <input
+                type="text"
+                class="form-control"
+                name="tiempoEstimado"
+                id="field_tiempoEstimado"
+                placeholder="Ej: 5 días laborables"
+                formControlName="tiempoEstimado"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="field_observacionesPresupuesto"> Observaciones del presupuesto </label>
+
+              <textarea
+                class="form-control"
+                name="observacionesPresupuesto"
+                id="field_observacionesPresupuesto"
+                rows="5"
+                formControlName="observacionesPresupuesto"
+              ></textarea>
+            </div>
+          }
+
           <div class="mb-3">
             <label class="form-label" for="field_producto" jhiTranslate="detallSublimApp.solicitudPresupuesto.producto">Producto</label>
             <select

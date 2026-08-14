@@ -24,33 +24,44 @@
           <div class="form-row">
             <div class="form-group">
               <label for="name">Nombre</label>
-              <input id="name" type="text" placeholder="Tu nombre" />
+              <input [(ngModel)]="form.nombre" name="nombre" id="name" type="text" placeholder="Tu nombre" />
             </div>
 
             <div class="form-group">
               <label for="email">Correo electrónico</label>
-              <input id="email" type="email" placeholder="tuemail@ejemplo.com" />
+              <input [(ngModel)]="form.email" name="email" id="email" type="email" placeholder="tuemail@ejemplo.com" />
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label for="phone">Teléfono</label>
-              <input id="phone" type="text" placeholder="+34 600 000 000" />
+              <input [(ngModel)]="form.telefono" name="telefono" id="phone" type="text" placeholder="+34 600 000 000" />
             </div>
 
             <div class="form-group">
               <label for="subject">Asunto</label>
-              <input id="subject" type="text" placeholder="Motivo de tu consulta" />
+              <input [(ngModel)]="form.asunto" name="asunto" id="subject" type="text" placeholder="Motivo de tu consulta" />
             </div>
           </div>
 
           <div class="form-group">
             <label for="message">Mensaje</label>
-            <textarea id="message" rows="6" placeholder="Escribe aquí tu consulta..."></textarea>
+            <textarea [(ngModel)]="form.mensaje" name="mensaje" id="message" rows="6" placeholder="Escribe aquí tu consulta..."></textarea>
           </div>
 
-          <button type="button" class="ds-btn ds-btn-primary">Enviar mensaje</button>
+          @if (successMessage) {
+            <div class="form-success-message">
+              {{ successMessage }}
+            </div>
+          }
+
+          @if (errorMessage) {
+            <div class="form-error-message">
+              {{ errorMessage }}
+            </div>
+          }
+          <button (click)="enviarMensaje()" type="button" class="ds-btn ds-btn-primary">Enviar mensaje</button>
         </form>
       </div>
 

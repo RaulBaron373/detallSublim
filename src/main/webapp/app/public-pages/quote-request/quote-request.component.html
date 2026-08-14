@@ -26,57 +26,68 @@
           <div class="form-row">
             <div class="form-group">
               <label for="clientName">Nombre</label>
-              <input id="clientName" type="text" placeholder="Tu nombre completo" />
+              <input [(ngModel)]="form.nombreCliente" name="clientName" id="clientName" type="text" placeholder="Tu nombre completo" />
             </div>
 
             <div class="form-group">
               <label for="email">Correo electrónico</label>
-              <input id="email" type="email" placeholder="tuemail@ejemplo.com" />
+              <input [(ngModel)]="form.email" name="email" id="email" type="email" placeholder="tuemail@ejemplo.com" />
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label for="phone">Teléfono</label>
-              <input id="phone" type="text" placeholder="+34 600 000 000" />
+              <input [(ngModel)]="form.telefono" name="telefono" id="phone" type="text" placeholder="+34 600 000 000" />
             </div>
 
             <div class="form-group">
               <label for="company">Empresa (opcional)</label>
-              <input id="company" type="text" placeholder="Nombre de la empresa" />
+              <input [(ngModel)]="form.nombreEmpresa" name="nombreEmpresa" id="company" type="text" placeholder="Nombre de la empresa" />
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label for="product">Producto</label>
-              <select id="product">
+              <select [(ngModel)]="form.producto" name="producto" id="product">
                 <option value="">Selecciona una opción</option>
-                <option>Taza personalizada</option>
-                <option>Camiseta personalizada</option>
-                <option>Sudadera personalizada</option>
-                <option>Gorra personalizada</option>
-                <option>Merchandising corporativo</option>
-                <option>Otro</option>
+
+                <option *ngFor="let producto of productos" [value]="producto.id">
+                  {{ producto.nombre }}
+                </option>
               </select>
             </div>
 
             <div class="form-group">
               <label for="quantity">Cantidad aproximada</label>
-              <input id="quantity" type="number" placeholder="Ej. 100" />
+              <input [(ngModel)]="form.cantidad" name="cantidad" id="quantity" type="number" placeholder="Ej. 100" min="1" />
             </div>
           </div>
 
           <div class="form-group">
             <label for="details">Descripción del pedido</label>
             <textarea
+              [(ngModel)]="form.descripcion"
+              name="descripcion"
               id="details"
               rows="6"
               placeholder="Describe el tipo de producto, diseño, colores, técnica deseada o cualquier detalle importante..."
             ></textarea>
           </div>
 
-          <button type="button" class="ds-btn ds-btn-primary">Enviar solicitud</button>
+          @if (successMessage) {
+            <div class="form-success-message">
+              {{ successMessage }}
+            </div>
+          }
+
+          @if (errorMessage) {
+            <div class="form-error-message">
+              {{ errorMessage }}
+            </div>
+          }
+          <button (click)="enviarSolicitud()" type="button" class="ds-btn ds-btn-primary">Enviar solicitud</button>
         </form>
       </div>
 

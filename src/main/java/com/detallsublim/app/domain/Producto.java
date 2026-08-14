@@ -40,7 +40,8 @@ public class Producto implements Serializable {
     @Column(name = "plazo_estimado_dias")
     private Integer plazoEstimadoDias;
 
-    @Column(name = "imagen_url")
+    @Lob
+    @Column(name = "imagen_url", columnDefinition = "LONGTEXT")
     private String imagenUrl;
 
     @NotNull

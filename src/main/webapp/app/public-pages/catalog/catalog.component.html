@@ -16,116 +16,39 @@
     </div>
 
     <section class="catalog-filters">
-      <button class="catalog-filter active">Todos</button>
-      <button class="catalog-filter">Tazas</button>
-      <button class="catalog-filter">Textil</button>
-      <button class="catalog-filter">Gorras</button>
-      <button class="catalog-filter">Regalos</button>
-      <button class="catalog-filter">Empresas</button>
+      <button class="catalog-filter" [class.active]="categoriaSeleccionada === 'Todos'" (click)="filtrarProductos('Todos')">Todos</button>
+
+      <button
+        class="catalog-filter"
+        *ngFor="let categoria of categorias"
+        [class.active]="categoriaSeleccionada === categoria.nombre"
+        (click)="filtrarProductos(categoria.nombre ?? '')"
+      >
+        {{ categoria.nombre }}
+      </button>
     </section>
 
     <section class="catalog-grid">
-      <article class="catalog-card">
+      <article class="catalog-card" *ngFor="let producto of productosFiltrados">
         <div class="catalog-card-image">
-          <img
-            src="https://images.unsplash.com/photo-1514228742587-6b1558fcf93a?auto=format&fit=crop&w=900&q=80"
-            alt="Taza personalizada"
-          />
-        </div>
-        <div class="catalog-card-content">
-          <span class="catalog-card-category">Tazas</span>
-          <h2>Taza personalizada clásica</h2>
-          <p>Ideal para regalos, detalles promocionales y merchandising con diseños a todo color.</p>
-          <div class="catalog-card-footer">
-            <span class="catalog-price">Desde 5,50 €</span>
-            <a routerLink="/solicitar-presupuesto" class="catalog-link">Solicitar</a>
-          </div>
-        </div>
-      </article>
+          <img *ngIf="producto.imagenUrl" [src]="producto.imagenUrl" [alt]="producto.nombre" />
 
-      <article class="catalog-card">
-        <div class="catalog-card-image">
-          <img
-            src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80"
-            alt="Camiseta personalizada"
-          />
+          <div *ngIf="!producto.imagenUrl" class="catalog-no-image">Sin imagen</div>
         </div>
-        <div class="catalog-card-content">
-          <span class="catalog-card-category">Textil</span>
-          <h2>Camiseta personalizada</h2>
-          <p>Opción perfecta para eventos, equipos, peñas, promociones y ropa laboral.</p>
-          <div class="catalog-card-footer">
-            <span class="catalog-price">Desde 8,90 €</span>
-            <a routerLink="/solicitar-presupuesto" class="catalog-link">Solicitar</a>
-          </div>
-        </div>
-      </article>
 
-      <article class="catalog-card">
-        <div class="catalog-card-image">
-          <img
-            src="https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=900&q=80"
-            alt="Gorra personalizada"
-          />
-        </div>
         <div class="catalog-card-content">
-          <span class="catalog-card-category">Gorras</span>
-          <h2>Gorra personalizada</h2>
-          <p>Muy utilizada en campañas de promoción, uniformidad y regalos para grupos o empresas.</p>
-          <div class="catalog-card-footer">
-            <span class="catalog-price">Desde 6,75 €</span>
-            <a routerLink="/solicitar-presupuesto" class="catalog-link">Solicitar</a>
-          </div>
-        </div>
-      </article>
+          <span class="catalog-card-category">
+            {{ producto.categoria?.nombre }}
+          </span>
 
-      <article class="catalog-card">
-        <div class="catalog-card-image">
-          <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80" alt="Regalo personalizado" />
-        </div>
-        <div class="catalog-card-content">
-          <span class="catalog-card-category">Regalos</span>
-          <h2>Detalles personalizados</h2>
-          <p>Productos pensados para celebraciones, regalos únicos y pequeños detalles con identidad propia.</p>
-          <div class="catalog-card-footer">
-            <span class="catalog-price">Consultar</span>
-            <a routerLink="/solicitar-presupuesto" class="catalog-link">Solicitar</a>
-          </div>
-        </div>
-      </article>
+          <h2>{{ producto.nombre }}</h2>
 
-      <article class="catalog-card">
-        <div class="catalog-card-image">
-          <img
-            src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80"
-            alt="Merchandising para empresa"
-          />
-        </div>
-        <div class="catalog-card-content">
-          <span class="catalog-card-category">Empresas</span>
-          <h2>Merchandising corporativo</h2>
-          <p>Soluciones personalizadas para reforzar marca, campañas y acciones promocionales.</p>
-          <div class="catalog-card-footer">
-            <span class="catalog-price">Según volumen</span>
-            <a routerLink="/solicitar-presupuesto" class="catalog-link">Solicitar</a>
-          </div>
-        </div>
-      </article>
+          <p>{{ producto.descripcion }}</p>
 
-      <article class="catalog-card">
-        <div class="catalog-card-image">
-          <img
-            src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80"
-            alt="Sudadera personalizada"
-          />
-        </div>
-        <div class="catalog-card-content">
-          <span class="catalog-card-category">Textil</span>
-          <h2>Sudadera personalizada</h2>
-          <p>Una prenda ideal para grupos, asociaciones, equipos o ropa promocional de calidad.</p>
           <div class="catalog-card-footer">
-            <span class="catalog-price">Desde 14,90 €</span>
-            <a routerLink="/solicitar-presupuesto" class="catalog-link">Solicitar</a>
+            <span class="catalog-price"> Desde {{ producto.precioBase }} € </span>
+
+            <a [routerLink]="['/solicitar-presupuesto']" [queryParams]="{ producto: producto.id }" class="catalog-link"> Solicitar </a>
           </div>
         </div>
       </article>

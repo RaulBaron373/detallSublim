@@ -4,6 +4,12 @@
     "browsehappy": "Està usant un navegador <strong>des-actualitzat</strong>. Si us plau <a href=\"http://browsehappy.com/?locale=en\">actualitzi el seu navegador</a> per millorar l'experiencia.",
     "menu": {
       "home": "Inici",
+      "about": "Qui som",
+      "services": "Serveis",
+      "catalog": "Catàleg",
+      "technologies": "Tecnologies",
+      "contact": "Contacte",
+      "quoteRequest": "Sol·licitar pressupost",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entitats",
@@ -89,7 +95,63 @@
     "ribbon": {
       "dev": "Development"
     },
-    "item-count": "Visualització {{first}} - {{second}} de {{total}} articles."
+    "item-count": "Visualització {{first}} - {{second}} de {{total}} articles.",
+    "public": {
+      "home": {
+        "technologies": {
+          "items": {
+            "sublimation": {
+              "title": "Sublimació",
+              "desc": "Ideal per tasses, samarretes i altres articles amb impressió a tot color, gran definició i excel·lent durabilitat."
+            },
+            "dtg": {
+              "title": "Impressió DTG",
+              "desc": "Perfecta per peces tèxtils amb dissenys detallats, colors vius i resultats professionals en tirades petites."
+            },
+            "screenPrinting": {
+              "title": "Serigrafia",
+              "desc": "Una opció molt resistent per comandes grans, especialment útil en roba laboral, marxandatge i esdeveniments."
+            },
+            "laser": {
+              "title": "Làser",
+              "desc": "Gravat i tall de precisió per materials com fusta, metall o plàstic, amb un acabat net i elegant."
+            }
+          }
+        },
+        "badge": "Personalització Premium",
+        "heroTitle": "Personalitza",
+        "heroHighlight": "el que vulguis",
+        "heroDescription": "Transformem productes ordinaris en peces úniques amb acabats professionals per particulars, esdeveniments i empreses.",
+        "quoteButton": "Sol·licita el teu pressupost",
+        "catalogButton": "Veure productes",
+
+        "happyClients": "Clients satisfets",
+        "createdProducts": "Productes creats",
+        "commitment": "Compromís",
+
+        "technologiesTitle": "Les nostres tecnologies",
+        "technologiesSubtitle": "Utilitzem tècniques avançades per aconseguir acabats duradors i professionals adaptats a cada producte.",
+
+        "featuredProducts": "Productes destacats",
+        "featuredSubtitle": "Descobreix algunes de les opcions més sol·licitades per regals, esdeveniments i empreses.",
+
+        "fullCatalog": "Veure catàleg complet",
+
+        "finalTag": "Parlem de la teva idea",
+        "finalTitle": "Converteix el teu projecte en un",
+        "finalHighlight": "producte únic",
+
+        "finalDescription": "T'ajudem a trobar la millor solució de personalització segons les teves necessitats.",
+
+        "contactNow": "Contactar ara",
+
+        "quickContact": "Contacte ràpid",
+        "attention": "Atenció",
+        "customResponse": "Resposta personalitzada",
+        "orders": "Comandes",
+        "privateCompanies": "Particulars i empreses"
+      }
+    }
   },
   "entity": {
     "action": {

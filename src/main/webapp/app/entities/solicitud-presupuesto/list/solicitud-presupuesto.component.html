@@ -140,6 +140,7 @@
                     class="status-badge"
                     [ngClass]="{
                       'status-pending': solicitudPresupuesto.estado === 'PENDIENTE',
+                      'status-budgeted': solicitudPresupuesto.estado === 'PRESUPUESTADO',
                       'status-accepted': solicitudPresupuesto.estado === 'ACEPTADO',
                       'status-finished': solicitudPresupuesto.estado === 'FINALIZADO',
                       'status-cancelled': solicitudPresupuesto.estado === 'RECHAZADO',
@@ -150,6 +151,7 @@
                         {
                           null: '',
                           PENDIENTE: 'PENDIENTE',
+                          PRESUPUESTADO: 'PRESUPUESTADO',
                           ACEPTADO: 'ACEPTADO',
                           FINALIZADO: 'FINALIZADO',
                           RECHAZADO: 'RECHAZADO',

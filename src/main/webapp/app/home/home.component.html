@@ -4,36 +4,40 @@
       <div class="ds-hero-content">
         <div class="ds-badge">
           <span>✦</span>
-          <span>Personalización Premium</span>
+          <span>{{ t.badge }}</span>
         </div>
 
         <h1 class="ds-hero-title">
-          Personaliza
-          <span class="ds-gradient-text">lo que quieras</span>
+          {{ t.heroTitle }}
+          <span class="ds-gradient-text">{{ t.heroHighlight }}</span>
         </h1>
 
         <p class="ds-hero-description">
-          Transformamos productos ordinarios en piezas únicas con acabados profesionales para particulares, eventos y empresas.
+          {{ t.heroDescription }}
         </p>
 
         <div class="ds-hero-actions">
-          <a routerLink="/solicitar-presupuesto" class="ds-btn ds-btn-primary"> Solicita tu presupuesto </a>
+          <a routerLink="/solicitar-presupuesto" class="ds-btn ds-btn-primary">
+            {{ t.quoteButton }}
+          </a>
 
-          <a routerLink="/catalogo" class="ds-btn ds-btn-secondary"> Ver productos </a>
+          <a routerLink="/catalogo" class="ds-btn ds-btn-secondary">
+            {{ t.catalogButton }}
+          </a>
         </div>
 
         <div class="ds-hero-stats">
           <div class="ds-stat">
             <strong>500+</strong>
-            <span>Clientes felices</span>
+            <span>{{ 'global.public.home.happyClients' | translate }}</span>
           </div>
           <div class="ds-stat">
             <strong>1000+</strong>
-            <span>Productos creados</span>
+            <span>{{ 'global.public.home.createdProducts' | translate }}</span>
           </div>
           <div class="ds-stat">
             <strong>100%</strong>
-            <span>Compromiso</span>
+            <span>{{ 'global.public.home.commitment' | translate }}</span>
           </div>
         </div>
       </div>
@@ -53,61 +57,49 @@
 <section class="ds-technologies ds-bg-soft-cyan">
   <div class="ds-container">
     <div class="ds-tech-header">
-      <h2 class="ds-section-title">Nuestras Tecnologías</h2>
+      <h2 class="ds-section-title">{{ t.technologiesTitle }}</h2>
       <p class="ds-section-subtitle">
-        Utilizamos técnicas avanzadas para conseguir acabados duraderos, profesionales y adaptados a cada producto.
+        {{ t.technologiesSubtitle }}
       </p>
     </div>
 
     <div class="ds-tech-grid">
-      <article class="ds-tech-card">
-        <div class="ds-tech-icon ds-tech-icon-pink">✦</div>
-        <h3>Sublimación</h3>
-        <p>Ideal para tazas, camisetas y otros artículos con impresión a todo color, gran definición y excelente durabilidad.</p>
-      </article>
+      <article class="ds-tech-card" *ngFor="let tech of t.technologies">
+        <div class="ds-tech-icon" [ngClass]="tech.iconClass">
+          {{ tech.icon }}
+        </div>
 
-      <article class="ds-tech-card">
-        <div class="ds-tech-icon ds-tech-icon-cyan">▣</div>
-        <h3>Impresión DTG</h3>
-        <p>Perfecta para prendas textiles con diseños detallados, colores vivos y resultados profesionales en pequeñas tiradas.</p>
-      </article>
+        <h3>{{ tech.title }}</h3>
 
-      <article class="ds-tech-card">
-        <div class="ds-tech-icon ds-tech-icon-yellow">◌</div>
-        <h3>Serigrafía</h3>
-        <p>Una opción muy resistente para pedidos grandes, especialmente útil en ropa laboral, merchandising y eventos.</p>
-      </article>
-
-      <article class="ds-tech-card">
-        <div class="ds-tech-icon ds-tech-icon-pink-soft">⚡</div>
-        <h3>Láser</h3>
-        <p>Grabado y corte de precisión para materiales como madera, metal o plástico, con un acabado limpio y elegante.</p>
+        <p>
+          {{ tech.description }}
+        </p>
       </article>
     </div>
 
     <div class="ds-tech-highlight">
       <div class="ds-tech-highlight-text">
-        <h3>Equipamiento de última generación</h3>
-        <p>Apostamos por herramientas modernas y procesos de trabajo cuidados para ofrecer resultados consistentes y de alta calidad.</p>
-        <p>Te ayudamos a elegir la técnica más adecuada según el producto, la cantidad y el tipo de personalización que necesites.</p>
+        <h3>{{ t.highlightTitle }}</h3>
+        <p>{{ t.highlightText1 }}</p>
+        <p>{{ t.highlightText2 }}</p>
       </div>
 
       <div class="ds-tech-stats">
         <div class="ds-tech-stat-card ds-tech-stat-pink">
           <strong>99%</strong>
-          <span>Satisfacción</span>
+          <span>{{ t.stats.satisfaction }}</span>
         </div>
         <div class="ds-tech-stat-card ds-tech-stat-cyan">
           <strong>24h</strong>
-          <span>Respuesta rápida</span>
+          <span>{{ t.stats.response }}</span>
         </div>
         <div class="ds-tech-stat-card ds-tech-stat-yellow">
           <strong>1000+</strong>
-          <span>Proyectos</span>
+          <span>{{ t.stats.projects }}</span>
         </div>
         <div class="ds-tech-stat-card ds-tech-stat-pink-soft">
           <strong>4</strong>
-          <span>Técnicas</span>
+          <span>{{ t.stats.techniques }}</span>
         </div>
       </div>
     </div>
@@ -117,61 +109,43 @@
 <section class="ds-products">
   <div class="ds-container">
     <div class="ds-products-header">
-      <h2 class="ds-section-title">Productos destacados</h2>
+      <h2 class="ds-section-title">{{ 'global.public.home.featuredProducts' | translate }}</h2>
       <p class="ds-section-subtitle">
-        Descubre algunas de las opciones más solicitadas para regalos, eventos, promociones y pedidos de empresa.
+        {{ 'global.public.home.featuredSubtitle' | translate }}
       </p>
     </div>
 
-    <div class="ds-products-grid">
-      <article class="ds-product-card">
-        <div class="ds-product-image-wrapper">
-          <img
-            class="ds-product-image"
-            src="https://images.unsplash.com/photo-1514228742587-6b1558fcf93a?auto=format&fit=crop&w=900&q=80"
-            alt="Taza personalizada"
-          />
+    <div class="catalog-grid">
+      <article class="catalog-card" *ngFor="let producto of featuredProducts">
+        <div class="catalog-card-image">
+          @if (producto.imagenUrl) {
+            <img class="ds-product-image" [src]="producto.imagenUrl" [alt]="producto.nombre ?? 'Producto Detall Sublim'" />
+          } @else {
+            <div class="catalog-no-image">Sin imagen</div>
+          }
         </div>
-        <div class="ds-product-content">
-          <h3>Tazas personalizadas</h3>
-          <p>Ideales para regalos, merchandising y detalles corporativos con impresión a todo color.</p>
-          <span class="ds-product-price">Desde 5,50 €</span>
-        </div>
-      </article>
 
-      <article class="ds-product-card">
-        <div class="ds-product-image-wrapper">
-          <img
-            class="ds-product-image"
-            src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80"
-            alt="Camiseta personalizada"
-          />
-        </div>
-        <div class="ds-product-content">
-          <h3>Camisetas personalizadas</h3>
-          <p>Perfectas para equipos, eventos, promociones y ropa laboral con distintas técnicas de impresión.</p>
-          <span class="ds-product-price">Desde 8,90 €</span>
-        </div>
-      </article>
+        <div class="catalog-card-content">
+          <span class="catalog-card-category">
+            {{ producto.categoria?.nombre }}
+          </span>
 
-      <article class="ds-product-card">
-        <div class="ds-product-image-wrapper">
-          <img
-            class="ds-product-image"
-            src="https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=900&q=80"
-            alt="Gorra personalizada"
-          />
-        </div>
-        <div class="ds-product-content">
-          <h3>Gorras personalizadas</h3>
-          <p>Una opción muy visual para promociones, uniformidad y campañas de marca.</p>
-          <span class="ds-product-price">Desde 6,75 €</span>
+          <h3>{{ producto.nombre }}</h3>
+
+          <p>{{ producto.descripcion }}</p>
+
+          <div class="catalog-card-footer">
+            <span class="catalog-price"> Desde {{ producto.precioBase }} € </span>
+            <a [routerLink]="['/solicitar-presupuesto']" [queryParams]="{ producto: producto.id }" class="catalog-link"> Solicitar </a>
+          </div>
         </div>
       </article>
     </div>
 
     <div class="ds-products-cta">
-      <a routerLink="/catalogo" class="ds-btn ds-btn-primary">Ver catálogo completo</a>
+      <a routerLink="/catalogo" class="ds-btn ds-btn-primary">
+        {{ 'global.public.home.fullCatalog' | translate }}
+      </a>
     </div>
   </div>
 </section>
@@ -180,28 +154,31 @@
   <div class="ds-container">
     <div class="ds-final-cta-box">
       <div class="ds-final-cta-content">
-        <span class="ds-final-cta-tag">Hablemos de tu idea</span>
+        <span class="ds-final-cta-tag">{{ 'global.public.home.finalTag' | translate }}</span>
 
         <h2 class="ds-final-cta-title">
-          Convierte tu proyecto en un
-          <span class="ds-gradient-text">producto único</span>
+          {{ 'global.public.home.finalTitle' | translate }}
+          <span class="ds-gradient-text">{{ 'global.public.home.finalHighlight' | translate }}</span>
         </h2>
 
         <p class="ds-final-cta-description">
-          Ya sea para un pedido personal, un evento o un trabajo para empresa, te ayudamos a encontrar la mejor solución de personalización
-          según tus necesidades.
+          {{ 'global.public.home.finalDescription' | translate }}
         </p>
 
         <div class="ds-final-cta-actions">
-          <a routerLink="/solicitar-presupuesto" class="ds-btn ds-btn-primary"> Solicitar presupuesto </a>
+          <a routerLink="/solicitar-presupuesto" class="ds-btn ds-btn-primary">
+            {{ 'global.public.home.quoteButton' | translate }}
+          </a>
 
-          <a routerLink="/contacto" class="ds-btn ds-btn-outline"> Contactar ahora </a>
+          <a routerLink="/contacto" class="ds-btn ds-btn-outline">
+            {{ 'global.public.home.contactNow' | translate }}
+          </a>
         </div>
       </div>
 
       <div class="ds-final-cta-side">
         <div class="ds-final-contact-card">
-          <h3>Contacto rápido</h3>
+          <h3>{{ 'global.public.home.quickContact' | translate }}</h3>
 
           <ul class="ds-final-contact-list">
             <li>
@@ -213,12 +190,12 @@
               <span>+34 600 000 000</span>
             </li>
             <li>
-              <strong>Atención:</strong>
-              <span>Respuesta personalizada</span>
+              <strong>{{ 'global.public.home.attention' | translate }}:</strong>
+              <span>{{ 'global.public.home.customResponse' | translate }}</span>
             </li>
             <li>
-              <strong>Pedidos:</strong>
-              <span>Particulares y empresas</span>
+              <strong>{{ 'global.public.home.orders' | translate }}:</strong>
+              <span>{{ 'global.public.home.privateCompanies' | translate }}</span>
             </li>
           </ul>
         </div>

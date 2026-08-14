@@ -18,37 +18,45 @@
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed()">
       <ul class="navbar-nav ms-auto align-items-lg-center nav-list">
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <a class="nav-link nav-link-custom" routerLink="/" (click)="collapseNavbar()">Inicio</a>
+          <a class="nav-link nav-link-custom" routerLink="/" (click)="collapseNavbar()">{{ 'global.menu.home' | translate }}</a>
         </li>
 
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link nav-link-custom" routerLink="/quienes-somos" (click)="collapseNavbar()">Quiénes somos</a>
+          <a class="nav-link nav-link-custom" routerLink="/quienes-somos" (click)="collapseNavbar()">{{
+            'global.menu.about' | translate
+          }}</a>
         </li>
 
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link nav-link-custom" routerLink="/servicios" (click)="collapseNavbar()">Servicios</a>
+          <a class="nav-link nav-link-custom" routerLink="/servicios" (click)="collapseNavbar()">{{
+            'global.menu.services' | translate
+          }}</a>
         </li>
 
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link nav-link-custom" routerLink="/catalogo" (click)="collapseNavbar()">Catálogo</a>
+          <a class="nav-link nav-link-custom" routerLink="/catalogo" (click)="collapseNavbar()">{{ 'global.menu.catalog' | translate }}</a>
         </li>
 
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link nav-link-custom" routerLink="/tecnologias" (click)="collapseNavbar()">Tecnologías</a>
+          <a class="nav-link nav-link-custom" routerLink="/tecnologias" (click)="collapseNavbar()">{{
+            'global.menu.technologies' | translate
+          }}</a>
         </li>
 
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link nav-link-custom" routerLink="/contacto" (click)="collapseNavbar()">Contacto</a>
+          <a class="nav-link nav-link-custom" routerLink="/contacto" (click)="collapseNavbar()">{{ 'global.menu.contact' | translate }}</a>
         </li>
 
         <li class="nav-item nav-cta">
-          <a class="ds-btn ds-btn-primary" routerLink="/solicitar-presupuesto" (click)="collapseNavbar()"> Solicitar presupuesto </a>
+          <a class="ds-btn ds-btn-primary" routerLink="/solicitar-presupuesto" (click)="collapseNavbar()">
+            {{ 'global.menu.quoteRequest' | translate }}
+          </a>
         </li>
 
         @if (languages && languages.length > 1) {
           <li ngbDropdown class="nav-item dropdown pointer">
             <a class="nav-link nav-link-custom dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
-              Idioma
+              {{ 'global.menu.language' | translate }}
             </a>
             <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
               @for (language of languages; track $index) {

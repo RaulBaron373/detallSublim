@@ -1,6 +1,7 @@
 package com.detallsublim.app.service;
 
 import com.detallsublim.app.domain.SolicitudPresupuesto;
+import com.detallsublim.app.domain.enumeration.EstadoSolicitud;
 import com.detallsublim.app.repository.SolicitudPresupuestoRepository;
 import com.detallsublim.app.service.dto.SolicitudPresupuestoDTO;
 import com.detallsublim.app.service.mapper.SolicitudPresupuestoMapper;
@@ -25,12 +26,16 @@ public class SolicitudPresupuestoService {
 
     private final SolicitudPresupuestoMapper solicitudPresupuestoMapper;
 
+    private final MailService mailService;
+
     public SolicitudPresupuestoService(
         SolicitudPresupuestoRepository solicitudPresupuestoRepository,
-        SolicitudPresupuestoMapper solicitudPresupuestoMapper
+        SolicitudPresupuestoMapper solicitudPresupuestoMapper,
+        MailService mailService
     ) {
         this.solicitudPresupuestoRepository = solicitudPresupuestoRepository;
         this.solicitudPresupuestoMapper = solicitudPresupuestoMapper;
+        this.mailService = mailService;
     }
 
     /**
@@ -52,11 +57,102 @@ public class SolicitudPresupuestoService {
      * @param solicitudPresupuestoDTO the entity to save.
      * @return the persisted entity.
      */
-    public SolicitudPresupuestoDTO update(SolicitudPresupuestoDTO solicitudPresupuestoDTO) {
-        LOG.debug("Request to update SolicitudPresupuesto : {}", solicitudPresupuestoDTO);
-        SolicitudPresupuesto solicitudPresupuesto = solicitudPresupuestoMapper.toEntity(solicitudPresupuestoDTO);
-        solicitudPresupuesto = solicitudPresupuestoRepository.save(solicitudPresupuesto);
-        return solicitudPresupuestoMapper.toDto(solicitudPresupuesto);
+    public SolicitudPresupuestoDTO update(SolicitudPresupuestoDTO dto) {
+        LOG.debug("Request to update SolicitudPresupuesto : {}", dto);
+
+        SolicitudPresupuesto existing = solicitudPresupuestoRepository
+            .findById(dto.getId())
+            .orElseThrow(() -> new RuntimeException("Solicitud no encontrada"));
+
+        EstadoSolicitud estadoAnterior = existing.getEstado();
+
+        SolicitudPresupuesto updated = solicitudPresupuestoMapper.toEntity(dto);
+
+        updated = solicitudPresupuestoRepository.save(updated);
+
+        // Detectar cambio de estado
+        if (estadoAnterior != updated.getEstado()) {
+            enviarEmailEstado(updated);
+        }
+
+        return solicitudPresupuestoMapper.toDto(updated);
+    }
+
+    private void enviarEmailEstado(SolicitudPresupuesto solicitud) {
+        String email = solicitud.getEmail();
+        String nombre = solicitud.getNombreCliente();
+
+        switch (solicitud.getEstado()) {
+            case PRESUPUESTADO -> {
+                String precio = solicitud.getPrecioPresupuesto() != null ? solicitud.getPrecioPresupuesto() + " €" : "Por definir";
+
+                String tiempo = solicitud.getTiempoEstimado() != null ? solicitud.getTiempoEstimado() : "Por definir";
+
+                String observaciones = solicitud.getObservacionesPresupuesto() != null
+                    ? solicitud.getObservacionesPresupuesto()
+                    : "Sin observaciones adicionales.";
+
+                String producto = solicitud.getProducto() != null ? solicitud.getProducto().getNombre() : "Producto personalizado";
+
+                String mensaje =
+                    "Hola " +
+                    nombre +
+                    ",\n\n" +
+                    "Hemos preparado un presupuesto para tu solicitud.\n\n" +
+                    "Producto: " +
+                    producto +
+                    "\n" +
+                    "Cantidad: " +
+                    solicitud.getCantidad() +
+                    "\n" +
+                    "Precio estimado: " +
+                    precio +
+                    "\n" +
+                    "Tiempo estimado: " +
+                    tiempo +
+                    "\n\n" +
+                    "Observaciones:\n" +
+                    observaciones +
+                    "\n\n" +
+                    "Gracias por confiar en Detall Sublim.";
+
+                mailService.sendEmail(email, "Presupuesto disponible - Detall Sublim", mensaje, false, false);
+            }
+            case ACEPTADO -> {
+                mailService.sendEmail(
+                    email,
+                    "Presupuesto aceptado - Detall Sublim",
+                    "Hola " + nombre + ", tu solicitud ha sido aceptada. Nos pondremos en contacto contigo pronto.",
+                    false,
+                    false
+                );
+            }
+            case FINALIZADO -> {
+                mailService.sendEmail(
+                    email,
+                    "Pedido finalizado - Detall Sublim",
+                    "Hola " + nombre + ", tu pedido ha sido finalizado. Gracias por confiar en nosotros.",
+                    false,
+                    false
+                );
+            }
+            case RECHAZADO -> {
+                String motivo = solicitud.getObservacionesInternas() != null
+                    ? solicitud.getObservacionesInternas()
+                    : "No se ha especificado motivo.";
+
+                mailService.sendEmail(
+                    email,
+                    "Solicitud rechazada - Detall Sublim",
+                    "Hola " + nombre + ", tu solicitud ha sido rechazada.\nMotivo: " + motivo,
+                    false,
+                    false
+                );
+            }
+            default -> {
+                // no hacer nada para PENDIENTE
+            }
+        }
     }
 
     /**

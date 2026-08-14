@@ -29,6 +29,7 @@ public class ProductoDTO implements Serializable {
 
     private Integer plazoEstimadoDias;
 
+    @Lob
     private String imagenUrl;
 
     @NotNull

@@ -13,6 +13,10 @@ export interface ISolicitudPresupuesto {
   fechaSolicitud?: dayjs.Dayjs | null;
   estado?: keyof typeof EstadoSolicitud | null;
   observacionesInternas?: string | null;
+  precioPresupuesto?: number | null;
+  tiempoEstimado?: string | null;
+  observacionesPresupuesto?: string | null;
+  fechaEnvioPresupuesto?: dayjs.Dayjs | null;
   producto?: Pick<IProducto, 'id' | 'nombre'> | null;
 }
 
