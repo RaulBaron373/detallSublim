@@ -3,7 +3,7 @@ jest.mock('app/core/auth/account.service');
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { Subject, of } from 'rxjs';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 
@@ -27,7 +27,7 @@ describe('Home Component', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [HomeComponent],
+      imports: [TranslateModule.forRoot(), HomeComponent],
       providers: [AccountService],
     })
       .overrideTemplate(HomeComponent, '')
