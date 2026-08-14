@@ -1,265 +1,273 @@
-# detallSublim
+# Detall Sublim
 
-This application was generated using JHipster 8.11.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v8.11.0](https://www.jhipster.tech/documentation-archive/v8.11.0).
+Aplicación web Full Stack para una empresa de productos personalizados, desarrollada con **Angular, TypeScript, Java, Spring Boot y MySQL**.
 
-## Project Structure
+El proyecto combina una web corporativa pública con un sistema de solicitud de presupuestos y un panel privado de administración para gestionar productos, categorías, solicitudes, mensajes y usuarios.
 
-Node is required for generation and recommended for development. `package.json` is always generated for a better development experience with prettier, commit hooks, scripts and so on.
+> Proyecto desarrollado como parte de mi formación en Desarrollo de Aplicaciones Web (DAW).
 
-In the project root, JHipster generates configuration files for tools like git, prettier, eslint, husky, and others that are well known and you can find references in the web.
+---
 
-`/src/*` structure follows default Java structure.
+## Vista general
 
-- `.yo-rc.json` - Yeoman configuration file
-  JHipster configuration is stored in this file at `generator-jhipster` key. You may find `generator-jhipster-*` for specific blueprints configuration.
-- `.yo-resolve` (optional) - Yeoman conflict resolver
-  Allows to use a specific action when conflicts are found skipping prompts for files that matches a pattern. Each line should match `[pattern] [action]` with pattern been a [Minimatch](https://github.com/isaacs/minimatch#minimatch) pattern and action been one of skip (default if omitted) or force. Lines starting with `#` are considered comments and are ignored.
-- `.jhipster/*.json` - JHipster entity configuration files
+![Página principal de Detall Sublim](docs/screenshots/home.jpg)
 
-- `npmw` - wrapper to use locally installed npm.
-  JHipster installs Node and npm locally using the build tool by default. This wrapper makes sure npm is installed locally and uses it avoiding some differences different versions can cause. By using `./npmw` instead of the traditional `npm` you can configure a Node-less environment to develop or test your application.
-- `/src/main/docker` - Docker configurations for the application and services that the application depends on
+Detall Sublim nace como una solución para digitalizar la presentación del catálogo de una empresa de personalización y centralizar la gestión de solicitudes de presupuesto.
 
-## Development
+La aplicación está dividida en dos áreas principales:
 
-The build system will install automatically the recommended version of Node and npm.
+- **Área pública**, orientada a clientes.
+- **Panel de administración**, orientado a la gestión interna del negocio.
 
-We provide a wrapper to launch npm.
-You will only need to run this command when dependencies change in [package.json](package.json).
+---
 
+## Funcionalidades principales
+
+### Área pública
+
+- Página corporativa responsive.
+- Catálogo de productos.
+- Filtrado por categorías.
+- Visualización de precios orientativos.
+- Solicitud personalizada de presupuestos.
+- Formulario de contacto.
+- Navegación entre las distintas áreas de servicios y tecnologías.
+
+### Panel de administración
+
+- Autenticación de usuarios.
+- Gestión de productos.
+- Gestión de categorías.
+- Gestión de solicitudes de presupuesto.
+- Gestión de mensajes de contacto.
+- Gestión de usuarios y roles.
+- Actualización del estado de las solicitudes.
+- Registro de precio y tiempo estimado de un presupuesto.
+- Envío de notificaciones por correo electrónico asociado al estado de las solicitudes.
+
+---
+
+## Catálogo de productos
+
+El catálogo permite consultar los productos disponibles y filtrarlos por categoría.
+
+![Catálogo de productos](docs/screenshots/catalogo.jpg)
+
+---
+
+## Solicitud de presupuesto
+
+Los clientes pueden seleccionar un producto y enviar una solicitud indicando cantidad, empresa y detalles adicionales.
+
+![Formulario de solicitud de presupuesto](docs/screenshots/presupuesto.jpg)
+
+Las solicitudes quedan registradas en el backend y pueden gestionarse posteriormente desde el panel privado.
+
+---
+
+## Panel de administración
+
+El panel de administración permite gestionar las principales áreas de la aplicación desde una interfaz privada.
+
+![Panel de administración](docs/screenshots/panel-admin.jpg)
+
+Desde este panel se puede acceder a la gestión de productos, categorías, solicitudes de presupuesto, mensajes de contacto y usuarios.
+
+### Gestión de solicitudes
+
+Las solicitudes de presupuesto pueden consultarse y administrarse desde el panel interno.
+
+Cada solicitud puede pasar por distintos estados:
+
+- Pendiente
+- Presupuestado
+- Aceptado
+- Rechazado
+- Finalizado
+
+![Gestión de solicitudes de presupuesto](docs/screenshots/panel-solicitudes.jpg)
+
+Desde esta sección se puede revisar la información enviada por el cliente, actualizar el estado de la solicitud y registrar datos asociados al presupuesto.
+
+### Gestión de productos
+
+El panel permite administrar el catálogo de productos disponibles en la aplicación.
+
+Desde esta sección es posible gestionar información como:
+
+- Nombre del producto.
+- Descripción.
+- Precio orientativo.
+- Categoría.
+- Imagen.
+- Estado del producto.
+
+![Gestión de productos](docs/screenshots/crud-productos.jpg)
+
+---
+
+## Stack tecnológico
+
+### Frontend
+
+- Angular
+- TypeScript
+- HTML5
+- SCSS
+- Bootstrap / ng-bootstrap
+
+### Backend
+
+- Java
+- Spring Boot
+- Spring Security
+- APIs REST
+- JWT
+
+### Persistencia
+
+- MySQL
+- Spring Data JPA
+- Hibernate
+
+### Herramientas
+
+- JHipster 8.11.0
+- Maven
+- npm
+- Git
+- GitHub
+- Figma
+
+---
+
+## Arquitectura
+
+La aplicación sigue una arquitectura Full Stack separada por responsabilidades:
+
+```text
+Angular
+   │
+   │ HTTP / REST
+   ▼
+Spring Boot
+   │
+   ├── REST Controllers
+   ├── Services
+   ├── Security / JWT
+   ├── Repositories
+   │
+   ▼
+ MySQL
 ```
-./npmw install
-```
 
-We use npm scripts and [Angular CLI][] with [Webpack][] as our build system.
+El frontend consume los endpoints REST expuestos por Spring Boot, mientras que el backend se encarga de la lógica de negocio, la seguridad y la persistencia de datos.
 
-Run the following commands in two separate terminals to create a blissful development experience where your browser
-auto-refreshes when files change on your hard drive.
+---
 
-```
+## Seguridad
+
+La aplicación utiliza **Spring Security** y autenticación mediante **JWT**.
+
+Las operaciones administrativas están protegidas, mientras que determinados endpoints necesarios para la parte pública permiten:
+
+- consultar productos;
+- consultar categorías;
+- enviar mensajes de contacto;
+- enviar solicitudes de presupuesto.
+
+Las claves y credenciales sensibles no están almacenadas directamente en el repositorio y se proporcionan mediante variables de entorno.
+
+---
+
+## Ejecución en local
+
+### Requisitos
+
+- Java
+- Node.js / npm
+- MySQL
+- Maven Wrapper incluido en el proyecto
+
+### Backend
+
+```bash
 ./mvnw
+```
+
+### Frontend
+
+En otra terminal:
+
+```bash
 ./npmw start
 ```
 
-Npm is also used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by
-specifying a newer version in [package.json](package.json). You can also run `./npmw update` and `./npmw install` to manage dependencies.
-Add the `help` flag on any command to see how you can use it. For example, `./npmw help update`.
+Durante el desarrollo, la aplicación frontend estará disponible en:
 
-The `./npmw run` command will list all the scripts available to run for this project.
+- http://localhost:4200
 
-### PWA Support
+Y el backend en:
 
-JHipster ships with PWA (Progressive Web App) support, and it's turned off by default. One of the main components of a PWA is a service worker.
+- http://localhost:8080
 
-The service worker initialization code is disabled by default. To enable it, uncomment the following code in `src/main/webapp/app/app.config.ts`:
+---
 
-```typescript
-ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
+## Variables de entorno
+
+Para evitar almacenar información sensible en el código fuente, determinadas configuraciones se proporcionan mediante variables de entorno.
+
+Entre ellas:
+
+```text
+JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET
+MAIL_USERNAME
+MAIL_PASSWORD
 ```
 
-### Managing dependencies
+---
 
-For example, to add [Leaflet][] library as a runtime dependency of your application, you would run following command:
+## Estado del proyecto
 
-```
-./npmw install --save --save-exact leaflet
-```
+**Desarrollo funcional completado.**
 
-To benefit from TypeScript type definitions from [DefinitelyTyped][] repository in development, you would run following command:
+Actualmente el proyecto se encuentra en fase de preparación final, incluyendo:
 
-```
-./npmw install --save-dev --save-exact @types/leaflet
-```
+- personalización definitiva de contenidos;
+- mejora y ampliación de pruebas automatizadas;
+- preparación del despliegue;
+- posibles mejoras de UX y rendimiento.
 
-Then you would import the JS and CSS files specified in library's installation instructions so that [Webpack][] knows about them:
-Edit [src/main/webapp/app/app.config.ts](src/main/webapp/app/app.config.ts) file:
+---
 
-```
-import 'leaflet/dist/leaflet.js';
-```
+## Próximas mejoras
 
-Edit [src/main/webapp/content/scss/vendor.scss](src/main/webapp/content/scss/vendor.scss) file:
+- Despliegue de la aplicación.
+- Generación de presupuestos en PDF.
+- Mejora de la cobertura de pruebas.
+- Automatización CI/CD.
+- Optimización adicional de la experiencia responsive.
+- Mejoras en el sistema de notificaciones por correo.
 
-```
-@import 'leaflet/dist/leaflet.css';
-```
+---
 
-Note: There are still a few other things remaining to do for Leaflet that we won't detail here.
+## Sobre el proyecto
 
-For further instructions on how to develop with JHipster, have a look at [Using JHipster in development][].
+Detall Sublim ha sido desarrollado de forma individual como proyecto Full Stack, trabajando tanto en la interfaz de usuario como en el backend, el modelo de datos, la API REST, la seguridad y la lógica de negocio.
 
-### Using Angular CLI
+El proyecto fue generado inicialmente con **JHipster 8.11.0** y posteriormente personalizado y ampliado para implementar los requisitos específicos de la aplicación.
 
-You can also use [Angular CLI][] to generate some custom client code.
+---
 
-For example, the following command:
+## Autor
 
-```
-ng generate component my-component
-```
+**Raúl Barón Gómez**
 
-will generate few files:
+Desarrollador Full Stack Junior especializado en:
 
-```
-create src/main/webapp/app/my-component/my-component.component.html
-create src/main/webapp/app/my-component/my-component.component.ts
-update src/main/webapp/app/app.config.ts
-```
+- Angular
+- TypeScript
+- Java
+- Spring Boot
 
-## Building for production
-
-### Packaging as jar
-
-To build the final jar and optimize the detallSublim application for production, run:
-
-```
-./mvnw -Pprod clean verify
-```
-
-This will concatenate and minify the client CSS and JavaScript files. It will also modify `index.html` so it references these new files.
-To ensure everything worked, run:
-
-```
-java -jar target/*.jar
-```
-
-Then navigate to [http://localhost:8080](http://localhost:8080) in your browser.
-
-Refer to [Using JHipster in production][] for more details.
-
-### Packaging as war
-
-To package your application as a war in order to deploy it to an application server, run:
-
-```
-./mvnw -Pprod,war clean verify
-```
-
-### JHipster Control Center
-
-JHipster Control Center can help you manage and control your application(s). You can start a local control center server (accessible on http://localhost:7419) with:
-
-```
-docker compose -f src/main/docker/jhipster-control-center.yml up
-```
-
-## Testing
-
-### Spring Boot tests
-
-To launch your application's tests, run:
-
-```
-./mvnw verify
-```
-
-### Client tests
-
-Unit tests are run by [Jest][]. They're located near components and can be run with:
-
-```
-./npmw test
-```
-
-## Others
-
-### Code quality using Sonar
-
-Sonar is used to analyse code quality. You can start a local Sonar server (accessible on http://localhost:9001) with:
-
-```
-docker compose -f src/main/docker/sonar.yml up -d
-```
-
-Note: we have turned off forced authentication redirect for UI in [src/main/docker/sonar.yml](src/main/docker/sonar.yml) for out of the box experience while trying out SonarQube, for real use cases turn it back on.
-
-You can run a Sonar analysis with using the [sonar-scanner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) or by using the maven plugin.
-
-Then, run a Sonar analysis:
-
-```
-./mvnw -Pprod clean verify sonar:sonar -Dsonar.login=admin -Dsonar.password=admin
-```
-
-If you need to re-run the Sonar phase, please be sure to specify at least the `initialize` phase since Sonar properties are loaded from the sonar-project.properties file.
-
-```
-./mvnw initialize sonar:sonar -Dsonar.login=admin -Dsonar.password=admin
-```
-
-Additionally, Instead of passing `sonar.password` and `sonar.login` as CLI arguments, these parameters can be configured from [sonar-project.properties](sonar-project.properties) as shown below:
-
-```
-sonar.login=admin
-sonar.password=admin
-```
-
-For more information, refer to the [Code quality page][].
-
-### Docker Compose support
-
-JHipster generates a number of Docker Compose configuration files in the [src/main/docker/](src/main/docker/) folder to launch required third party services.
-
-For example, to start required services in Docker containers, run:
-
-```
-docker compose -f src/main/docker/services.yml up -d
-```
-
-To stop and remove the containers, run:
-
-```
-docker compose -f src/main/docker/services.yml down
-```
-
-[Spring Docker Compose Integration](https://docs.spring.io/spring-boot/reference/features/dev-services.html) is enabled by default. It's possible to disable it in application.yml:
-
-```yaml
-spring:
-  ...
-  docker:
-    compose:
-      enabled: false
-```
-
-You can also fully dockerize your application and all the services that it depends on.
-To achieve this, first build a Docker image of your app by running:
-
-```sh
-npm run java:docker
-```
-
-Or build a arm64 Docker image when using an arm64 processor os like MacOS with M1 processor family running:
-
-```sh
-npm run java:docker:arm64
-```
-
-Then run:
-
-```sh
-docker compose -f src/main/docker/app.yml up -d
-```
-
-For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the Docker Compose sub-generator (`jhipster docker-compose`), which is able to generate Docker configurations for one or several JHipster applications.
-
-## Continuous Integration (optional)
-
-To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
-
-[JHipster Homepage and latest documentation]: https://www.jhipster.tech
-[JHipster 8.11.0 archive]: https://www.jhipster.tech/documentation-archive/v8.11.0
-[Using JHipster in development]: https://www.jhipster.tech/documentation-archive/v8.11.0/development/
-[Using Docker and Docker-Compose]: https://www.jhipster.tech/documentation-archive/v8.11.0/docker-compose
-[Using JHipster in production]: https://www.jhipster.tech/documentation-archive/v8.11.0/production/
-[Running tests page]: https://www.jhipster.tech/documentation-archive/v8.11.0/running-tests/
-[Code quality page]: https://www.jhipster.tech/documentation-archive/v8.11.0/code-quality/
-[Setting up Continuous Integration]: https://www.jhipster.tech/documentation-archive/v8.11.0/setting-up-ci/
-[Node.js]: https://nodejs.org/
-[NPM]: https://www.npmjs.com/
-[Webpack]: https://webpack.github.io/
-[BrowserSync]: https://www.browsersync.io/
-[Jest]: https://jestjs.io
-[Leaflet]: https://leafletjs.com/
-[DefinitelyTyped]: https://definitelytyped.org/
-[Angular CLI]: https://angular.dev/tools/cli
+[LinkedIn](https://www.linkedin.com/in/raulbarongomez/) · [GitHub](https://github.com/RaulBaron373)
