@@ -5,14 +5,17 @@
     </a>
 
     <button
-      class="navbar-toggler navbar-toggler-custom"
+      class="navbar__toggle"
+      [class.navbar__toggle--open]="!isNavbarCollapsed()"
       type="button"
       aria-controls="navbarResponsive"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
+      [attr.aria-expanded]="!isNavbarCollapsed()"
+      aria-label="Abrir menú de navegación"
       (click)="toggleNavbar()"
     >
-      <fa-icon icon="bars"></fa-icon>
+      <span></span>
+      <span></span>
+      <span></span>
     </button>
 
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed()">

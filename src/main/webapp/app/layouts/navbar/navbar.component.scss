@@ -19,7 +19,7 @@
 
 .navbar-logo {
   display: block;
-  height: 120px;
+  height: 100px;
   width: auto;
   object-fit: contain;
 }
@@ -77,14 +77,57 @@
   margin-left: 0.5rem;
 }
 
-.navbar-toggler-custom {
-  border: none;
+.navbar__toggle {
+  display: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+
+  border: 1px solid rgba(216, 75, 138, 0.2);
+  border-radius: 0.75rem;
+
+  background: rgba(255, 255, 255, 0.3);
+
+  cursor: pointer;
+
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 0.3rem;
+
   box-shadow: none;
-  color: var(--ds-color-text);
 }
 
-.navbar-toggler-custom:focus {
+.navbar__toggle:focus {
   box-shadow: none;
+}
+
+.navbar__toggle span {
+  display: block;
+
+  width: 1.25rem;
+  height: 2px;
+
+  border-radius: 999px;
+
+  background: var(--ds-color-text);
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.navbar__toggle--open span:nth-child(1) {
+  transform: translateY(0.4rem) rotate(45deg);
+}
+
+.navbar__toggle--open span:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar__toggle--open span:nth-child(3) {
+  transform: translateY(-0.4rem) rotate(-45deg);
 }
 
 .profile-image {
@@ -121,19 +164,71 @@
   background: rgba(216, 75, 138) !important;
   color: #fff !important;
 }
+@media (min-width: 990px) and (max-width: 1199.98px) {
+  .navbar-brand.brand {
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+  }
 
-@media (max-width: 991.98px) {
+  .navbar-logo {
+    height: 95px;
+    width: auto;
+    flex-shrink: 0;
+  }
+
+  .nav-link-custom {
+    padding: 0.65rem 0.6rem !important;
+    font-size: 0.9rem;
+  }
+
+  .nav-cta {
+    margin-left: 0.25rem;
+  }
+
+  .nav-cta .ds-btn {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 990px) {
+  .navbar__toggle {
+    display: flex;
+  }
+
   .main-navbar {
-    padding: 0.75rem 0;
+    padding: 0.25rem 0;
+
+    .container {
+      position: relative;
+      min-height: 70px;
+    }
+  }
+
+  .navbar-logo {
+    height: 80px;
   }
 
   .navbar-collapse {
-    margin-top: 1rem;
+    position: absolute;
+
+    top: 100%;
+    left: 0.75rem;
+    right: 0.75rem;
+
+    z-index: 1000;
+
+    margin-top: 0.5rem;
     padding: 1rem;
+
     border-radius: 20px;
+
     background: rgba(255, 255, 255, 0.92);
+
     backdrop-filter: blur(16px);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+    -webkit-backdrop-filter: blur(16px);
+
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
   }
 
   .nav-list {
