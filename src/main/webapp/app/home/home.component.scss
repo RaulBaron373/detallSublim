@@ -1,7 +1,7 @@
 .ds-hero {
   position: relative;
   overflow: hidden;
-  min-height: calc(100vh - 90px);
+  min-height: calc(100vh);
   display: flex;
   align-items: center;
   background:
@@ -96,12 +96,6 @@
 }
 
 .ds-hero-logo-card {
-  width: min(100%, 520px);
-  background: rgba(255, 255, 255, 0.96);
-  border: 1.5px solid rgba(255, 255, 255, 0.78);
-  border-radius: 2rem;
-  padding: 2.75rem;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
   transition:
     transform 0.28s ease,
     box-shadow 0.28s ease,
@@ -110,8 +104,6 @@
 
 .ds-hero-logo-card:hover {
   transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
-  border-color: rgba(255, 255, 255, 0.95);
 }
 
 .ds-hero-logo-card img {
@@ -185,7 +177,7 @@
 }
 
 .ds-technologies {
-  padding: 6rem 0;
+  padding: 4rem 0;
 }
 
 .ds-tech-header {
