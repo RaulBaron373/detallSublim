@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20260819154400-1" author="raul">
+
+        <addColumn tableName="solicitud_presupuesto">
+
+            <column name="precio_presupuesto" type="double">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="tiempo_estimado" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="observaciones_presupuesto" type="${clobType}">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="fecha_envio_presupuesto" type="${datetimeType}">
+                <constraints nullable="true"/>
+            </column>
+
+        </addColumn>
+
+    </changeSet>
+
+</databaseChangeLog>
