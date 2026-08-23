@@ -38,28 +38,28 @@ export default class HomeComponent implements OnInit, OnDestroy {
 
       technologies: [
         {
-          icon: '✦',
+          icon: '≋',
           iconClass: 'ds-tech-icon-pink',
           title: 'Sublimación',
-          description: 'Ideal para tazas, camisetas y otros artículos con impresión a todo color.',
+          description: 'Ideal para tazas, bidones, camisetas técnicas, puzzles y cientos de artículos con impresión a todo color.',
         },
         {
           icon: '▣',
           iconClass: 'ds-tech-icon-cyan',
-          title: 'Impresión DTG',
-          description: 'Perfecta para prendas textiles con diseños detallados y colores vivos.',
+          title: 'Impresión DTF',
+          description: 'Perfecta para prendas textiles de color con diseños detallados y colores vivos.',
         },
         {
-          icon: '◌',
+          icon: '▦',
           iconClass: 'ds-tech-icon-yellow',
           title: 'Serigrafía',
           description: 'Excelente opción para pedidos grandes y ropa laboral.',
         },
         {
-          icon: '⚡',
+          icon: '✦',
           iconClass: 'ds-tech-icon-pink-soft',
-          title: 'Láser',
-          description: 'Grabado y corte de precisión para acabados profesionales.',
+          title: 'DTF UV',
+          description: 'Transferencia de diseños en superficies como vidrio, madera, metal, plástico y muchos más.',
         },
       ],
       highlightTitle: 'Equipamiento de última generación',
