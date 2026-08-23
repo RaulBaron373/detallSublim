@@ -218,6 +218,50 @@
   color: #c9a400;
 }
 
+.contact-info-content {
+  min-width: 0;
+}
+
+.contact-info-content strong {
+  display: block;
+}
+
+.contact-info-content a {
+  display: block;
+  width: fit-content;
+
+  color: var(--ds-color-text-muted);
+  line-height: 1.55;
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+}
+
+.contact-info-content a:hover {
+  color: var(--ds-color-primary);
+}
+
+.contact-location-item {
+  align-items: flex-start;
+}
+
+.contact-location-address {
+  margin-top: 0.2rem;
+}
+
+.contact-map {
+  width: 100%;
+  margin-top: 0.9rem;
+
+  overflow: hidden;
+  border-radius: 0.9rem;
+}
+
+.contact-map iframe {
+  display: block;
+  width: 100%;
+}
+
 .contact-note {
   padding: 1.4rem;
   border-radius: 1.2rem;
@@ -278,28 +322,223 @@
 }
 
 @media (max-width: 576px) {
+  /* =====================================================
+      GENERAL
+     ===================================================== */
+
   .contact-page {
-    padding: 3rem 0 4rem;
+    padding: 7rem 0 3rem;
+  }
+
+  /* =====================================================
+      HEADER
+     ===================================================== */
+
+  .contact-header {
+    margin-bottom: 2rem;
   }
 
   .contact-header h1 {
-    font-size: 2.3rem;
+    margin-bottom: 0.7rem;
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+
+  .contact-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  /* =====================================================
+      CONTENIDO PRINCIPAL
+     ===================================================== */
+
+  .contact-main {
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  /* =====================================================
+      FORMULARIO
+     ===================================================== */
+
+  .contact-form-card {
+    padding: 1.4rem;
+    border-radius: 1.5rem;
+  }
+
+  .contact-form-card h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.55rem;
+  }
+
+  .contact-form-intro {
+    margin-bottom: 1.25rem;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .contact-form {
+    gap: 0.9rem;
   }
 
   .form-row {
     grid-template-columns: 1fr;
+    gap: 0.9rem;
   }
 
-  .contact-form-card,
-  .contact-info-card,
+  .form-group {
+    gap: 0.4rem;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 0.8rem 0.9rem;
+    border-radius: 0.9rem;
+
+    font-size: 0.9rem;
+  }
+
+  .form-group textarea {
+    height: 120px;
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .contact-form .ds-btn {
+    width: 100%;
+    margin-top: 0.25rem;
+  }
+
+  /* =====================================================
+      INFORMACIÓN DE CONTACTO
+     ===================================================== */
+
+  .contact-info-card {
+    padding: 1.4rem;
+    border-radius: 1.5rem;
+  }
+
+  .contact-info-card h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.55rem;
+  }
+
+  .contact-info-card > p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .contact-info-list {
+    gap: 0.65rem;
+    margin: 1.25rem 0;
+  }
+
+  .contact-info-item {
+    gap: 0.75rem;
+    padding: 0.75rem;
+
+    border-radius: 1rem;
+  }
+
+  .contact-info-icon {
+    min-width: 42px;
+    width: 42px;
+    height: 42px;
+
+    font-size: 1rem;
+  }
+
+  .contact-info-item strong {
+    margin-bottom: 0.1rem;
+    font-size: 0.88rem;
+  }
+
+  .contact-info-item span {
+    font-size: 0.82rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+
+  .contact-info-content {
+    min-width: 0;
+  }
+
+  .contact-info-content a,
+  .contact-info-content span {
+    overflow-wrap: anywhere;
+  }
+
+  .contact-map {
+    margin-top: 0.75rem;
+  }
+
+  .contact-map iframe {
+    height: 120px;
+  }
+
+  /* =====================================================
+      NOTA PRESUPUESTO
+     ===================================================== */
+
+  .contact-note {
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  .contact-note h3 {
+    margin-bottom: 0.45rem;
+    font-size: 1.1rem;
+  }
+
+  .contact-note p {
+    margin-bottom: 0.75rem;
+
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .contact-note .ds-btn-outline {
+    margin-top: 0.3rem;
+    padding: 0.65rem 1rem;
+
+    font-size: 0.85rem;
+  }
+
+  /* =====================================================
+      CTA FINAL
+     ===================================================== */
+
   .contact-cta-box {
-    padding: 1.5rem;
+    gap: 1rem;
+    padding: 1.4rem;
+
+    border-radius: 1.5rem;
   }
 
-  .contact-form-card h2,
-  .contact-info-card h2,
   .contact-cta-text h2 {
-    font-size: 1.7rem;
+    margin-bottom: 0.5rem;
+
+    font-size: 1.55rem;
+    line-height: 1.15;
+  }
+
+  .contact-cta-text p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .contact-cta-actions {
+    width: 100%;
+  }
+
+  .contact-cta-actions .ds-btn {
+    width: 100%;
+    text-align: center;
   }
 }
 
