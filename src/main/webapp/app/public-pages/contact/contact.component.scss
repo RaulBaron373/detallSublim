@@ -310,6 +310,20 @@
     grid-template-columns: 1fr;
   }
 
+  .contact-info-list {
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+
+  .contact-info-item:nth-child(-n + 3) {
+    grid-column: 1;
+  }
+
+  .contact-info-item:nth-child(4) {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+
   .contact-cta-box {
     flex-direction: column;
     align-items: flex-start;
@@ -434,8 +448,16 @@
   }
 
   .contact-info-list {
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 0.65rem;
     margin: 1.25rem 0;
+  }
+
+  .contact-info-item:nth-child(-n + 3),
+  .contact-info-item:nth-child(4) {
+    grid-column: auto;
+    grid-row: auto;
   }
 
   .contact-info-item {
