@@ -246,10 +246,6 @@
 }
 
 @media (max-width: 991.98px) {
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-
   .services-detail-content {
     grid-template-columns: 1fr;
   }
@@ -266,21 +262,189 @@
 }
 
 @media (max-width: 576px) {
+  /* =====================================================
+      GENERAL
+     ===================================================== */
+
   .services-page {
-    padding: 3rem 0 4rem;
+    padding: 7rem 0 3rem;
+  }
+
+  /* =====================================================
+      HEADER
+     ===================================================== */
+
+  .services-header {
+    margin-bottom: 2rem;
   }
 
   .services-header h1 {
-    font-size: 2.3rem;
+    margin-bottom: 0.8rem;
+    font-size: 2rem;
+    line-height: 1.08;
   }
 
-  .services-detail-content,
+  .services-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  /* =====================================================
+      SERVICIOS
+     ===================================================== */
+
+  .services-grid {
+    display: flex;
+    gap: 1rem;
+
+    margin-inline: -1rem;
+    margin-bottom: 2.5rem;
+    padding-inline: 1rem;
+    padding-bottom: 1rem;
+
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .services-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .service-card {
+    flex: 0 0 82%;
+    min-height: 245px;
+    padding: 1.4rem;
+
+    border-radius: 1.4rem;
+    scroll-snap-align: start;
+  }
+
+  .service-card:hover {
+    transform: none;
+  }
+
+  .service-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 0.9rem;
+    font-size: 1.15rem;
+  }
+
+  .service-card h2 {
+    margin-bottom: 0.65rem;
+    font-size: 1.25rem;
+    line-height: 1.25;
+  }
+
+  .service-card p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  /* =====================================================
+      DETALLE DEL SERVICIO
+     ===================================================== */
+
+  .services-detail {
+    margin-bottom: 2.5rem;
+  }
+
+  .services-detail-content {
+    gap: 1.5rem;
+    padding: 1.4rem;
+
+    border-radius: 1.5rem;
+  }
+
+  .detail-text h2 {
+    margin-bottom: 0.8rem;
+    font-size: 1.55rem;
+    line-height: 1.15;
+  }
+
+  .detail-text p {
+    margin-bottom: 0.8rem;
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .detail-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Beneficios en carrusel */
+  .detail-points {
+    flex-direction: row;
+    gap: 0.75rem;
+
+    margin-inline: -0.4rem;
+    padding-inline: 0.4rem;
+    padding-bottom: 0.5rem;
+
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .detail-points::-webkit-scrollbar {
+    display: none;
+  }
+
+  .detail-point {
+    flex: 0 0 78%;
+    min-height: 125px;
+    padding: 1rem;
+
+    border-radius: 1rem;
+    scroll-snap-align: start;
+  }
+
+  .detail-point strong {
+    margin-bottom: 0.3rem;
+    font-size: 0.92rem;
+  }
+
+  .detail-point span {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  /* =====================================================
+      CTA
+     ===================================================== */
+
   .services-cta-box {
-    padding: 1.5rem;
+    gap: 1.25rem;
+    padding: 1.4rem;
+
+    border-radius: 1.5rem;
   }
 
-  .detail-text h2,
   .services-cta-text h2 {
-    font-size: 1.7rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.55rem;
+    line-height: 1.15;
+  }
+
+  .services-cta-text p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .services-cta-actions {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 0.75rem;
+
+    width: 100%;
+  }
+
+  .services-cta-actions .ds-btn {
+    width: 100%;
+    padding-inline: 0.65rem;
+
+    text-align: center;
+    white-space: nowrap;
   }
 }
