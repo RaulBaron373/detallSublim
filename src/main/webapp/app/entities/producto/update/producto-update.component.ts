@@ -20,6 +20,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'jhi-producto-update',
   templateUrl: './producto-update.component.html',
+  styleUrl: './producto-update.component.scss',
   imports: [SharedModule, FormsModule, ReactiveFormsModule, RouterLink],
 })
 export class ProductoUpdateComponent implements OnInit {

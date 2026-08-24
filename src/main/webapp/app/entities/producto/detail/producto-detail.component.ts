@@ -9,6 +9,7 @@ import { NgClass } from '@angular/common';
 @Component({
   selector: 'jhi-producto-detail',
   templateUrl: './producto-detail.component.html',
+  styleUrl: './producto-detail.component.scss',
   imports: [SharedModule, RouterModule, NgClass],
 })
 export class ProductoDetailComponent {

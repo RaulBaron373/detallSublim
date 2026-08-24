@@ -292,6 +292,11 @@
     grid-template-columns: 1fr;
   }
 
+  .quote-info-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .quote-benefits-grid {
     grid-template-columns: repeat(2, 1fr);
   }

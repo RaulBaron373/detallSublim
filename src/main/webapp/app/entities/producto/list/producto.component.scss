@@ -1,18 +1,313 @@
+/* =====================================================
+    PRODUCTOS - BASE
+   ===================================================== */
+
 .producto-img {
   width: 60px;
   height: 60px;
+
   object-fit: cover;
-  border-radius: 0.6rem;
+
   border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 0.6rem;
 }
 
 .producto-desc {
-  font-size: 0.8rem;
-  color: #6c757d;
   max-width: 250px;
+
+  color: #6c757d;
+
+  font-size: 0.8rem;
+  line-height: 1.45;
 }
 
 .producto-precio {
+  color: var(--ds-color-primary);
   font-weight: 600;
-  color: #d84b8a;
+}
+
+/* =====================================================
+    TABLET
+   ===================================================== */
+
+@media (max-width: 991.98px) {
+  .admin-page {
+    padding: 7rem 1.5rem 3rem;
+  }
+
+  .admin-page-header {
+    align-items: flex-start;
+  }
+
+  .admin-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .admin-table {
+    min-width: 950px;
+  }
+}
+
+/* =====================================================
+    MOBILE
+   ===================================================== */
+
+@media (max-width: 576px) {
+  /* Página */
+
+  .admin-page {
+    padding: 6.5rem 1rem 3rem;
+  }
+
+  .admin-back {
+    margin-bottom: 1.5rem;
+  }
+
+  .admin-page-header {
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+
+  .admin-page-tag {
+    margin-bottom: 0.65rem;
+  }
+
+  .admin-page-header h1 {
+    margin-bottom: 0.35rem;
+
+    font-size: 1.8rem;
+    line-height: 1.15;
+  }
+
+  .admin-page-subtitle {
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  /* Acciones superiores */
+
+  .admin-page-actions {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 0.65rem;
+
+    width: 100%;
+    margin-top: 1.25rem;
+  }
+
+  .admin-page-actions .btn,
+  .admin-page-actions .ds-btn {
+    width: 100%;
+    min-height: 46px;
+    padding-inline: 0.65rem;
+
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  /* Quitamos aspecto de tabla */
+
+  .admin-table-card {
+    overflow: visible;
+
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .admin-table-wrapper {
+    padding: 0;
+    overflow: visible;
+  }
+
+  .admin-table {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+  }
+
+  .admin-table thead {
+    display: none;
+  }
+
+  .admin-table tbody {
+    display: grid;
+    gap: 1rem;
+  }
+
+  /* Cada fila se convierte en tarjeta */
+
+  .admin-table tbody tr {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    grid-template-areas:
+      'image name'
+      'image price'
+      'id status'
+      'category category'
+      'actions actions';
+    gap: 0.35rem 0.85rem;
+
+    width: 100%;
+    padding: 1rem;
+
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 1.35rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  }
+
+  .admin-table tbody td {
+    display: block;
+
+    min-width: 0;
+    padding: 0;
+
+    background: transparent;
+    border: 0;
+  }
+
+  /* ID */
+
+  .admin-table tbody td:nth-child(1) {
+    grid-area: id;
+
+    align-self: center;
+
+    font-size: 0.78rem;
+  }
+
+  /* Imagen */
+
+  .admin-table tbody td:nth-child(2) {
+    grid-area: image;
+  }
+
+  .producto-img {
+    width: 72px;
+    height: 72px;
+
+    border-radius: 0.9rem;
+  }
+
+  /* Nombre + descripción */
+
+  .admin-table tbody td:nth-child(3) {
+    grid-area: name;
+
+    min-width: 0;
+  }
+
+  .admin-table tbody td:nth-child(3) strong {
+    display: block;
+
+    margin-bottom: 0.2rem;
+
+    font-size: 1rem;
+    line-height: 1.25;
+  }
+
+  .producto-desc {
+    display: -webkit-box;
+
+    max-width: none;
+
+    overflow: hidden;
+
+    font-size: 0.76rem;
+    line-height: 1.4;
+
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  /* Precio */
+
+  .admin-table tbody td:nth-child(4) {
+    grid-area: price;
+
+    font-size: 0.88rem;
+  }
+
+  /*
+   * Personalizable y plazo no son imprescindibles
+   * en la vista rápida móvil.
+   * Siguen disponibles al visualizar el producto.
+   */
+
+  .admin-table tbody td:nth-child(5),
+  .admin-table tbody td:nth-child(6) {
+    display: none;
+  }
+
+  /* Estado */
+
+  .admin-table tbody td:nth-child(7) {
+    grid-area: status;
+
+    align-self: center;
+    justify-self: end;
+  }
+
+  /* Categoría */
+
+  .admin-table tbody td:nth-child(8) {
+    grid-area: category;
+
+    margin-top: 0.55rem;
+    padding-top: 0.65rem;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+
+    color: var(--ds-color-text-muted);
+
+    font-size: 0.78rem;
+  }
+
+  .admin-table tbody td:nth-child(8)::before {
+    content: 'Categoría: ';
+
+    color: var(--ds-color-text);
+    font-weight: 600;
+  }
+
+  /* Acciones */
+
+  .admin-table tbody td:nth-child(9) {
+    grid-area: actions;
+
+    margin-top: 0.55rem;
+  }
+
+  .admin-action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.55rem;
+
+    width: 100%;
+  }
+
+  .admin-action-buttons .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  /* Paginación */
+
+  .admin-pagination-block {
+    align-items: center;
+
+    margin-top: 1.5rem;
+
+    text-align: center;
+  }
 }

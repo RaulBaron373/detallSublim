@@ -1,0 +1,154 @@
+/* =====================================================
+    PRODUCT VIEW
+   ===================================================== */
+
+.product-view-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.product-view-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+  gap: 2rem;
+  align-items: start;
+}
+
+.product-view-image {
+  min-width: 0;
+}
+
+.product-view-image img {
+  width: 100%;
+  max-height: 350px;
+
+  object-fit: cover;
+
+  border-radius: 1.25rem;
+}
+
+.product-view-info {
+  min-width: 0;
+}
+
+.info-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.product-view-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+
+  margin-top: 2rem;
+}
+
+/* =====================================================
+    TABLET
+   ===================================================== */
+
+@media (max-width: 991.98px) {
+  .product-view-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-view-image {
+    order: -1;
+  }
+
+  .product-view-image img {
+    max-width: 520px;
+    margin-inline: auto;
+  }
+}
+
+/* =====================================================
+    MOBILE
+   ===================================================== */
+
+@media (max-width: 576px) {
+  .admin-form-page {
+    padding: 6.5rem 0 3rem;
+  }
+
+  .admin-back {
+    margin-bottom: 1.25rem;
+  }
+
+  .product-view-card {
+    padding: 1.25rem;
+
+    border-radius: 1.5rem;
+  }
+
+  .product-view-header {
+    align-items: flex-start;
+  }
+
+  .product-view-header h1 {
+    margin-bottom: 0;
+
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .product-view-grid {
+    gap: 1.25rem;
+  }
+
+  .product-view-image img {
+    width: 100%;
+    max-width: none;
+    max-height: 240px;
+
+    object-fit: cover;
+
+    border-radius: 1rem;
+  }
+
+  .info-block h4,
+  .info-row h5 {
+    margin-bottom: 0.25rem;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .info-block p,
+  .info-row p,
+  .info-row a {
+    margin-bottom: 0;
+
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+
+  .info-block {
+    margin-bottom: 1.25rem;
+  }
+
+  .info-row {
+    gap: 0.75rem;
+  }
+
+  .info-row + .info-row {
+    margin-top: 1rem;
+  }
+
+  .product-view-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+
+    margin-top: 1.5rem;
+  }
+
+  .product-view-actions .btn,
+  .product-view-actions .ds-btn {
+    width: 100%;
+  }
+}
