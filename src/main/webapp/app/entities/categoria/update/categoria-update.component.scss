@@ -1,0 +1,113 @@
+/* =====================================================
+    CATEGORY FORM
+   ===================================================== */
+
+.admin-form-card {
+  max-width: 720px;
+}
+
+.admin-form-card form {
+  width: 100%;
+}
+
+.admin-form-card .form-control {
+  width: 100%;
+
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 1rem;
+
+  box-shadow: none;
+}
+
+.admin-form-card .form-control:focus {
+  border-color: var(--ds-color-primary);
+  box-shadow: 0 0 0 4px rgba(216, 75, 138, 0.1);
+}
+
+.admin-form-card textarea.form-control {
+  min-height: 110px;
+  resize: vertical;
+}
+
+#field_activa {
+  width: 20px;
+  height: 20px;
+
+  accent-color: var(--ds-color-primary);
+  cursor: pointer;
+}
+
+.admin-form-card form > div:last-child {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+
+  margin-top: 1.5rem;
+}
+
+/* =====================================================
+    MOBILE
+   ===================================================== */
+
+@media (max-width: 576px) {
+  .admin-form-page {
+    padding: 6.5rem 0 3rem;
+  }
+
+  .admin-back {
+    margin-bottom: 1.25rem;
+  }
+
+  .admin-form-card {
+    padding: 1.4rem;
+
+    border-radius: 1.5rem;
+  }
+
+  .admin-form-card h2 {
+    margin-bottom: 1.5rem;
+
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .admin-form-card .mb-3 {
+    margin-bottom: 1rem !important;
+  }
+
+  .admin-form-card .form-label {
+    margin-bottom: 0.4rem;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .admin-form-card .form-control {
+    min-height: 52px;
+
+    padding: 0.8rem 0.9rem;
+
+    font-size: 0.9rem;
+  }
+
+  .admin-form-card textarea.form-control {
+    min-height: 100px;
+  }
+
+  /* Botones */
+
+  .admin-form-card form > div:last-child {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+
+    margin-top: 1.25rem;
+  }
+
+  .admin-form-card form > div:last-child .btn {
+    width: 100%;
+    min-height: 46px;
+
+    margin: 0;
+  }
+}

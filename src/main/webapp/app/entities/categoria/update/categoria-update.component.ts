@@ -18,6 +18,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'jhi-categoria-update',
   templateUrl: './categoria-update.component.html',
+  styleUrl: './categoria-update.component.scss',
   imports: [SharedModule, FormsModule, ReactiveFormsModule, RouterLink],
 })
 export class CategoriaUpdateComponent implements OnInit {

@@ -9,6 +9,7 @@ import { NgClass } from '@angular/common';
 @Component({
   selector: 'jhi-categoria-detail',
   templateUrl: './categoria-detail.component.html',
+  styleUrl: './categoria-detail.component.scss',
   imports: [SharedModule, RouterModule, NgClass],
 })
 export class CategoriaDetailComponent {
