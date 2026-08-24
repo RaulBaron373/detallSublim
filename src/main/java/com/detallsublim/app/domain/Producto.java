@@ -48,6 +48,10 @@ public class Producto implements Serializable {
     @Column(name = "activo", nullable = false)
     private Boolean activo;
 
+    @NotNull
+    @Column(name = "destacado", nullable = false)
+    private Boolean destacado;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Categoria categoria;
 
@@ -170,6 +174,19 @@ public class Producto implements Serializable {
         return this;
     }
 
+    public Boolean getDestacado() {
+        return this.destacado;
+    }
+
+    public Producto destacado(Boolean destacado) {
+        this.setDestacado(destacado);
+        return this;
+    }
+
+    public void setDestacado(Boolean destacado) {
+        this.destacado = destacado;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -201,6 +218,7 @@ public class Producto implements Serializable {
             ", plazoEstimadoDias=" + getPlazoEstimadoDias() +
             ", imagenUrl='" + getImagenUrl() + "'" +
             ", activo='" + getActivo() + "'" +
+            ", destacado='" + getDestacado() + "'" +
             "}";
     }
 }

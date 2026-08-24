@@ -140,14 +140,14 @@
 
   .admin-table tbody tr {
     display: grid;
-    grid-template-columns: 72px minmax(0, 1fr);
+    grid-template-columns: 72px minmax(0, 1fr) auto;
     grid-template-areas:
-      'image name'
-      'image price'
-      'id status'
-      'category category'
-      'actions actions';
-    gap: 0.35rem 0.85rem;
+      'image name name'
+      'image price price'
+      'status status featured'
+      'category category category'
+      'actions actions actions';
+    gap: 0.4rem 0.85rem;
 
     width: 100%;
     padding: 1rem;
@@ -168,19 +168,9 @@
     border: 0;
   }
 
-  /* ID */
-
-  .admin-table tbody td:nth-child(1) {
-    grid-area: id;
-
-    align-self: center;
-
-    font-size: 0.78rem;
-  }
-
   /* Imagen */
 
-  .admin-table tbody td:nth-child(2) {
+  .admin-table tbody td:nth-child(1) {
     grid-area: image;
   }
 
@@ -191,15 +181,15 @@
     border-radius: 0.9rem;
   }
 
-  /* Nombre + descripción */
+  /* Nombre */
 
-  .admin-table tbody td:nth-child(3) {
+  .admin-table tbody td:nth-child(2) {
     grid-area: name;
 
     min-width: 0;
   }
 
-  .admin-table tbody td:nth-child(3) strong {
+  .admin-table tbody td:nth-child(2) strong {
     display: block;
 
     margin-bottom: 0.2rem;
@@ -212,7 +202,6 @@
     display: -webkit-box;
 
     max-width: none;
-
     overflow: hidden;
 
     font-size: 0.76rem;
@@ -224,27 +213,32 @@
 
   /* Precio */
 
-  .admin-table tbody td:nth-child(4) {
+  .admin-table tbody td:nth-child(3) {
     grid-area: price;
 
     font-size: 0.88rem;
   }
 
-  /*
-   * Personalizable y plazo no son imprescindibles
-   * en la vista rápida móvil.
-   * Siguen disponibles al visualizar el producto.
-   */
+  /* Personalizable y plazo */
 
-  .admin-table tbody td:nth-child(5),
-  .admin-table tbody td:nth-child(6) {
+  .admin-table tbody td:nth-child(4),
+  .admin-table tbody td:nth-child(5) {
     display: none;
   }
 
   /* Estado */
 
-  .admin-table tbody td:nth-child(7) {
+  .admin-table tbody td:nth-child(6) {
     grid-area: status;
+
+    align-self: center;
+    justify-self: start;
+  }
+
+  /* Destacado */
+
+  .admin-table tbody td:nth-child(7) {
+    grid-area: featured;
 
     align-self: center;
     justify-self: end;

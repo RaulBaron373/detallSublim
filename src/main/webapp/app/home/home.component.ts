@@ -213,12 +213,13 @@ export default class HomeComponent implements OnInit, OnDestroy {
   }
 
   loadFeaturedProducts(): void {
-    this.productoService.query().subscribe(res => {
-      this.featuredProducts = (res.body ?? [])
-        .filter(producto => producto.activo)
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        .sort((a, b) => (a.id ?? 0) - (b.id ?? 0))
-        .slice(0, 3);
-    });
+    this.productoService
+      .query({
+        size: 1000,
+        sort: ['nombre,asc'],
+      })
+      .subscribe(res => {
+        this.featuredProducts = (res.body ?? []).filter(producto => producto.activo && producto.destacado).slice(0, 3);
+      });
   }
 }

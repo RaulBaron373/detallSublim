@@ -36,7 +36,6 @@
         <table class="table admin-table">
           <thead>
             <tr>
-              <th>ID</th>
               <th>Nombre</th>
               <th>Descripción</th>
               <th>Estado</th>
@@ -47,10 +46,6 @@
           <tbody>
             @for (categoria of categorias(); track trackId(categoria)) {
               <tr>
-                <td>
-                  <span class="table-link-id">#{{ categoria.id }}</span>
-                </td>
-
                 <td>
                   <strong>{{ categoria.nombre }}</strong>
                 </td>

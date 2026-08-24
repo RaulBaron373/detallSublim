@@ -13,13 +13,6 @@
         <div>
           <jhi-alert-error />
 
-          @if (editForm.controls.id.value !== null) {
-            <div class="mb-3">
-              <label class="form-label" for="field_id" jhiTranslate="detallSublimApp.producto.id">ID</label>
-              <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-            </div>
-          }
-
           @let nombreRef = editForm.get('nombre')!;
           <div class="mb-3">
             <label class="form-label" for="field_nombre" jhiTranslate="detallSublimApp.producto.nombre">Nombre</label>
@@ -137,6 +130,24 @@
           </div>
 
           <div class="mb-3">
+            <label class="form-label" for="field_destacado"> Producto destacado </label>
+
+            <input
+              type="checkbox"
+              class="form-check"
+              name="destacado"
+              id="field_destacado"
+              data-cy="destacado"
+              formControlName="destacado"
+              (change)="onDestacadoChange($event)"
+            />
+
+            <small class="form-text text-muted d-block mt-1">
+              Los productos destacados aparecen en la página de Inicio. Máximo 3 productos.
+            </small>
+          </div>
+
+          <div class="mb-3">
             <label class="form-label" for="field_categoria" jhiTranslate="detallSublimApp.producto.categoria">Categoria</label>
             <select
               class="form-control"
@@ -172,4 +183,77 @@
       </form>
     </div>
   </div>
+  @if (showFeaturedLimitModal) {
+    <div class="featured-modal-backdrop">
+      <div class="featured-modal" role="dialog" aria-modal="true" aria-labelledby="featured-modal-title">
+        <div class="featured-modal-header">
+          <div>
+            <span class="featured-modal-tag"> Productos destacados </span>
+
+            <h3 id="featured-modal-title">Límite de productos destacados</h3>
+          </div>
+        </div>
+
+        <p class="featured-modal-description">
+          Solo pueden aparecer un máximo de
+          <strong>3 productos destacados</strong>
+          en Inicio.
+        </p>
+
+        <p class="featured-modal-description">
+          Para destacar
+          <strong>
+            {{ editForm.get('nombre')?.value || 'este producto' }} </strong
+          >, selecciona como máximo otros dos productos que quieras mantener.
+        </p>
+
+        <div class="featured-product-list">
+          @for (featuredProduct of featuredProducts; track featuredProduct.id) {
+            <label class="featured-product-option" [class.featured-product-option-selected]="isFeaturedSelected(featuredProduct.id)">
+              <input
+                type="checkbox"
+                [checked]="isFeaturedSelected(featuredProduct.id)"
+                (change)="toggleFeaturedSelection(featuredProduct.id)"
+              />
+
+              @if (featuredProduct.imagenUrl) {
+                <img [src]="featuredProduct.imagenUrl" [alt]="featuredProduct.nombre" />
+              }
+
+              <span class="featured-product-info">
+                <strong>{{ featuredProduct.nombre }}</strong>
+
+                <small>
+                  {{ featuredProduct.categoria?.nombre || 'Sin categoría' }}
+                </small>
+              </span>
+            </label>
+          }
+        </div>
+
+        @if (selectedFeaturedIds.size > 2) {
+          <p class="featured-modal-warning">
+            Debes desmarcar al menos
+            {{ selectedFeaturedIds.size - 2 }}
+            producto(s) más.
+          </p>
+        } @else {
+          <p class="featured-modal-success">La selección es válida.</p>
+        }
+
+        <div class="featured-modal-actions">
+          <button type="button" class="btn admin-btn-light" (click)="cancelFeaturedReplacement()">Cancelar</button>
+
+          <button
+            type="button"
+            class="ds-btn ds-btn-primary"
+            [disabled]="selectedFeaturedIds.size > 2"
+            (click)="confirmFeaturedReplacement()"
+          >
+            Confirmar reemplazo
+          </button>
+        </div>
+      </div>
+    </div>
+  }
 </section>

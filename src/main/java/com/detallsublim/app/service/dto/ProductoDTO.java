@@ -35,6 +35,9 @@ public class ProductoDTO implements Serializable {
     @NotNull
     private Boolean activo;
 
+    @NotNull
+    private Boolean destacado;
+
     private CategoriaDTO categoria;
 
     public Long getId() {
@@ -109,6 +112,14 @@ public class ProductoDTO implements Serializable {
         this.categoria = categoria;
     }
 
+    public Boolean getDestacado() {
+        return destacado;
+    }
+
+    public void setDestacado(Boolean destacado) {
+        this.destacado = destacado;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -143,6 +154,7 @@ public class ProductoDTO implements Serializable {
             ", imagenUrl='" + getImagenUrl() + "'" +
             ", activo='" + getActivo() + "'" +
             ", categoria=" + getCategoria() +
+            ", destacado='" + getDestacado() + "'" +
             "}";
     }
 }

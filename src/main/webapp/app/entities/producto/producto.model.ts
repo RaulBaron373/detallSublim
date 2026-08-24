@@ -9,6 +9,7 @@ export interface IProducto {
   plazoEstimadoDias?: number | null;
   imagenUrl?: string | null;
   activo?: boolean | null;
+  destacado?: boolean | null;
   categoria?: Pick<ICategoria, 'id' | 'nombre'> | null;
 }
 

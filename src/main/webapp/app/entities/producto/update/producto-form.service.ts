@@ -14,7 +14,7 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type ProductoFormGroupInput = IProducto | PartialWithRequiredKeyOf<NewProducto>;
 
-type ProductoFormDefaults = Pick<NewProducto, 'id' | 'personalizable' | 'activo'>;
+type ProductoFormDefaults = Pick<NewProducto, 'id' | 'personalizable' | 'activo' | 'destacado'>;
 
 type ProductoFormGroupContent = {
   id: FormControl<IProducto['id'] | NewProducto['id']>;
@@ -26,6 +26,7 @@ type ProductoFormGroupContent = {
   imagenUrl: FormControl<IProducto['imagenUrl']>;
   activo: FormControl<IProducto['activo']>;
   categoria: FormControl<IProducto['categoria']>;
+  destacado: FormControl<IProducto['destacado']>;
 };
 
 export type ProductoFormGroup = FormGroup<ProductoFormGroupContent>;
@@ -61,6 +62,9 @@ export class ProductoFormService {
         validators: [Validators.required],
       }),
       categoria: new FormControl(productoRawValue.categoria),
+      destacado: new FormControl(productoRawValue.destacado, {
+        validators: [Validators.required],
+      }),
     });
   }
 
@@ -83,6 +87,7 @@ export class ProductoFormService {
       id: null,
       personalizable: false,
       activo: false,
+      destacado: false,
     };
   }
 }

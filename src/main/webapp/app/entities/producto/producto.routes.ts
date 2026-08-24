@@ -9,7 +9,7 @@ const productoRoute: Routes = [
     path: '',
     loadComponent: () => import('./list/producto.component').then(m => m.ProductoComponent),
     data: {
-      defaultSort: `id,${ASC}`,
+      defaultSort: `nombre,${ASC}`,
     },
     canActivate: [UserRouteAccessService],
   },

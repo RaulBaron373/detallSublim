@@ -9,7 +9,7 @@ const categoriaRoute: Routes = [
     path: '',
     loadComponent: () => import('./list/categoria.component').then(m => m.CategoriaComponent),
     data: {
-      defaultSort: `id,${ASC}`,
+      defaultSort: `nombre,${ASC}`,
     },
     canActivate: [UserRouteAccessService],
   },
