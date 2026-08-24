@@ -10,6 +10,7 @@ import { NgClass } from '@angular/common';
 @Component({
   selector: 'jhi-solicitud-presupuesto-detail',
   templateUrl: './solicitud-presupuesto-detail.component.html',
+  styleUrl: './solicitud-presupuesto-detail.component.scss',
   imports: [SharedModule, RouterModule, FormatMediumDatetimePipe, NgClass],
 })
 export class SolicitudPresupuestoDetailComponent {

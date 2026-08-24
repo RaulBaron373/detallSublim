@@ -21,6 +21,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'jhi-solicitud-presupuesto-update',
   templateUrl: './solicitud-presupuesto-update.component.html',
+  styleUrl: './solicitud-presupuesto-update.component.scss',
   imports: [SharedModule, FormsModule, ReactiveFormsModule, RouterLink],
 })
 export class SolicitudPresupuestoUpdateComponent implements OnInit {
@@ -80,6 +81,16 @@ export class SolicitudPresupuestoUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.solicitudPresupuestoService.create(solicitudPresupuesto));
     }
+  }
+
+  shouldShowBudgetSection(): boolean {
+    const estado = this.editForm.get('estado')?.value;
+    const precio = this.editForm.get('precioPresupuesto')?.value;
+    const tiempo = this.editForm.get('tiempoEstimado')?.value;
+    const observaciones = this.editForm.get('observacionesPresupuesto')?.value;
+    const fechaEnvio = this.editForm.get('fechaEnvioPresupuesto')?.value;
+
+    return estado === EstadoSolicitud.PRESUPUESTADO || fechaEnvio != null || precio != null || !!tiempo || !!observaciones;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ISolicitudPresupuesto>>): void {

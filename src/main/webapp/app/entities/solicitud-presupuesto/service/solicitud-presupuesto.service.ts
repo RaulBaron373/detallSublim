@@ -11,8 +11,9 @@ import { ISolicitudPresupuesto, NewSolicitudPresupuesto } from '../solicitud-pre
 
 export type PartialUpdateSolicitudPresupuesto = Partial<ISolicitudPresupuesto> & Pick<ISolicitudPresupuesto, 'id'>;
 
-type RestOf<T extends ISolicitudPresupuesto | NewSolicitudPresupuesto> = Omit<T, 'fechaSolicitud'> & {
+type RestOf<T extends ISolicitudPresupuesto | NewSolicitudPresupuesto> = Omit<T, 'fechaSolicitud' | 'fechaEnvioPresupuesto'> & {
   fechaSolicitud?: string | null;
+  fechaEnvioPresupuesto?: string | null;
 };
 
 export type RestSolicitudPresupuesto = RestOf<ISolicitudPresupuesto>;
@@ -109,13 +110,19 @@ export class SolicitudPresupuestoService {
     return {
       ...solicitudPresupuesto,
       fechaSolicitud: solicitudPresupuesto.fechaSolicitud?.toJSON() ?? null,
+      fechaEnvioPresupuesto: solicitudPresupuesto.fechaEnvioPresupuesto?.toJSON() ?? null,
     };
   }
 
   protected convertDateFromServer(restSolicitudPresupuesto: RestSolicitudPresupuesto): ISolicitudPresupuesto {
     return {
       ...restSolicitudPresupuesto,
+
       fechaSolicitud: restSolicitudPresupuesto.fechaSolicitud ? dayjs(restSolicitudPresupuesto.fechaSolicitud) : undefined,
+
+      fechaEnvioPresupuesto: restSolicitudPresupuesto.fechaEnvioPresupuesto
+        ? dayjs(restSolicitudPresupuesto.fechaEnvioPresupuesto)
+        : undefined,
     };
   }
 

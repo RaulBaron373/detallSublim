@@ -172,58 +172,94 @@
             }
           </div>
 
-          <div class="mb-3">
-            <label
-              class="form-label"
-              for="field_observacionesInternas"
-              jhiTranslate="detallSublimApp.solicitudPresupuesto.observacionesInternas"
-              >Observaciones Internas</label
-            >
+          <!-- =====================================================
+              INFORMACIÓN INTERNA
+              ===================================================== -->
+
+          <div class="internal-admin-section">
+            <div class="internal-admin-header">
+              <div>
+                <span class="internal-admin-tag">Solo administración</span>
+                <h3>Observaciones internas</h3>
+              </div>
+            </div>
+
+            <p class="internal-admin-description">
+              Esta información es únicamente para la gestión interna de Detall Sublim y no se envía al cliente.
+            </p>
+
             <textarea
               class="form-control"
               name="observacionesInternas"
               id="field_observacionesInternas"
               data-cy="observacionesInternas"
               formControlName="observacionesInternas"
+              rows="3"
+              placeholder="Ej: Comprar material, confirmar disponibilidad..."
             ></textarea>
           </div>
 
-          @if (editForm.get('estado')?.value === 'PRESUPUESTADO') {
-            <div class="mb-3">
-              <label class="form-label" for="field_precioPresupuesto"> Precio del presupuesto (€) </label>
+          <!-- =====================================================
+              PRESUPUESTO PARA EL CLIENTE
+              ===================================================== -->
 
-              <input
-                type="number"
-                class="form-control"
-                name="precioPresupuesto"
-                id="field_precioPresupuesto"
-                formControlName="precioPresupuesto"
-              />
-            </div>
+          @if (shouldShowBudgetSection()) {
+            <div class="budget-admin-section">
+              <div class="budget-admin-header">
+                <div>
+                  <span class="budget-admin-tag">Presupuesto</span>
 
-            <div class="mb-3">
-              <label class="form-label" for="field_tiempoEstimado"> Tiempo estimado </label>
+                  <h3>Datos del presupuesto</h3>
+                </div>
+              </div>
 
-              <input
-                type="text"
-                class="form-control"
-                name="tiempoEstimado"
-                id="field_tiempoEstimado"
-                placeholder="Ej: 5 días laborables"
-                formControlName="tiempoEstimado"
-              />
-            </div>
+              <p class="budget-admin-description">
+                Estos datos se envían al cliente cuando la solicitud pasa por primera vez a estado <strong>Presupuestado</strong> y se
+                conservarán en el historial de la solicitud.
+              </p>
 
-            <div class="mb-3">
-              <label class="form-label" for="field_observacionesPresupuesto"> Observaciones del presupuesto </label>
+              <div class="budget-fields-grid">
+                <div class="mb-3">
+                  <label class="form-label" for="field_precioPresupuesto"> Precio del presupuesto (€) </label>
 
-              <textarea
-                class="form-control"
-                name="observacionesPresupuesto"
-                id="field_observacionesPresupuesto"
-                rows="5"
-                formControlName="observacionesPresupuesto"
-              ></textarea>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="precioPresupuesto"
+                    id="field_precioPresupuesto"
+                    formControlName="precioPresupuesto"
+                    min="0"
+                    step="0.01"
+                    placeholder="Ej: 300"
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label" for="field_tiempoEstimado"> Tiempo estimado </label>
+
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="tiempoEstimado"
+                    id="field_tiempoEstimado"
+                    placeholder="Ej: 4 semanas"
+                    formControlName="tiempoEstimado"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-0">
+                <label class="form-label" for="field_observacionesPresupuesto"> Observaciones del presupuesto </label>
+
+                <textarea
+                  class="form-control"
+                  name="observacionesPresupuesto"
+                  id="field_observacionesPresupuesto"
+                  rows="4"
+                  formControlName="observacionesPresupuesto"
+                  placeholder="Información adicional que recibirá el cliente..."
+                ></textarea>
+              </div>
             </div>
           }
 

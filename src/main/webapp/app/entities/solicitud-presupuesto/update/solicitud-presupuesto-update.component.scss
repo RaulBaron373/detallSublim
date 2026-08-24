@@ -1,0 +1,321 @@
+/* =====================================================
+    SOLICITUD PRESUPUESTO - FORMULARIO
+   ===================================================== */
+
+.admin-form-card {
+  width: 100%;
+  max-width: 900px;
+}
+
+.admin-form-card form {
+  width: 100%;
+}
+
+.admin-form-card .form-label {
+  margin-bottom: 0.45rem;
+
+  font-weight: 600;
+}
+
+.admin-form-card .form-control {
+  width: 100%;
+  min-width: 0;
+
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 1rem;
+
+  box-shadow: none;
+}
+
+.admin-form-card .form-control:focus {
+  border-color: var(--ds-color-primary);
+  box-shadow: 0 0 0 4px rgba(216, 75, 138, 0.1);
+}
+
+.admin-form-card textarea.form-control {
+  min-height: 105px;
+
+  resize: vertical;
+}
+
+.admin-form-card select.form-control {
+  cursor: pointer;
+}
+
+/* Evita overflow con datetime-local */
+
+.admin-form-card input[type='datetime-local'] {
+  min-width: 0;
+}
+
+/* =====================================================
+    OBSERVACIONES INTERNAS
+   ===================================================== */
+
+.internal-admin-section {
+  margin: 1.75rem 0;
+  padding: 1.4rem;
+
+  background: rgba(255, 196, 0, 0.08);
+  border: 1px solid rgba(255, 196, 0, 0.22);
+  border-radius: 1.3rem;
+}
+
+.internal-admin-header {
+  margin-bottom: 0.55rem;
+}
+
+.internal-admin-header h3 {
+  margin: 0;
+
+  font-size: 1.15rem;
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+.internal-admin-tag {
+  display: inline-flex;
+
+  margin-bottom: 0.45rem;
+  padding: 0.3rem 0.65rem;
+
+  color: #806200;
+
+  background: rgba(255, 196, 0, 0.14);
+  border-radius: 999px;
+
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.internal-admin-description {
+  max-width: 650px;
+  margin-bottom: 1rem;
+
+  color: #706849;
+
+  font-size: 0.83rem;
+  line-height: 1.5;
+}
+
+/* =====================================================
+    PRESUPUESTO
+   ===================================================== */
+
+.budget-admin-section {
+  margin: 1.75rem 0;
+  padding: 1.5rem;
+
+  background: linear-gradient(135deg, rgba(216, 75, 138, 0.07), rgba(255, 255, 255, 0.96));
+
+  border: 1px solid rgba(216, 75, 138, 0.22);
+  border-radius: 1.4rem;
+
+  box-shadow: 0 10px 30px rgba(216, 75, 138, 0.06);
+}
+
+.budget-admin-header {
+  margin-bottom: 0.55rem;
+}
+
+.budget-admin-header h3 {
+  margin: 0;
+
+  font-size: 1.25rem;
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+.budget-admin-tag {
+  display: inline-flex;
+
+  margin-bottom: 0.45rem;
+  padding: 0.3rem 0.7rem;
+
+  color: var(--ds-color-primary);
+
+  background: rgba(216, 75, 138, 0.1);
+  border-radius: 999px;
+
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.budget-admin-description {
+  max-width: 650px;
+  margin-bottom: 1.25rem;
+
+  color: #6c757d;
+
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+.budget-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+/* =====================================================
+    BOTONES
+   ===================================================== */
+
+.admin-form-card form > div:last-child {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+
+  margin-top: 1.75rem;
+}
+
+/* =====================================================
+    TABLET
+   ===================================================== */
+
+@media (max-width: 991.98px) {
+  .admin-form-page {
+    padding: 7rem 1.5rem 3.5rem;
+  }
+
+  .admin-form-card {
+    padding: 2rem;
+  }
+}
+
+/* =====================================================
+    MOBILE
+   ===================================================== */
+
+@media (max-width: 576px) {
+  .admin-form-page {
+    padding: 6.5rem 0 3rem;
+  }
+
+  .admin-form-page .ds-container {
+    padding-inline: 1rem;
+  }
+
+  .admin-back {
+    margin-bottom: 1.25rem;
+  }
+
+  .admin-form-card {
+    width: 100%;
+    padding: 1.25rem;
+
+    border-radius: 1.5rem;
+  }
+
+  .admin-form-card h2 {
+    margin-bottom: 1.5rem;
+
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  /* Campos */
+
+  .admin-form-card .mb-3 {
+    margin-bottom: 1rem !important;
+  }
+
+  .admin-form-card .form-label {
+    margin-bottom: 0.4rem;
+
+    font-size: 0.9rem;
+  }
+
+  .admin-form-card .form-control {
+    min-height: 52px;
+    padding: 0.8rem 0.9rem;
+
+    border-radius: 0.95rem;
+
+    font-size: 0.9rem;
+  }
+
+  .admin-form-card textarea.form-control {
+    min-height: 100px;
+  }
+
+  /* El contenedor Bootstrap del datetime no puede ensancharse */
+
+  .admin-form-card .d-flex {
+    min-width: 0;
+  }
+
+  .admin-form-card input[type='datetime-local'] {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Bloque interno */
+
+  .internal-admin-section {
+    margin: 1.4rem 0;
+    padding: 1rem;
+
+    border-radius: 1.15rem;
+  }
+
+  .internal-admin-header h3 {
+    font-size: 1.05rem;
+  }
+
+  .internal-admin-description {
+    margin-bottom: 0.85rem;
+
+    font-size: 0.78rem;
+  }
+
+  /* Presupuesto */
+
+  .budget-admin-section {
+    margin: 1.4rem 0;
+    padding: 1rem;
+
+    border-radius: 1.15rem;
+  }
+
+  .budget-admin-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .budget-admin-description {
+    margin-bottom: 1rem;
+
+    font-size: 0.78rem;
+  }
+
+  .budget-fields-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  /* Acciones */
+
+  .admin-form-card form > div:last-child {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+
+    margin-top: 1.5rem;
+  }
+
+  .admin-form-card form > div:last-child .btn,
+  .admin-form-card form > div:last-child .ds-btn {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+
+    margin: 0;
+    padding-inline: 0.5rem;
+
+    font-size: 0.88rem;
+  }
+}

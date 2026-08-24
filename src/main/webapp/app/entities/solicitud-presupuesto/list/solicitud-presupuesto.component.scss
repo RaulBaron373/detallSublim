@@ -1,1 +1,745 @@
-/* Estilos específicos de Solicitudes de presupuesto */
+/* =====================================================
+    SOLICITUDES DE PRESUPUESTO - LISTADO
+   ===================================================== */
+
+/* =====================================================
+    TABLET
+   ===================================================== */
+
+@media (max-width: 991.98px) {
+  /* Página */
+
+  .admin-page {
+    padding: 7rem 1.5rem 3.5rem;
+  }
+
+  .admin-back {
+    margin-bottom: 1.5rem;
+  }
+
+  .admin-page-header {
+    align-items: flex-start;
+    gap: 1.5rem;
+
+    margin-bottom: 2rem;
+  }
+
+  .admin-page-header > div:first-child {
+    min-width: 0;
+  }
+
+  .admin-page-header h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .admin-page-subtitle {
+    max-width: 580px;
+
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  /* Acciones superiores */
+
+  .admin-page-actions {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.65rem;
+
+    margin-top: 0;
+  }
+
+  .admin-page-actions .btn,
+  .admin-page-actions .ds-btn {
+    min-height: 44px;
+
+    padding-inline: 0.9rem;
+
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  /* ===================================================
+        LA TABLA PASA A TARJETAS
+        =================================================== */
+
+  .admin-table-card {
+    overflow: visible;
+
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .admin-table-wrapper {
+    padding: 0;
+    overflow: visible;
+  }
+
+  .admin-table {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+
+    margin: 0;
+  }
+
+  .admin-table thead {
+    display: none;
+  }
+
+  .admin-table tbody {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  /* Cada solicitud */
+
+  .admin-table tbody tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'client status'
+      'email email'
+      'phone company'
+      'quantity date'
+      'product product'
+      'actions actions';
+    gap: 0.65rem 1rem;
+
+    min-width: 0;
+    padding: 1.15rem;
+
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 1.35rem;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.055);
+  }
+
+  .admin-table tbody td {
+    display: block;
+
+    min-width: 0;
+    padding: 0;
+
+    background: transparent;
+    border: 0;
+
+    text-align: left !important;
+  }
+
+  /* ID oculto */
+
+  .admin-table tbody td:nth-child(1) {
+    display: none;
+  }
+
+  /* Cliente */
+
+  .admin-table tbody td:nth-child(2) {
+    grid-area: client;
+
+    min-width: 0;
+  }
+
+  .admin-table tbody td:nth-child(2) strong {
+    display: block;
+
+    font-size: 1rem;
+    line-height: 1.3;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* Email */
+
+  .admin-table tbody td:nth-child(3) {
+    grid-area: email;
+
+    color: #6c757d;
+
+    font-size: 0.8rem;
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+  }
+
+  .admin-table tbody td:nth-child(3)::before {
+    content: 'Email: ';
+
+    color: #292929;
+    font-weight: 600;
+  }
+
+  /* Teléfono */
+
+  .admin-table tbody td:nth-child(4) {
+    grid-area: phone;
+
+    color: #6c757d;
+
+    font-size: 0.8rem;
+  }
+
+  .admin-table tbody td:nth-child(4)::before {
+    content: 'Tel.: ';
+
+    color: #292929;
+    font-weight: 600;
+  }
+
+  /* Empresa */
+
+  .admin-table tbody td:nth-child(5) {
+    grid-area: company;
+
+    min-width: 0;
+
+    color: #6c757d;
+
+    font-size: 0.8rem;
+
+    overflow-wrap: anywhere;
+  }
+
+  .admin-table tbody td:nth-child(5)::before {
+    content: 'Empresa: ';
+
+    color: #292929;
+    font-weight: 600;
+  }
+
+  /* Cantidad */
+
+  .admin-table tbody td:nth-child(6) {
+    grid-area: quantity;
+
+    font-size: 0.8rem;
+  }
+
+  .admin-table tbody td:nth-child(6)::before {
+    content: 'Cantidad: ';
+
+    color: #6c757d;
+    font-weight: 600;
+  }
+
+  /* Fecha */
+
+  .admin-table tbody td:nth-child(7) {
+    grid-area: date;
+
+    justify-self: end;
+
+    color: #6c757d;
+
+    font-size: 0.75rem;
+    line-height: 1.4;
+    text-align: right !important;
+  }
+
+  /* Estado */
+
+  .admin-table tbody td:nth-child(8) {
+    grid-area: status;
+
+    align-self: start;
+    justify-self: end;
+  }
+
+  .admin-table tbody td:nth-child(8) .status-badge {
+    font-size: 0.68rem;
+
+    white-space: nowrap;
+  }
+
+  /* Producto */
+
+  .admin-table tbody td:nth-child(9) {
+    grid-area: product;
+
+    margin-top: 0.25rem;
+    padding-top: 0.7rem;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+
+    font-size: 0.82rem;
+  }
+
+  .admin-table tbody td:nth-child(9)::before {
+    content: 'Producto: ';
+
+    color: #6c757d;
+    font-weight: 600;
+  }
+
+  .admin-table tbody td:nth-child(9) a {
+    overflow-wrap: anywhere;
+  }
+
+  /* Acciones */
+
+  .admin-table tbody td:nth-child(10) {
+    grid-area: actions;
+
+    margin-top: 0.2rem;
+  }
+
+  .admin-action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+
+    width: 100%;
+  }
+
+  .admin-action-buttons .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+
+    padding: 0;
+
+    border-radius: 50%;
+  }
+
+  /* Paginación */
+
+  .admin-pagination-block {
+    margin-top: 1.75rem;
+  }
+}
+
+/* =====================================================
+    TABLET PEQUEÑA
+   ===================================================== */
+
+@media (max-width: 767.98px) {
+  .admin-page-header {
+    display: block;
+  }
+
+  .admin-page-actions {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+
+    width: 100%;
+    margin-top: 1.25rem;
+  }
+
+  .admin-page-actions .btn,
+  .admin-page-actions .ds-btn {
+    width: 100%;
+  }
+
+  .admin-table tbody {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================================
+    MOBILE
+   ===================================================== */
+
+@media (max-width: 576px) {
+  /* ===================================================
+        PÁGINA
+        =================================================== */
+
+  .admin-page {
+    padding: 6.5rem 1rem 3rem;
+  }
+
+  .admin-back {
+    margin-bottom: 1.5rem;
+  }
+
+  .admin-page-header {
+    display: block;
+
+    margin-bottom: 1.5rem;
+  }
+
+  .admin-page-tag {
+    margin-bottom: 0.65rem;
+  }
+
+  .admin-page-header h1 {
+    margin-bottom: 0.4rem;
+
+    font-size: 1.8rem;
+    line-height: 1.15;
+  }
+
+  .admin-page-subtitle {
+    max-width: none;
+
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  /* ===================================================
+        BOTONES SUPERIORES
+        =================================================== */
+
+  .admin-page-actions {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 0.65rem;
+
+    width: 100%;
+    margin-top: 1.25rem;
+  }
+
+  .admin-page-actions .btn,
+  .admin-page-actions .ds-btn {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+
+    padding-inline: 0.55rem;
+
+    font-size: 0.84rem;
+    white-space: nowrap;
+  }
+
+  /* ===================================================
+        CONVERTIMOS LA TABLA EN TARJETAS
+        =================================================== */
+
+  .admin-table-card {
+    overflow: visible;
+
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .admin-table-wrapper {
+    padding: 0;
+    overflow: visible;
+  }
+
+  .admin-table {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+  }
+
+  .admin-table thead {
+    display: none;
+  }
+
+  .admin-table tbody {
+    display: grid;
+    gap: 1rem;
+  }
+
+  /* ===================================================
+        TARJETA DE SOLICITUD
+        =================================================== */
+
+  .admin-table tbody tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'client status'
+      'email email'
+      'phone phone'
+      'company company'
+      'quantity date'
+      'product product'
+      'actions actions';
+    gap: 0.6rem 1rem;
+
+    width: 100%;
+    padding: 1rem;
+
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 1.35rem;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  }
+
+  .admin-table tbody td {
+    display: block;
+
+    min-width: 0;
+    padding: 0;
+
+    background: transparent;
+    border: 0;
+
+    text-align: left !important;
+  }
+
+  /* ===================================================
+        ID
+        Lo ocultamos en móvil porque no aporta valor.
+        =================================================== */
+
+  .admin-table tbody td:nth-child(1) {
+    display: none;
+  }
+
+  /* ===================================================
+        CLIENTE
+        =================================================== */
+
+  .admin-table tbody td:nth-child(2) {
+    grid-area: client;
+
+    min-width: 0;
+  }
+
+  .admin-table tbody td:nth-child(2) strong {
+    display: block;
+
+    font-size: 1.05rem;
+    line-height: 1.25;
+  }
+
+  /* ===================================================
+        EMAIL
+        =================================================== */
+
+  .admin-table tbody td:nth-child(3) {
+    grid-area: email;
+
+    color: #6c757d;
+
+    font-size: 0.8rem;
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+  }
+
+  .admin-table tbody td:nth-child(3)::before {
+    content: 'Email: ';
+
+    color: #2a2a2a;
+
+    font-weight: 600;
+  }
+
+  /* ===================================================
+        TELÉFONO
+        =================================================== */
+
+  .admin-table tbody td:nth-child(4) {
+    grid-area: phone;
+
+    color: #6c757d;
+
+    font-size: 0.8rem;
+  }
+
+  .admin-table tbody td:nth-child(4)::before {
+    content: 'Teléfono: ';
+
+    color: #2a2a2a;
+
+    font-weight: 600;
+  }
+
+  /* ===================================================
+        EMPRESA
+        =================================================== */
+
+  .admin-table tbody td:nth-child(5) {
+    grid-area: company;
+
+    color: #6c757d;
+
+    font-size: 0.8rem;
+  }
+
+  .admin-table tbody td:nth-child(5)::before {
+    content: 'Empresa: ';
+
+    color: #2a2a2a;
+
+    font-weight: 600;
+  }
+
+  /* ===================================================
+        CANTIDAD
+        =================================================== */
+
+  .admin-table tbody td:nth-child(6) {
+    grid-area: quantity;
+
+    font-size: 0.8rem;
+  }
+
+  .admin-table tbody td:nth-child(6)::before {
+    content: 'Cantidad: ';
+
+    color: #6c757d;
+
+    font-weight: 600;
+  }
+
+  /* ===================================================
+        FECHA
+        =================================================== */
+
+  .admin-table tbody td:nth-child(7) {
+    grid-area: date;
+
+    justify-self: end;
+
+    max-width: 145px;
+
+    color: #6c757d;
+
+    font-size: 0.74rem;
+    line-height: 1.35;
+    text-align: right !important;
+  }
+
+  /* ===================================================
+        ESTADO
+        =================================================== */
+
+  .admin-table tbody td:nth-child(8) {
+    grid-area: status;
+
+    align-self: start;
+    justify-self: end;
+  }
+
+  .admin-table tbody td:nth-child(8) .status-badge {
+    white-space: nowrap;
+
+    font-size: 0.68rem;
+  }
+
+  /* ===================================================
+        PRODUCTO
+        =================================================== */
+
+  .admin-table tbody td:nth-child(9) {
+    grid-area: product;
+
+    margin-top: 0.25rem;
+    padding-top: 0.7rem;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+
+    font-size: 0.82rem;
+  }
+
+  .admin-table tbody td:nth-child(9)::before {
+    content: 'Producto: ';
+
+    color: #6c757d;
+
+    font-weight: 600;
+  }
+
+  .admin-table tbody td:nth-child(9) a {
+    overflow-wrap: anywhere;
+  }
+
+  /* ===================================================
+        ACCIONES
+        =================================================== */
+
+  .admin-table tbody td:nth-child(10) {
+    grid-area: actions;
+
+    margin-top: 0.25rem;
+  }
+
+  .admin-action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.55rem;
+
+    width: 100%;
+  }
+
+  .admin-action-buttons .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+
+    padding: 0;
+
+    border-radius: 50%;
+  }
+
+  /* ===================================================
+        PAGINACIÓN
+        =================================================== */
+
+  .admin-pagination-block {
+    margin-top: 1.5rem;
+
+    text-align: center;
+  }
+
+  .admin-pagination-block > div:first-child {
+    margin-bottom: 0.5rem;
+
+    font-size: 0.8rem;
+  }
+
+  .pagination {
+    margin-bottom: 0;
+
+    justify-content: center;
+  }
+}
+
+/* =====================================================
+    MÓVILES MUY PEQUEÑOS
+   ===================================================== */
+
+@media (max-width: 360px) {
+  .admin-page-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-table tbody tr {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'client'
+      'status'
+      'email'
+      'phone'
+      'company'
+      'quantity'
+      'date'
+      'product'
+      'actions';
+  }
+
+  .admin-table tbody td:nth-child(7),
+  .admin-table tbody td:nth-child(8) {
+    justify-self: start;
+
+    max-width: none;
+
+    text-align: left !important;
+  }
+
+  .admin-action-buttons {
+    justify-content: flex-start;
+  }
+}

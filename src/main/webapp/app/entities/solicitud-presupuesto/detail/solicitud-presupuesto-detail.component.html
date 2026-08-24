@@ -65,6 +65,61 @@
           <p>{{ s.descripcion }}</p>
         </div>
 
+        <!-- PRESUPUESTO -->
+        @if (s.fechaEnvioPresupuesto || s.precioPresupuesto != null || s.tiempoEstimado || s.observacionesPresupuesto) {
+          <div class="budget-view-section">
+            <div class="budget-view-header">
+              <div>
+                <span class="budget-view-tag"> Presupuesto </span>
+
+                <h4>Datos del presupuesto</h4>
+              </div>
+            </div>
+
+            <div class="budget-view-grid">
+              <div class="budget-view-item">
+                <span>Precio acordado</span>
+
+                <strong>
+                  @if (s.precioPresupuesto != null) {
+                    {{ s.precioPresupuesto }} €
+                  } @else {
+                    -
+                  }
+                </strong>
+              </div>
+
+              <div class="budget-view-item">
+                <span>Tiempo estimado</span>
+
+                <strong>
+                  {{ s.tiempoEstimado || '-' }}
+                </strong>
+              </div>
+
+              @if (s.fechaEnvioPresupuesto) {
+                <div class="budget-view-item budget-view-item-full">
+                  <span>Presupuesto enviado</span>
+
+                  <strong>
+                    {{ s.fechaEnvioPresupuesto | formatMediumDatetime }}
+                  </strong>
+                </div>
+              }
+            </div>
+
+            @if (s.observacionesPresupuesto) {
+              <div class="budget-view-observations">
+                <span>Observaciones del presupuesto</span>
+
+                <p>
+                  {{ s.observacionesPresupuesto }}
+                </p>
+              </div>
+            }
+          </div>
+        }
+
         <!-- OBSERVACIONES -->
         @if (s.observacionesInternas) {
           <div class="request-section internal-note">

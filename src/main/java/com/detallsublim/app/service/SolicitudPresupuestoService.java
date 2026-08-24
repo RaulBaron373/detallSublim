@@ -5,6 +5,7 @@ import com.detallsublim.app.domain.enumeration.EstadoSolicitud;
 import com.detallsublim.app.repository.SolicitudPresupuestoRepository;
 import com.detallsublim.app.service.dto.SolicitudPresupuestoDTO;
 import com.detallsublim.app.service.mapper.SolicitudPresupuestoMapper;
+import java.time.Instant;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,13 +67,47 @@ public class SolicitudPresupuestoService {
 
         EstadoSolicitud estadoAnterior = existing.getEstado();
 
+        boolean primerEnvioPresupuesto = dto.getEstado() == EstadoSolicitud.PRESUPUESTADO && existing.getFechaEnvioPresupuesto() == null;
+
         SolicitudPresupuesto updated = solicitudPresupuestoMapper.toEntity(dto);
+
+        /*
+         * Conservamos siempre la fecha original
+         * del primer envío del presupuesto.
+         */
+        if (existing.getFechaEnvioPresupuesto() != null) {
+            updated.setFechaEnvioPresupuesto(existing.getFechaEnvioPresupuesto());
+        }
+
+        /*
+         * La primera vez que pasa a PRESUPUESTADO
+         * registramos cuándo se envió.
+         */
+        if (primerEnvioPresupuesto) {
+            updated.setFechaEnvioPresupuesto(Instant.now());
+        }
 
         updated = solicitudPresupuestoRepository.save(updated);
 
-        // Detectar cambio de estado
+        /*
+         * Enviar email únicamente si cambia el estado.
+         */
         if (estadoAnterior != updated.getEstado()) {
-            enviarEmailEstado(updated);
+            /*
+             * El correo completo del presupuesto
+             * se envía solamente la primera vez.
+             */
+            if (updated.getEstado() == EstadoSolicitud.PRESUPUESTADO) {
+                if (primerEnvioPresupuesto) {
+                    enviarEmailEstado(updated);
+                }
+            } else {
+                /*
+                 * ACEPTADO, FINALIZADO y RECHAZADO
+                 * conservan sus emails actuales.
+                 */
+                enviarEmailEstado(updated);
+            }
         }
 
         return solicitudPresupuestoMapper.toDto(updated);
