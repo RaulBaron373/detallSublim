@@ -1,9 +1,6 @@
-.mensaje-cell {
-  max-width: 300px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+/* =====================================================
+    USUARIOS - LISTADO
+   ===================================================== */
 
 /* =====================================================
     TABLET
@@ -60,8 +57,8 @@
   }
 
   /* ===================================================
-      TABLA -> TARJETAS
-     =================================================== */
+        TABLA -> TARJETAS
+        =================================================== */
 
   .admin-table-card {
     overflow: visible;
@@ -95,15 +92,18 @@
     gap: 1rem;
   }
 
+  /* Tarjeta */
+
   .admin-table tbody tr {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
-      'name status'
+      'user status'
       'email email'
-      'phone date'
-      'subject subject'
-      'message message'
+      'language roles'
+      'created created'
+      'modified modified'
+      'modified-date modified-date'
       'actions actions';
     gap: 0.65rem 1rem;
 
@@ -135,10 +135,10 @@
     display: none;
   }
 
-  /* Nombre */
+  /* Usuario */
 
   .admin-table tbody td:nth-child(2) {
-    grid-area: name;
+    grid-area: user;
   }
 
   .admin-table tbody td:nth-child(2) strong {
@@ -170,106 +170,116 @@
     font-weight: 600;
   }
 
-  /* Teléfono */
-
-  .admin-table tbody td:nth-child(4) {
-    grid-area: phone;
-
-    color: #6c757d;
-
-    font-size: 0.8rem;
-  }
-
-  .admin-table tbody td:nth-child(4)::before {
-    content: 'Tel.: ';
-
-    color: #292929;
-    font-weight: 600;
-  }
-
-  /* Asunto */
-
-  .admin-table tbody td:nth-child(5) {
-    grid-area: subject;
-
-    margin-top: 0.2rem;
-    padding-top: 0.7rem;
-
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-
-    font-size: 0.88rem;
-    font-weight: 600;
-
-    overflow-wrap: anywhere;
-  }
-
-  .admin-table tbody td:nth-child(5)::before {
-    content: 'Asunto: ';
-
-    color: #6c757d;
-    font-weight: 600;
-  }
-
-  /* Mensaje */
-
-  .admin-table tbody td:nth-child(6) {
-    grid-area: message;
-
-    max-width: none;
-
-    color: #6c757d;
-
-    font-size: 0.8rem;
-    line-height: 1.5;
-
-    white-space: normal;
-    overflow: hidden;
-
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
-
-  .admin-table tbody td:nth-child(6)::before {
-    content: 'Mensaje: ';
-
-    color: #292929;
-    font-weight: 600;
-  }
-
-  /* Fecha */
-
-  .admin-table tbody td:nth-child(7) {
-    grid-area: date;
-
-    justify-self: end;
-
-    color: #6c757d;
-
-    font-size: 0.74rem;
-    line-height: 1.4;
-
-    text-align: right !important;
-  }
-
   /* Estado */
 
-  .admin-table tbody td:nth-child(8) {
+  .admin-table tbody td:nth-child(4) {
     grid-area: status;
 
     align-self: start;
     justify-self: end;
   }
 
-  .admin-table tbody td:nth-child(8) .status-badge {
+  .admin-table tbody td:nth-child(4) .status-badge {
     white-space: nowrap;
 
     font-size: 0.68rem;
   }
 
-  /* Acciones */
+  /* Idioma */
+
+  .admin-table tbody td:nth-child(5) {
+    grid-area: language;
+
+    color: #6c757d;
+
+    font-size: 0.8rem;
+  }
+
+  .admin-table tbody td:nth-child(5)::before {
+    content: 'Idioma: ';
+
+    color: #292929;
+    font-weight: 600;
+  }
+
+  /* Roles */
+
+  .admin-table tbody td:nth-child(6) {
+    grid-area: roles;
+
+    justify-self: end;
+  }
+
+  .user-authorities {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.35rem;
+  }
+
+  .user-authorities .status-badge {
+    font-size: 0.65rem;
+  }
+
+  /* Creado */
+
+  .admin-table tbody td:nth-child(7) {
+    grid-area: created;
+
+    margin-top: 0.2rem;
+    padding-top: 0.65rem;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+
+    color: #6c757d;
+
+    font-size: 0.76rem;
+  }
+
+  .admin-table tbody td:nth-child(7)::before {
+    content: 'Creado: ';
+
+    color: #292929;
+    font-weight: 600;
+  }
+
+  /* Modificado por */
+
+  .admin-table tbody td:nth-child(8) {
+    grid-area: modified;
+
+    color: #6c757d;
+
+    font-size: 0.76rem;
+  }
+
+  .admin-table tbody td:nth-child(8)::before {
+    content: 'Modificado por: ';
+
+    color: #292929;
+    font-weight: 600;
+  }
+
+  /* Última modificación */
 
   .admin-table tbody td:nth-child(9) {
+    grid-area: modified-date;
+
+    color: #6c757d;
+
+    font-size: 0.76rem;
+  }
+
+  .admin-table tbody td:nth-child(9)::before {
+    content: 'Última modificación: ';
+
+    color: #292929;
+    font-weight: 600;
+  }
+
+  /* Acciones */
+
+  .admin-table tbody td:nth-child(10) {
     grid-area: actions;
 
     margin-top: 0.25rem;
@@ -296,8 +306,6 @@
 
     border-radius: 50%;
   }
-
-  /* Paginación */
 
   .admin-pagination-block {
     margin-top: 1.75rem;
@@ -342,19 +350,8 @@
     padding: 6.5rem 1rem 3rem;
   }
 
-  .admin-back {
-    margin-bottom: 1.5rem;
-  }
-
-  .admin-page-tag {
-    margin-bottom: 0.65rem;
-  }
-
   .admin-page-header h1 {
-    margin-bottom: 0.4rem;
-
     font-size: 1.8rem;
-    line-height: 1.15;
   }
 
   .admin-page-subtitle {
@@ -380,11 +377,13 @@
   .admin-table tbody tr {
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
-      'name status'
+      'user status'
       'email email'
-      'phone date'
-      'subject subject'
-      'message message'
+      'language language'
+      'roles roles'
+      'created created'
+      'modified modified'
+      'modified-date modified-date'
       'actions actions';
 
     padding: 1rem;
@@ -392,8 +391,12 @@
     border-radius: 1.25rem;
   }
 
-  .admin-table tbody td:nth-child(7) {
-    max-width: 130px;
+  .admin-table tbody td:nth-child(6) {
+    justify-self: start;
+  }
+
+  .user-authorities {
+    justify-content: flex-start;
   }
 
   .admin-action-buttons .btn {
@@ -401,14 +404,10 @@
     min-width: 42px;
     height: 42px;
   }
-
-  .admin-pagination-block {
-    margin-top: 1.5rem;
-  }
 }
 
 /* =====================================================
-    MÓVIL PEQUEÑO
+    MÓVIL MUY PEQUEÑO
    ===================================================== */
 
 @media (max-width: 360px) {
@@ -419,23 +418,19 @@
   .admin-table tbody tr {
     grid-template-columns: 1fr;
     grid-template-areas:
-      'name'
+      'user'
       'status'
       'email'
-      'phone'
-      'date'
-      'subject'
-      'message'
+      'language'
+      'roles'
+      'created'
+      'modified'
+      'modified-date'
       'actions';
   }
 
-  .admin-table tbody td:nth-child(7),
-  .admin-table tbody td:nth-child(8) {
+  .admin-table tbody td:nth-child(4) {
     justify-self: start;
-
-    max-width: none;
-
-    text-align: left !important;
   }
 
   .admin-action-buttons {

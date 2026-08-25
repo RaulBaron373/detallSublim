@@ -1,0 +1,253 @@
+/* =====================================================
+    DETALLE DEL MENSAJE
+   ===================================================== */
+
+.message-view-card {
+  width: 100%;
+  max-width: 900px;
+
+  margin-inline: auto;
+  padding: 2.5rem;
+
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 1.8rem;
+
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
+}
+
+/* Header */
+
+.message-view-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.25rem;
+
+  margin-bottom: 2rem;
+}
+
+.message-view-header > div {
+  min-width: 0;
+}
+
+.message-view-header h1 {
+  margin: 0 0 0.4rem;
+
+  font-size: 2rem;
+  line-height: 1.2;
+
+  overflow-wrap: anywhere;
+}
+
+.message-subtitle {
+  margin: 0;
+
+  color: #6c757d;
+
+  font-size: 0.9rem;
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+/* Cliente + estado */
+
+.message-view-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+
+  margin-bottom: 1.75rem;
+}
+
+.message-section {
+  min-width: 0;
+}
+
+.message-section h4 {
+  margin-bottom: 0.85rem;
+
+  font-size: 1.15rem;
+}
+
+.message-section p {
+  margin-bottom: 0.65rem;
+
+  color: #626773;
+
+  line-height: 1.55;
+
+  overflow-wrap: anywhere;
+}
+
+.message-section strong {
+  color: #242424;
+}
+
+/* Mensaje recibido */
+
+.message-content-box {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+
+  background: rgba(36, 211, 196, 0.09);
+  border: 1px solid rgba(36, 211, 196, 0.12);
+  border-radius: 1.15rem;
+}
+
+.message-content-box h4 {
+  margin-bottom: 0.65rem;
+}
+
+.message-content-box p {
+  margin: 0;
+
+  line-height: 1.6;
+}
+
+/* Respuesta */
+
+.message-reply-box {
+  margin-top: 1.25rem;
+  padding: 1.25rem;
+
+  background: rgba(216, 75, 138, 0.07);
+  border: 1px solid rgba(216, 75, 138, 0.12);
+  border-radius: 1.15rem;
+}
+
+.message-reply-box h4 {
+  margin-bottom: 0.9rem;
+
+  font-size: 1.15rem;
+}
+
+.message-reply-box textarea {
+  width: 100%;
+  min-height: 130px;
+
+  padding: 0.9rem;
+
+  border-radius: 1rem;
+
+  resize: vertical;
+}
+
+.message-reply-box .ds-btn {
+  min-height: 46px;
+}
+
+/* Acciones */
+
+.message-view-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: 1.75rem;
+}
+
+/* =====================================================
+    TABLET
+   ===================================================== */
+
+@media (max-width: 991.98px) {
+  .admin-form-page {
+    padding: 7rem 1.5rem 3.5rem;
+  }
+
+  .message-view-card {
+    padding: 2rem;
+  }
+}
+
+/* =====================================================
+    MOBILE
+   ===================================================== */
+
+@media (max-width: 576px) {
+  .admin-form-page {
+    padding: 6.5rem 0 3rem;
+  }
+
+  .admin-form-page .ds-container {
+    padding-inline: 1rem;
+  }
+
+  .admin-back {
+    margin-bottom: 1.25rem;
+  }
+
+  .message-view-card {
+    padding: 1.25rem;
+
+    border-radius: 1.5rem;
+  }
+
+  .message-view-header {
+    gap: 0.75rem;
+
+    margin-bottom: 1.5rem;
+  }
+
+  .message-view-header h1 {
+    font-size: 1.55rem;
+  }
+
+  .message-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .message-view-header .status-badge {
+    flex-shrink: 0;
+
+    font-size: 0.68rem;
+  }
+
+  .message-view-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+
+    margin-bottom: 1.4rem;
+  }
+
+  .message-section h4 {
+    font-size: 1rem;
+  }
+
+  .message-section p {
+    font-size: 0.8rem;
+  }
+
+  .message-content-box,
+  .message-reply-box {
+    padding: 1rem;
+
+    border-radius: 1rem;
+  }
+
+  .message-reply-box textarea {
+    min-height: 120px;
+
+    font-size: 0.9rem;
+  }
+
+  .message-reply-box .ds-btn {
+    width: 100%;
+  }
+
+  .message-view-actions .btn {
+    width: 100%;
+    min-height: 46px;
+  }
+}
+
+@media (max-width: 360px) {
+  .message-view-header {
+    flex-direction: column;
+  }
+
+  .message-view-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -8,6 +8,7 @@ import { NgClass } from '@angular/common';
 @Component({
   selector: 'jhi-user-mgmt-detail',
   templateUrl: './user-management-detail.component.html',
+  styleUrl: './user-management-detail.component.scss',
   imports: [RouterModule, SharedModule, NgClass],
 })
 export default class UserManagementDetailComponent {

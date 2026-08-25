@@ -4,15 +4,10 @@
       <a routerLink="/admin/user-management" class="admin-back-btn">← Volver a administración</a>
     </div>
 
-    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form class="admin-form-card user-form-card" name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="myUserLabel" jhiTranslate="userManagement.home.createOrEditLabel">Crear o editar un usuario</h2>
 
       <jhi-alert-error />
-
-      <div class="mb-3" [hidden]="!editForm.value.id">
-        <label class="form-label" for="field_id" jhiTranslate="global.field.id">ID</label>
-        <input type="text" id="field_id" class="form-control" name="id" formControlName="id" readonly />
-      </div>
 
       <div class="mb-3">
         <label class="form-label" for="field_login" jhiTranslate="userManagement.login">Login</label>
@@ -137,13 +132,17 @@
           }
         </select>
       </div>
-      <button type="button" class="btn btn-secondary" (click)="previousState()">
-        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
-      </button>
+      <div class="user-form-actions">
+        <button type="button" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>
+          <span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
 
-      <button type="submit" [disabled]="editForm.invalid || isSaving()" class="btn btn-primary">
-        <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
-      </button>
+        <button type="submit" [disabled]="editForm.invalid || isSaving()" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>
+          <span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
     </form>
   </div>
 </section>

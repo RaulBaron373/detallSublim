@@ -12,6 +12,7 @@ import { MensajeContactoService } from '../service/mensaje-contacto.service';
 @Component({
   selector: 'jhi-mensaje-contacto-detail',
   templateUrl: './mensaje-contacto-detail.component.html',
+  styleUrl: './mensaje-contacto-detail.component.scss',
   imports: [SharedModule, RouterModule, FormatMediumDatetimePipe, NgClass, FormsModule],
 })
 export class MensajeContactoDetailComponent {

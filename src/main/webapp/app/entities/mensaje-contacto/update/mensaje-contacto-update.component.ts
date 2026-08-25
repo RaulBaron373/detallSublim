@@ -18,6 +18,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'jhi-mensaje-contacto-update',
   templateUrl: './mensaje-contacto-update.component.html',
+  styleUrl: './mensaje-contacto-update.component.scss',
   imports: [SharedModule, FormsModule, ReactiveFormsModule, RouterLink],
 })
 export class MensajeContactoUpdateComponent implements OnInit {
