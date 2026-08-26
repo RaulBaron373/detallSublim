@@ -46,7 +46,7 @@
         <p>Revisar contactos recibidos</p>
       </a>
 
-      <a routerLink="/admin/user-management" class="panel-card">
+      <a *jhiHasAnyAuthority="'ROLE_ADMIN'" routerLink="/admin/user-management" class="panel-card">
         <h3>Administración</h3>
         <p>Gestión de usuarios</p>
       </a>

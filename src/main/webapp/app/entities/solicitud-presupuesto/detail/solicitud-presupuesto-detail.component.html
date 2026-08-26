@@ -132,7 +132,13 @@
         <div class="request-view-actions">
           <button (click)="previousState()" class="btn admin-btn-light">Volver</button>
 
-          <button [routerLink]="['/solicitud-presupuesto', s.id, 'edit']" class="ds-btn ds-btn-primary">Editar</button>
+          <button
+            *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']"
+            [routerLink]="['/solicitud-presupuesto', s.id, 'edit']"
+            class="ds-btn ds-btn-primary"
+          >
+            Editar
+          </button>
         </div>
       </div>
     }

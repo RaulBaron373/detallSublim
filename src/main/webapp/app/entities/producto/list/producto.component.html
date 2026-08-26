@@ -15,7 +15,7 @@
         <span>Actualizar</span>
       </button>
 
-      <button class="ds-btn ds-btn-primary" [routerLink]="['/producto/new']">
+      <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']" class="ds-btn ds-btn-primary" [routerLink]="['/producto/new']">
         <fa-icon icon="plus"></fa-icon>
         <span>Nuevo producto</span>
       </button>
@@ -94,11 +94,15 @@
                       <fa-icon icon="eye"></fa-icon>
                     </a>
 
-                    <a [routerLink]="['/producto', producto.id, 'edit']" class="btn admin-btn-edit">
+                    <a
+                      *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']"
+                      [routerLink]="['/producto', producto.id, 'edit']"
+                      class="btn admin-btn-edit"
+                    >
                       <fa-icon icon="pencil-alt"></fa-icon>
                     </a>
 
-                    <button (click)="delete(producto)" class="btn admin-btn-delete">
+                    <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']" (click)="delete(producto)" class="btn admin-btn-delete">
                       <fa-icon icon="times"></fa-icon>
                     </button>
                   </div>

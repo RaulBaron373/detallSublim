@@ -18,6 +18,7 @@
       </button>
 
       <button
+        *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']"
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="ds-btn ds-btn-primary"
@@ -182,6 +183,7 @@
                     </a>
 
                     <a
+                      *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']"
                       [routerLink]="['/solicitud-presupuesto', solicitudPresupuesto.id, 'edit']"
                       class="btn btn-sm admin-btn-edit"
                       data-cy="entityEditButton"
@@ -190,6 +192,7 @@
                     </a>
 
                     <button
+                      *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']"
                       type="button"
                       (click)="delete(solicitudPresupuesto)"
                       class="btn btn-sm admin-btn-delete"

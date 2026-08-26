@@ -46,7 +46,7 @@
         </div>
 
         <!-- RESPUESTA -->
-        <div class="message-reply-box">
+        <div *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']" class="message-reply-box">
           <h4>Responder al cliente</h4>
 
           <textarea class="form-control" rows="4" [(ngModel)]="respuesta" placeholder="Escribe aquí la respuesta al cliente..."></textarea>

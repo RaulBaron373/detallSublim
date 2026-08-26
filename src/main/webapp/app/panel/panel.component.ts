@@ -5,11 +5,12 @@ import { LoginService } from 'app/login/login.service';
 import { SolicitudPresupuestoService } from 'app/entities/solicitud-presupuesto/service/solicitud-presupuesto.service';
 import { MensajeContactoService } from 'app/entities/mensaje-contacto/service/mensaje-contacto.service';
 import { ProductoService } from 'app/entities/producto/service/producto.service';
+import HasAnyAuthorityDirective from 'app/shared/auth/has-any-authority.directive';
 
 @Component({
   selector: 'jhi-panel',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, HasAnyAuthorityDirective],
   templateUrl: './panel.component.html',
   styleUrl: './panel.component.scss',
 })
