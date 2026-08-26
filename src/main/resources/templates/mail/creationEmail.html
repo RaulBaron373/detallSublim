@@ -1,20 +1,51 @@
-<!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" lang="en">
-  <head>
-    <title th:text="#{email.activation.title}">JHipster creation</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}" />
-  </head>
-  <body>
-    <p th:text="#{email.activation.greeting(${user.login})}">Dear</p>
-    <p th:text="#{email.creation.text1}">Your JHipster account has been created, please click on the URL below to access it:</p>
-    <p>
-      <a th:with="url=(@{|${baseUrl}/account/reset/finish?key=${user.resetKey}|})" th:href="${url}" th:text="${url}">Login link</a>
-    </p>
-    <p>
-      <span th:text="#{email.activation.text2}">Regards, </span>
-      <br />
-      <em th:text="#{email.signature}">JHipster.</em>
-    </p>
-  </body>
-</html>
+<div xmlns:th="http://www.thymeleaf.org">
+  <div
+    style="
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(0, 217, 192, 0.12);
+      color: #008d7d;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    "
+  >
+    NUEVA CUENTA
+  </div>
+
+  <h1 style="margin: 0 0 16px; color: #081a35; font-size: 28px; line-height: 36px">Tu acceso está listo</h1>
+
+  <p style="margin: 0 0 14px; color: #555b68; font-size: 15px; line-height: 24px">
+    Hola
+    <strong th:text="${user.login}">usuario</strong>,
+  </p>
+
+  <p style="margin: 0 0 26px; color: #555b68; font-size: 15px; line-height: 24px">
+    Se ha creado una cuenta para ti en el sistema interno de Detall Sublim.
+  </p>
+
+  <p style="margin: 0 0 26px; color: #555b68; font-size: 15px; line-height: 24px">
+    Utiliza el siguiente botón para establecer tu contraseña y completar el acceso.
+  </p>
+
+  <div style="text-align: center; margin: 30px 0">
+    <a
+      th:with="url=(@{|${baseUrl}/account/reset/finish?key=${user.resetKey}|})"
+      th:href="${url}"
+      style="
+        display: inline-block;
+        padding: 14px 24px;
+        border-radius: 999px;
+        background: #d84b8a;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+      "
+    >
+      Crear mi contraseña
+    </a>
+  </div>
+</div>

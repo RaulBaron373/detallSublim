@@ -44,8 +44,40 @@ public class MensajeContactoService {
      */
     public MensajeContactoDTO save(MensajeContactoDTO mensajeContactoDTO) {
         LOG.debug("Request to save MensajeContacto : {}", mensajeContactoDTO);
+
         MensajeContacto mensajeContacto = mensajeContactoMapper.toEntity(mensajeContactoDTO);
         mensajeContacto = mensajeContactoRepository.save(mensajeContacto);
+
+        String telefono = mensajeContacto.getTelefono() != null && !mensajeContacto.getTelefono().isBlank()
+            ? mensajeContacto.getTelefono()
+            : "No indicado";
+
+        String mensaje = mensajeContacto.getMensaje() != null && !mensajeContacto.getMensaje().isBlank()
+            ? mensajeContacto.getMensaje()
+            : "Sin mensaje";
+
+        String contenido =
+            "Se ha recibido un nuevo mensaje desde la web de Detall Sublim.\n\n" +
+            "Nombre: " +
+            mensajeContacto.getNombre() +
+            "\n" +
+            "Email: " +
+            mensajeContacto.getEmail() +
+            "\n" +
+            "Teléfono: " +
+            telefono +
+            "\n" +
+            "Asunto: " +
+            mensajeContacto.getAsunto() +
+            "\n\n" +
+            "Mensaje:\n" +
+            mensaje +
+            "\n\n" +
+            "ID del mensaje: #" +
+            mensajeContacto.getId();
+
+        mailService.sendCompanyNotification("Nuevo mensaje de contacto - Detall Sublim", contenido);
+
         return mensajeContactoMapper.toDto(mensajeContacto);
     }
 
@@ -120,7 +152,21 @@ public class MensajeContactoService {
         MensajeContacto mensaje = mensajeContactoRepository.findById(id).orElseThrow(() -> new RuntimeException("Mensaje no encontrado"));
 
         // enviar email
-        mailService.sendEmail(mensaje.getEmail(), "Respuesta a tu consulta - Detall Sublim", respuesta, false, false);
+        String contenido =
+            "Hola " +
+            mensaje.getNombre() +
+            ",\n\n" +
+            "Hemos revisado tu consulta y queremos darte la siguiente respuesta:\n\n" +
+            respuesta +
+            "\n\nSi necesitas cualquier otra aclaración, puedes volver a ponerte en contacto con nosotros.";
+
+        mailService.sendBrandedTextEmail(
+            mensaje.getEmail(),
+            "Respuesta a tu consulta - Detall Sublim",
+            "RESPUESTA",
+            "Tenemos una respuesta para ti",
+            contenido
+        );
 
         // marcar como atendido
         mensaje.setAtendido(true);
