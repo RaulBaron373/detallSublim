@@ -67,7 +67,13 @@
         <div class="product-view-actions">
           <button (click)="previousState()" class="btn admin-btn-light">Volver</button>
 
-          <button [routerLink]="['/producto', p.id, 'edit']" class="ds-btn ds-btn-primary">Editar</button>
+          <button
+            *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']"
+            [routerLink]="['/producto', p.id, 'edit']"
+            class="ds-btn ds-btn-primary"
+          >
+            Editar
+          </button>
         </div>
       </div>
     }

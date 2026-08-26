@@ -88,8 +88,19 @@
 
                 <td class="text-end">
                   <div class="admin-action-buttons">
-                    <button type="submit" [routerLink]="['./', user.login, 'view']" class="btn admin-btn-view">
-                      <fa-icon icon="eye"></fa-icon>
+                    <button
+                      type="button"
+                      class="btn admin-btn-password"
+                      (click)="sendPasswordReset(user)"
+                      [disabled]="!user.email || !user.activated || resetPasswordLogin() !== null"
+                      title="Enviar restablecimiento de contraseña"
+                      aria-label="Enviar restablecimiento de contraseña"
+                    >
+                      @if (resetPasswordLogin() === user.login) {
+                        <fa-icon icon="sync" animation="spin"></fa-icon>
+                      } @else {
+                        <fa-icon icon="envelope"></fa-icon>
+                      }
                     </button>
 
                     <button type="submit" [routerLink]="['./', user.login, 'edit']" queryParamsHandling="merge" class="btn admin-btn-edit">

@@ -31,6 +31,11 @@ export class UserManagementService {
     return this.http.get<IUser[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
+  resetPassword(login: string): Observable<void> {
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+    return this.http.post<void>(`${this.resourceUrl}/${login}/reset-password`, {});
+  }
+
   delete(login: string): Observable<{}> {
     return this.http.delete(`${this.resourceUrl}/${login}`);
   }

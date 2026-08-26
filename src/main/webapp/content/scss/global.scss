@@ -680,7 +680,8 @@ p {
 
 .admin-btn-view,
 .admin-btn-edit,
-.admin-btn-delete {
+.admin-btn-delete,
+.admin-btn-password {
   width: 36px;
   height: 36px;
   border-radius: 999px;
@@ -689,6 +690,21 @@ p {
   justify-content: center;
   border: none;
 }
+
+.admin-btn-password {
+  background: rgba(124, 58, 237, 0.12);
+  color: #7c3aed;
+}
+
+//.admin-btn-password:hover:not(:disabled) {
+//background: rgba(124, 58, 237, 0.2);
+//color: #6d28d9;
+//}
+
+//.admin-btn-password:disabled {
+//  opacity: 0.45;
+//  cursor: not-allowed;
+//}
 
 .admin-btn-view {
   background: rgba(0, 217, 192, 0.14);

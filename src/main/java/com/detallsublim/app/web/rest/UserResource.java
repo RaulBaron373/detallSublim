@@ -193,6 +193,41 @@ public class UserResource {
     }
 
     /**
+     * {@code POST /admin/users/:login/reset-password} :
+     * Envía al usuario un correo para restablecer su contraseña.
+     *
+     * Solo puede ejecutarlo un administrador.
+     *
+     * @param login login del usuario.
+     * @return respuesta sin contenido si el correo se ha enviado correctamente.
+     */
+    @PostMapping("/users/{login}/reset-password")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<Void> sendPasswordResetMail(@PathVariable("login") @Pattern(regexp = Constants.LOGIN_REGEX) String login) {
+        LOG.debug("REST request to send password reset mail to User: {}", login);
+
+        User user = userRepository
+            .findOneByLogin(login.toLowerCase(Locale.ROOT))
+            .orElseThrow(() -> new BadRequestAlertException("User not found", "userManagement", "usernotfound"));
+
+        if (!user.isActivated()) {
+            throw new BadRequestAlertException("User is not activated", "userManagement", "usernotactivated");
+        }
+
+        if (user.getEmail() == null || user.getEmail().isBlank()) {
+            throw new BadRequestAlertException("User does not have an email address", "userManagement", "emailmissing");
+        }
+
+        User resetUser = userService
+            .requestPasswordReset(user.getEmail())
+            .orElseThrow(() -> new BadRequestAlertException("Password reset could not be requested", "userManagement", "resetfailed"));
+
+        mailService.sendPasswordResetMail(resetUser);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
      * {@code DELETE /admin/users/:login} : delete the "login" User.
      *
      * @param login the login of the user to delete.

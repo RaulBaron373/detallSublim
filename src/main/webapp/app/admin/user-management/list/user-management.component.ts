@@ -13,6 +13,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { UserManagementService } from '../service/user-management.service';
 import { User } from '../user-management.model';
 import UserManagementDeleteDialogComponent from '../delete/user-management-delete-dialog.component';
+import { AlertService } from 'app/core/util/alert.service';
 
 @Component({
   selector: 'jhi-user-mgmt',
@@ -24,6 +25,7 @@ export default class UserManagementComponent implements OnInit {
   currentAccount = inject(AccountService).trackCurrentAccount();
   users = signal<User[] | null>(null);
   isLoading = signal(false);
+  resetPasswordLogin = signal<string | null>(null);
   totalItems = signal(0);
   itemsPerPage = ITEMS_PER_PAGE;
   page!: number;
@@ -34,6 +36,7 @@ export default class UserManagementComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly sortService = inject(SortService);
   private readonly modalService = inject(NgbModal);
+  private readonly alertService = inject(AlertService);
 
   ngOnInit(): void {
     this.handleNavigation();
@@ -97,5 +100,33 @@ export default class UserManagementComponent implements OnInit {
   private onSuccess(users: User[] | null, headers: HttpHeaders): void {
     this.totalItems.set(Number(headers.get('X-Total-Count')));
     this.users.set(users);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  sendPasswordReset(user: User): void {
+    if (!user.login || !user.email || !user.activated) {
+      return;
+    }
+
+    this.resetPasswordLogin.set(user.login);
+
+    this.userService.resetPassword(user.login).subscribe({
+      next: () => {
+        this.resetPasswordLogin.set(null);
+
+        this.alertService.addAlert({
+          type: 'success',
+          message: `Se ha enviado a ${user.email} el enlace para restablecer la contraseña.`,
+        });
+      },
+      error: () => {
+        this.resetPasswordLogin.set(null);
+
+        this.alertService.addAlert({
+          type: 'danger',
+          message: 'No se ha podido enviar el correo de restablecimiento de contraseña.',
+        });
+      },
+    });
   }
 }
