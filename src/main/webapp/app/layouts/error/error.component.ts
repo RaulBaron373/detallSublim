@@ -1,45 +1,32 @@
-import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
-import SharedModule from 'app/shared/shared.module';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'jhi-error',
   templateUrl: './error.component.html',
-  imports: [SharedModule, RouterLink],
+  styleUrl: './error.component.scss',
+  imports: [RouterLink],
 })
-export default class ErrorComponent implements OnInit, OnDestroy {
-  errorMessage = signal<string | undefined>(undefined);
-  errorKey?: string;
-  langChangeSubscription?: Subscription;
+export default class ErrorComponent implements OnInit {
+  statusCode = signal('500');
 
-  private readonly translateService = inject(TranslateService);
+  eyebrow = signal('ERROR DEL SISTEMA');
+
+  heading = signal('Algo no ha salido como esperábamos');
+
+  description = signal('Ha ocurrido un error inesperado. Puedes volver al inicio e intentarlo de nuevo.');
+
   private readonly route = inject(ActivatedRoute);
 
   ngOnInit(): void {
     this.route.data.subscribe(routeData => {
-      if (routeData.errorMessage) {
-        this.errorKey = routeData.errorMessage;
-        this.getErrorMessageTranslation();
-        this.langChangeSubscription = this.translateService.onLangChange.subscribe(() => this.getErrorMessageTranslation());
-      }
+      this.statusCode.set(routeData['statusCode'] ?? '500');
+
+      this.eyebrow.set(routeData['eyebrow'] ?? 'ERROR DEL SISTEMA');
+
+      this.heading.set(routeData['heading'] ?? 'Algo no ha salido como esperábamos');
+
+      this.description.set(routeData['description'] ?? 'Ha ocurrido un error inesperado. Puedes volver al inicio e intentarlo de nuevo.');
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.langChangeSubscription) {
-      this.langChangeSubscription.unsubscribe();
-    }
-  }
-
-  private getErrorMessageTranslation(): void {
-    this.errorMessage.set('');
-    if (this.errorKey) {
-      this.translateService.get(this.errorKey).subscribe(translatedErrorMessage => {
-        this.errorMessage.set(translatedErrorMessage);
-      });
-    }
   }
 }

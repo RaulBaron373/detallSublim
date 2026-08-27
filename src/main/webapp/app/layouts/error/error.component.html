@@ -1,21 +1,91 @@
-<section class="error-page">
+<section class="ds-error-page">
+  <!-- Decoración -->
+  <div class="ds-error-blob ds-error-blob--pink" aria-hidden="true"></div>
+
+  <div class="ds-error-blob ds-error-blob--cyan" aria-hidden="true"></div>
+
+  <div class="ds-error-blob ds-error-blob--yellow" aria-hidden="true"></div>
+
   <div class="ds-container">
-    <div class="error-card">
-      <div class="error-code">404</div>
+    <article class="ds-error-card">
+      <!-- Marca -->
+      <div class="ds-error-brand">
+        <svg class="ds-error-logo" viewBox="0 0 574 683" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Contorno -->
+          <path
+            class="ds-error-logo-outline"
+            d="
+              M 166 33
+              H 540
+              V 516
+              C 540 590 481 649 407 649
+              H 33
+              V 166
+              C 33 93 93 33 166 33
+              Z
+            "
+          />
 
-      <h1 class="error-title">Página no encontrada</h1>
+          <!-- D magenta -->
+          <path
+            class="ds-error-logo-magenta"
+            d="
+              M 357 87
+              H 242
+              A 162 162 0 0 0 242 411
+              H 357
+              Z
+            "
+          />
 
-      <p class="error-text">La página que estás buscando no existe o ha sido movida.</p>
+          <!-- D cian -->
+          <path
+            class="ds-error-logo-cyan"
+            d="
+              M 218 274
+              H 333
+              A 162 162 0 0 1 333 598
+              H 218
+              Z
+            "
+          />
 
-      @if (errorMessage(); as errMessage) {
-        <div class="error-detail">
-          {{ errMessage }}
-        </div>
-      }
+          <!-- Solape amarillo -->
+          <rect class="ds-error-logo-yellow" x="219" y="274" width="137" height="137" />
+        </svg>
 
-      <div class="error-actions">
-        <a routerLink="/" class="ds-btn ds-btn-primary"> Ir al inicio </a>
+        <span>Detall Sublim</span>
       </div>
-    </div>
+
+      <!-- Código -->
+      <div class="ds-error-code" [attr.aria-label]="'Error ' + statusCode()">
+        {{ statusCode() }}
+      </div>
+
+      <!-- Tipo -->
+      <div class="ds-error-eyebrow">
+        {{ eyebrow() }}
+      </div>
+
+      <!-- Mensaje -->
+      <h1 class="ds-error-title">
+        {{ heading() }}
+      </h1>
+
+      <p class="ds-error-description">
+        {{ description() }}
+      </p>
+
+      <!-- Acción -->
+      <div class="ds-error-actions">
+        <a routerLink="/" class="ds-btn ds-btn-primary ds-error-home">
+          Volver al inicio
+
+          <span aria-hidden="true"> → </span>
+        </a>
+      </div>
+
+      <p class="ds-error-reference">Código {{ statusCode() }} · Detall Sublim</p>
+    </article>
   </div>
 </section>
