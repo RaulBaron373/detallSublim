@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SolicitudPresupuestoService } from 'app/entities/solicitud-presupuesto/service/solicitud-presupuesto.service';
-import dayjs from 'dayjs/esm';
-import { EstadoSolicitud } from 'app/entities/enumerations/estado-solicitud.model';
-import { NewSolicitudPresupuesto } from 'app/entities/solicitud-presupuesto/solicitud-presupuesto.model';
+import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { ProductoService } from 'app/entities/producto/service/producto.service';
+
+import { PublicCatalogService } from 'app/core/catalog/public-catalog.service';
 import { IProducto } from 'app/entities/producto/producto.model';
 import SharedModule from 'app/shared/shared.module';
 
@@ -26,19 +24,21 @@ export class QuoteRequestComponent {
     descripcion: '',
     cantidad: 1,
   };
+
   successMessage = '';
   errorMessage = '';
+
   productos: IProducto[] = [];
 
   constructor(
-    private solicitudPresupuestoService: SolicitudPresupuestoService,
-    private productoService: ProductoService,
-    private route: ActivatedRoute,
+    private readonly http: HttpClient,
+    private readonly publicCatalogService: PublicCatalogService,
+    private readonly route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
-    this.productoService.query().subscribe(res => {
-      this.productos = (res.body ?? []).filter(producto => producto.activo);
+    this.publicCatalogService.getProductos().subscribe(productos => {
+      this.productos = productos;
 
       this.route.queryParams.subscribe(params => {
         const productoId = Number(params['producto']);
@@ -56,25 +56,27 @@ export class QuoteRequestComponent {
 
     if (!this.form.nombreCliente.trim() || !this.form.email.trim() || !this.form.telefono.trim() || !this.form.descripcion.trim()) {
       this.errorMessage = 'Debes completar todos los campos obligatorios.';
+
       return;
     }
 
-    const productoSeleccionado = this.productos.find(producto => producto.id === Number(this.form.producto)) ?? null;
-
-    const payload: NewSolicitudPresupuesto = {
-      id: null,
+    const payload = {
       nombreCliente: this.form.nombreCliente,
+
       email: this.form.email,
+
       telefono: this.form.telefono,
+
       nombreEmpresa: this.form.nombreEmpresa,
+
       descripcion: this.form.descripcion,
+
       cantidad: Number(this.form.cantidad),
-      fechaSolicitud: dayjs(),
-      estado: EstadoSolicitud.PENDIENTE,
-      producto: productoSeleccionado,
+
+      productoId: this.form.producto ? Number(this.form.producto) : null,
     };
 
-    this.solicitudPresupuestoService.create(payload).subscribe({
+    this.http.post<void>('/api/public/quote-request', payload).subscribe({
       next: () => {
         this.successMessage = 'Solicitud enviada correctamente.';
 

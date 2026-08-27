@@ -151,3 +151,21 @@ Desktop.ini
 ######################
 coverage/
 .nyc_output/
+
+######################
+# Environment / secrets
+######################
+
+.env
+.env.*
+!.env.example
+
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+secrets/
+*.secret

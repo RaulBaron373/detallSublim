@@ -7,8 +7,8 @@ import SharedModule from 'app/shared/shared.module';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 import { TranslateService } from '@ngx-translate/core';
-import { ProductoService } from 'app/entities/producto/service/producto.service';
 import { IProducto } from 'app/entities/producto/producto.model';
+import { PublicCatalogService } from 'app/core/catalog/public-catalog.service';
 
 @Component({
   selector: 'jhi-home',
@@ -182,7 +182,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
   private readonly accountService = inject(AccountService);
   private readonly router = inject(Router);
   private readonly translateService = inject(TranslateService);
-  private readonly productoService = inject(ProductoService);
+  private readonly publicCatalogService = inject(PublicCatalogService);
 
   ngOnInit(): void {
     this.accountService
@@ -213,13 +213,8 @@ export default class HomeComponent implements OnInit, OnDestroy {
   }
 
   loadFeaturedProducts(): void {
-    this.productoService
-      .query({
-        size: 1000,
-        sort: ['nombre,asc'],
-      })
-      .subscribe(res => {
-        this.featuredProducts = (res.body ?? []).filter(producto => producto.activo && producto.destacado).slice(0, 3);
-      });
+    this.publicCatalogService.getProductos().subscribe(productos => {
+      this.featuredProducts = productos.filter(producto => producto.destacado).slice(0, 3);
+    });
   }
 }

@@ -39,12 +39,16 @@ export class ProductoUpdateComponent implements OnInit {
 
   pendingFeaturedIdsToDisable: number[] = [];
 
+  imageError = '';
+
   protected dataUtils = inject(DataUtils);
   protected eventManager = inject(EventManager);
   protected productoService = inject(ProductoService);
   protected productoFormService = inject(ProductoFormService);
   protected categoriaService = inject(CategoriaService);
   protected activatedRoute = inject(ActivatedRoute);
+  private readonly maxImageSize = 1024 * 1024;
+  private readonly allowedImageTypes = new Set(['image/jpeg', 'image/png', 'image/webp']);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: ProductoFormGroup = this.productoFormService.createProductoFormGroup();
@@ -104,19 +108,54 @@ export class ProductoUpdateComponent implements OnInit {
   }
 
   onImageSelect(event: Event): void {
+    this.imageError = '';
+
     const input = event.target as HTMLInputElement;
 
-    if (!input.files || input.files.length === 0) {
+    const file = input.files?.[0];
+
+    if (!file) {
       return;
     }
 
-    const file = input.files[0];
+    if (!this.allowedImageTypes.has(file.type)) {
+      this.imageError = 'Formato no permitido. Utiliza una imagen JPG, PNG o WebP.';
+
+      input.value = '';
+
+      return;
+    }
+
+    if (file.size > this.maxImageSize) {
+      this.imageError = 'La imagen no puede superar 1 MB.';
+
+      input.value = '';
+
+      return;
+    }
+
     const reader = new FileReader();
 
+    reader.onerror = () => {
+      this.imageError = 'No se ha podido leer la imagen seleccionada.';
+
+      input.value = '';
+    };
+
     reader.onload = () => {
+      if (typeof reader.result !== 'string') {
+        this.imageError = 'La imagen seleccionada no es válida.';
+
+        input.value = '';
+
+        return;
+      }
+
       this.editForm.patchValue({
-        imagenUrl: reader.result as string,
+        imagenUrl: reader.result,
       });
+
+      this.editForm.controls.imagenUrl.markAsDirty();
     };
 
     reader.readAsDataURL(file);

@@ -15,21 +15,29 @@ public class SolicitudPresupuestoDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
+    @NotBlank
+    @Size(max = 100)
     private String nombreCliente;
 
-    @NotNull
+    @NotBlank
+    @Email
+    @Size(max = 254)
     private String email;
 
+    @Size(max = 30)
     private String telefono;
 
+    @Size(max = 150)
     private String nombreEmpresa;
 
     @Lob
+    @NotBlank
+    @Size(max = 5000)
     private String descripcion;
 
     @NotNull
     @Min(value = 1)
+    @Max(value = 1_000_000)
     private Integer cantidad;
 
     @NotNull
@@ -39,13 +47,16 @@ public class SolicitudPresupuestoDTO implements Serializable {
     private EstadoSolicitud estado;
 
     @Lob
+    @Size(max = 5000)
     private String observacionesInternas;
 
     private Double precioPresupuesto;
 
+    @Size(max = 100)
     private String tiempoEstimado;
 
     @Lob
+    @Size(max = 5000)
     private String observacionesPresupuesto;
 
     private Instant fechaEnvioPresupuesto;

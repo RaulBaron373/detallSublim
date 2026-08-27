@@ -113,7 +113,7 @@ public class ProductoResource {
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<ProductoDTO> partialUpdateProducto(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody ProductoDTO productoDTO
+        @Valid @NotNull @RequestBody ProductoDTO productoDTO
     ) throws URISyntaxException {
         LOG.debug("REST request to partial update Producto partially : {}, {}", id, productoDTO);
         if (productoDTO.getId() == null) {

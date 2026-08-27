@@ -24,11 +24,11 @@ export default class PasswordResetFinishComponent implements OnInit, AfterViewIn
   passwordForm = new FormGroup({
     newPassword: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(4), Validators.maxLength(50)],
+      validators: [Validators.required, Validators.minLength(8), Validators.maxLength(100)],
     }),
     confirmPassword: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(4), Validators.maxLength(50)],
+      validators: [Validators.required, Validators.minLength(8), Validators.maxLength(100)],
     }),
   });
 

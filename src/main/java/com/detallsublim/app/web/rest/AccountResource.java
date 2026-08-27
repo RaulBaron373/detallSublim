@@ -4,18 +4,23 @@ import com.detallsublim.app.domain.User;
 import com.detallsublim.app.repository.UserRepository;
 import com.detallsublim.app.security.SecurityUtils;
 import com.detallsublim.app.service.MailService;
+import com.detallsublim.app.service.RateLimitService;
 import com.detallsublim.app.service.UserService;
 import com.detallsublim.app.service.dto.AdminUserDTO;
 import com.detallsublim.app.service.dto.PasswordChangeDTO;
 import com.detallsublim.app.web.rest.errors.*;
 import com.detallsublim.app.web.rest.vm.KeyAndPasswordVM;
 import com.detallsublim.app.web.rest.vm.ManagedUserVM;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import java.time.Duration;
 import java.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -40,10 +45,21 @@ public class AccountResource {
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    private final RateLimitService rateLimitService;
+
+    public AccountResource(
+        UserRepository userRepository,
+        UserService userService,
+        MailService mailService,
+        RateLimitService rateLimitService
+    ) {
         this.userRepository = userRepository;
+
         this.userService = userService;
+
         this.mailService = mailService;
+
+        this.rateLimitService = rateLimitService;
     }
 
     /**
@@ -140,15 +156,26 @@ public class AccountResource {
      * @param mail the mail of the user.
      */
     @PostMapping(path = "/account/reset-password/init")
-    public void requestPasswordReset(@RequestBody String mail) {
+    public ResponseEntity<Void> requestPasswordReset(@RequestBody String mail, HttpServletRequest request) {
+        String rateLimitKey = rateLimitService.clientKey("password-reset", request);
+
+        RateLimitService.Result limit = rateLimitService.consume(rateLimitKey, 5, Duration.ofHours(1));
+
+        if (!limit.allowed()) {
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+                .header(HttpHeaders.RETRY_AFTER, String.valueOf(limit.retryAfterSeconds()))
+                .build();
+        }
+
         Optional<User> user = userService.requestPasswordReset(mail);
+
         if (user.isPresent()) {
             mailService.sendPasswordResetMail(user.orElseThrow());
         } else {
-            // Pretend the request has been successful to prevent checking which emails really exist
-            // but log that an invalid attempt has been made
             LOG.warn("Password reset requested for non existing mail");
         }
+
+        return ResponseEntity.noContent().build();
     }
 
     /**

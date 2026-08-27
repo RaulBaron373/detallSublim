@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import SharedModule from 'app/shared/shared.module';
-import { ProductoService } from 'app/entities/producto/service/producto.service';
 import { IProducto } from 'app/entities/producto/producto.model';
-import { CategoriaService } from 'app/entities/categoria/service/categoria.service';
 import { ICategoria } from 'app/entities/categoria/categoria.model';
+import { PublicCatalogService } from 'app/core/catalog/public-catalog.service';
 
 @Component({
   selector: 'jhi-catalog',
@@ -20,10 +19,7 @@ export class CatalogComponent implements OnInit {
   categorias: ICategoria[] = [];
   categoriaSeleccionada = 'Todos';
 
-  constructor(
-    private productoService: ProductoService,
-    private categoriaService: CategoriaService,
-  ) {}
+  constructor(private readonly publicCatalogService: PublicCatalogService) {}
 
   ngOnInit(): void {
     this.cargarProductos();
@@ -31,16 +27,16 @@ export class CatalogComponent implements OnInit {
   }
 
   cargarProductos(): void {
-    this.productoService.query().subscribe(res => {
-      this.productos = (res.body ?? []).filter(producto => producto.activo);
+    this.publicCatalogService.getProductos().subscribe(productos => {
+      this.productos = productos;
 
-      this.productosFiltrados = [...this.productos];
+      this.productosFiltrados = [...productos];
     });
   }
 
   cargarCategorias(): void {
-    this.categoriaService.query().subscribe(res => {
-      this.categorias = res.body ?? [];
+    this.publicCatalogService.getCategorias().subscribe(categorias => {
+      this.categorias = categorias;
     });
   }
 

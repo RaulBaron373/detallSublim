@@ -23,6 +23,7 @@
     <include file="config/liquibase/changelog/20260819160200_modify_imagen_url_Producto.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20260824141000_added_field_destacado_Producto.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20260825190000_added_role_viewer.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260827120000_remove_default_users_prod.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

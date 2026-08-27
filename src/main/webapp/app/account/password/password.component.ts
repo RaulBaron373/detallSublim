@@ -22,11 +22,11 @@ export default class PasswordComponent implements OnInit {
     currentPassword: new FormControl('', { nonNullable: true, validators: Validators.required }),
     newPassword: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(4), Validators.maxLength(50)],
+      validators: [Validators.required, Validators.minLength(8), Validators.maxLength(100)],
     }),
     confirmPassword: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(4), Validators.maxLength(50)],
+      validators: [Validators.required, Validators.minLength(8), Validators.maxLength(100)],
     }),
   });
 

@@ -53,6 +53,23 @@ public class SecurityConfiguration {
                             "camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"
                         )
                     )
+                    .contentSecurityPolicy(csp -> csp.policyDirectives(jHipsterProperties.getSecurity().getContentSecurityPolicy()))
+                    .httpStrictTransportSecurity(hsts -> hsts.maxAgeInSeconds(31536000).includeSubDomains(false))
+                    .frameOptions(FrameOptionsConfig::sameOrigin)
+                    .referrerPolicy(referrer -> referrer.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN))
+                    .permissionsPolicyHeader(permissions ->
+                        permissions.policy(
+                            "camera=(), " +
+                            "fullscreen=(self), " +
+                            "geolocation=(), " +
+                            "gyroscope=(), " +
+                            "magnetometer=(), " +
+                            "microphone=(), " +
+                            "midi=(), " +
+                            "payment=(), " +
+                            "sync-xhr=()"
+                        )
+                    )
             )
             .authorizeHttpRequests(authz ->
                 // prettier-ignore
@@ -62,45 +79,48 @@ public class SecurityConfiguration {
                     .requestMatchers(mvc.pattern("/app/**")).permitAll()
                     .requestMatchers(mvc.pattern("/i18n/**")).permitAll()
                     .requestMatchers(mvc.pattern("/content/**")).permitAll()
-                    .requestMatchers(mvc.pattern("/swagger-ui/**")).permitAll()
+                    .requestMatchers(mvc.pattern("/swagger-ui/**"),mvc.pattern("/swagger-ui.html")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(mvc.pattern(HttpMethod.POST, "/api/authenticate")).permitAll()
                     .requestMatchers(mvc.pattern(HttpMethod.GET, "/api/authenticate")).permitAll()
-                    .requestMatchers(mvc.pattern("/api/register")).permitAll()
-                    .requestMatchers(mvc.pattern("/api/activate")).permitAll()
+                    .requestMatchers(mvc.pattern("/api/register")).denyAll()
+                    .requestMatchers(mvc.pattern("/api/activate")).denyAll()
                     .requestMatchers(mvc.pattern("/api/account/reset-password/init")).permitAll()
                     .requestMatchers(mvc.pattern("/api/account/reset-password/finish")).permitAll()
                     .requestMatchers(mvc.pattern("/api/admin/**")).hasAuthority(AuthoritiesConstants.ADMIN)
 
-                    .requestMatchers(HttpMethod.GET, "/api/productos/**").permitAll()
+                    .requestMatchers(HttpMethod.GET,"/api/public/catalog/**").permitAll()
+                    .requestMatchers(HttpMethod.POST,"/api/public/contact").permitAll()
+                    .requestMatchers(HttpMethod.POST,"/api/public/quote-request").permitAll()
+                    .requestMatchers("/api/public/**").denyAll()
+
+                    .requestMatchers(HttpMethod.GET,"/api/productos/**").hasAnyAuthority(AuthoritiesConstants.ADMIN,AuthoritiesConstants.USER,AuthoritiesConstants.VIEWER)
                     .requestMatchers(HttpMethod.POST, "/api/productos/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
                     .requestMatchers(HttpMethod.PUT, "/api/productos/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
                     .requestMatchers(HttpMethod.PATCH, "/api/productos/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
                     .requestMatchers(HttpMethod.DELETE, "/api/productos/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
 
-                    .requestMatchers(HttpMethod.GET, "/api/categorias/**").permitAll()
+                    .requestMatchers(HttpMethod.GET,"/api/categorias/**").hasAnyAuthority(AuthoritiesConstants.ADMIN,AuthoritiesConstants.USER,AuthoritiesConstants.VIEWER)
                     .requestMatchers(HttpMethod.POST, "/api/categorias/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
                     .requestMatchers(HttpMethod.PUT, "/api/categorias/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
                     .requestMatchers(HttpMethod.PATCH, "/api/categorias/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
                     .requestMatchers(HttpMethod.DELETE, "/api/categorias/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
 
-                    .requestMatchers(HttpMethod.POST, "/api/mensaje-contactos").permitAll()
+                    .requestMatchers(HttpMethod.POST,"/api/mensaje-contactos").hasAnyAuthority(AuthoritiesConstants.ADMIN,AuthoritiesConstants.USER)
                     .requestMatchers(HttpMethod.GET, "/api/mensaje-contactos/**").hasAnyAuthority(AuthoritiesConstants.ADMIN,AuthoritiesConstants.VIEWER, AuthoritiesConstants.USER)
                     .requestMatchers(HttpMethod.POST,"/api/mensaje-contactos/*/responder").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
                     .requestMatchers(HttpMethod.PUT, "/api/mensaje-contactos/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
                     .requestMatchers(HttpMethod.PATCH, "/api/mensaje-contactos/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
                     .requestMatchers(HttpMethod.DELETE, "/api/mensaje-contactos/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
 
-                    .requestMatchers(HttpMethod.POST, "/api/solicitud-presupuestos").permitAll()
+                    .requestMatchers(HttpMethod.POST,"/api/solicitud-presupuestos").hasAnyAuthority(AuthoritiesConstants.ADMIN,AuthoritiesConstants.USER)
                     .requestMatchers(HttpMethod.GET,"/api/solicitud-presupuestos/**").hasAnyAuthority(AuthoritiesConstants.ADMIN,AuthoritiesConstants.VIEWER, AuthoritiesConstants.USER)
                     .requestMatchers(HttpMethod.PUT,"/api/solicitud-presupuestos/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
                     .requestMatchers(HttpMethod.PATCH,"/api/solicitud-presupuestos/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
                     .requestMatchers(HttpMethod.DELETE,"/api/solicitud-presupuestos/**").hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.USER)
+                    .requestMatchers(HttpMethod.GET,"/api/users", "/api/users/**").hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(mvc.pattern("/api/**")).authenticated()
                     .requestMatchers(mvc.pattern("/v3/api-docs/**")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(mvc.pattern("/management/health")).permitAll()
-                    .requestMatchers(mvc.pattern("/management/health/**")).permitAll()
-                    .requestMatchers(mvc.pattern("/management/info")).permitAll()
-                    .requestMatchers(mvc.pattern("/management/prometheus")).permitAll()
                     .requestMatchers(mvc.pattern("/management/**")).hasAuthority(AuthoritiesConstants.ADMIN)
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

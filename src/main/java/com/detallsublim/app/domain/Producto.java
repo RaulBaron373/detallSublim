@@ -216,7 +216,7 @@ public class Producto implements Serializable {
             ", precioBase=" + getPrecioBase() +
             ", personalizable='" + getPersonalizable() + "'" +
             ", plazoEstimadoDias=" + getPlazoEstimadoDias() +
-            ", imagenUrl='" + getImagenUrl() + "'" +
+            ", imagenUrlPresent=" + (getImagenUrl() != null && !getImagenUrl().isBlank()) +
             ", activo='" + getActivo() + "'" +
             ", destacado='" + getDestacado() + "'" +
             "}";

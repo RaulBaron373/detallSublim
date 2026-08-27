@@ -1,5 +1,6 @@
 package com.detallsublim.app.service.dto;
 
+import com.detallsublim.app.service.validation.ValidProductImage;
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -30,6 +31,7 @@ public class ProductoDTO implements Serializable {
     private Integer plazoEstimadoDias;
 
     @Lob
+    @ValidProductImage
     private String imagenUrl;
 
     @NotNull
@@ -151,7 +153,7 @@ public class ProductoDTO implements Serializable {
             ", precioBase=" + getPrecioBase() +
             ", personalizable='" + getPersonalizable() + "'" +
             ", plazoEstimadoDias=" + getPlazoEstimadoDias() +
-            ", imagenUrl='" + getImagenUrl() + "'" +
+            ", imagenUrlPresent=" + (getImagenUrl() != null && !getImagenUrl().isBlank()) +
             ", activo='" + getActivo() + "'" +
             ", categoria=" + getCategoria() +
             ", destacado='" + getDestacado() + "'" +

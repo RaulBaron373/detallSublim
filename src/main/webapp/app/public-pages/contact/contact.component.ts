@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import dayjs from 'dayjs/esm';
 
 import SharedModule from 'app/shared/shared.module';
-import { MensajeContactoService } from 'app/entities/mensaje-contacto/service/mensaje-contacto.service';
-import { NewMensajeContacto } from 'app/entities/mensaje-contacto/mensaje-contacto.model';
 
 @Component({
   selector: 'jhi-contact',
@@ -26,7 +24,7 @@ export class ContactComponent {
   successMessage = '';
   errorMessage = '';
 
-  constructor(private mensajeContactoService: MensajeContactoService) {}
+  constructor(private readonly http: HttpClient) {}
 
   enviarMensaje(): void {
     this.successMessage = '';
@@ -38,14 +36,15 @@ export class ContactComponent {
       return;
     }
 
-    const payload: NewMensajeContacto = {
-      id: null,
-      ...this.form,
-      fechaEnvio: dayjs(),
-      atendido: false,
+    const payload = {
+      nombre: this.form.nombre,
+      email: this.form.email,
+      telefono: this.form.telefono,
+      asunto: this.form.asunto,
+      mensaje: this.form.mensaje,
     };
 
-    this.mensajeContactoService.create(payload).subscribe({
+    this.http.post<void>('/api/public/contact', payload).subscribe({
       next: () => {
         this.successMessage = 'Mensaje enviado correctamente.';
 

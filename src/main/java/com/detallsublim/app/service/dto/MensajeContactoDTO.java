@@ -14,18 +14,25 @@ public class MensajeContactoDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
+    @NotBlank
+    @Size(max = 100)
     private String nombre;
 
-    @NotNull
+    @NotBlank
+    @Email
+    @Size(max = 254)
     private String email;
 
+    @Size(max = 30)
     private String telefono;
 
-    @NotNull
+    @NotBlank
+    @Size(max = 150)
     private String asunto;
 
     @Lob
+    @NotBlank
+    @Size(max = 5000)
     private String mensaje;
 
     @NotNull

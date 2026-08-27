@@ -17,7 +17,6 @@
     "entities": ["Categoria", "Producto", "SolicitudPresupuesto", "MensajeContacto"],
     "feignClient": null,
     "jhipsterVersion": "8.11.0",
-    "jwtSecretKey": "[REDACTED-JWT]",
     "languages": ["es", "ca", "en"],
     "lastLiquibaseTimestamp": 1776182465000,
     "microfrontend": null,

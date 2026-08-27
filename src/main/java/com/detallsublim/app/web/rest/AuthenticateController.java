@@ -5,10 +5,13 @@ import static com.detallsublim.app.security.SecurityUtils.JWT_ALGORITHM;
 import static com.detallsublim.app.security.SecurityUtils.USER_ID_CLAIM;
 
 import com.detallsublim.app.security.DomainUserDetailsService.UserWithId;
+import com.detallsublim.app.service.RateLimitService;
 import com.detallsublim.app.web.rest.vm.LoginVM;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.security.Principal;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
@@ -48,23 +51,54 @@ public class AuthenticateController {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public AuthenticateController(JwtEncoder jwtEncoder, AuthenticationManagerBuilder authenticationManagerBuilder) {
+    private final RateLimitService rateLimitService;
+
+    public AuthenticateController(
+        JwtEncoder jwtEncoder,
+        AuthenticationManagerBuilder authenticationManagerBuilder,
+        RateLimitService rateLimitService
+    ) {
         this.jwtEncoder = jwtEncoder;
+
         this.authenticationManagerBuilder = authenticationManagerBuilder;
+
+        this.rateLimitService = rateLimitService;
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM) {
+    public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM, HttpServletRequest request) {
+        String rateLimitKey = rateLimitService.clientKey("login", request);
+
+        RateLimitService.Result limit = rateLimitService.consume(rateLimitKey, 5, Duration.ofMinutes(15));
+
+        if (!limit.allowed()) {
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+                .header(HttpHeaders.RETRY_AFTER, String.valueOf(limit.retryAfterSeconds()))
+                .build();
+        }
+
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
             loginVM.getUsername(),
             loginVM.getPassword()
         );
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+        /*
+         * Login correcto:
+         * eliminamos los intentos fallidos
+         * acumulados para esa IP.
+         */
+        rateLimitService.reset(rateLimitKey);
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         String jwt = this.createToken(authentication, loginVM.isRememberMe());
+
         HttpHeaders httpHeaders = new HttpHeaders();
+
         httpHeaders.setBearerAuth(jwt);
+
         return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
     }
 

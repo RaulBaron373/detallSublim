@@ -107,7 +107,21 @@
           <div class="mb-3">
             <label class="form-label" for="field_imagenUrl"> Imagen del producto </label>
 
-            <input type="file" class="form-control" id="field_imagenUrl" accept="image/*" (change)="onImageSelect($event)" />
+            <input
+              type="file"
+              class="form-control"
+              id="field_imagenUrl"
+              accept="image/jpeg,image/png,image/webp"
+              (change)="onImageSelect($event)"
+            />
+
+            <small class="form-text text-muted d-block mt-1"> Formatos permitidos: JPG, PNG o WebP. Tamaño máximo: 1 MB. </small>
+
+            @if (imageError) {
+              <small class="form-text text-danger d-block mt-1">
+                {{ imageError }}
+              </small>
+            }
 
             @if (editForm.get('imagenUrl')?.value) {
               <div class="mt-3">
@@ -202,9 +216,8 @@
 
         <p class="featured-modal-description">
           Para destacar
-          <strong>
-            {{ editForm.get('nombre')?.value || 'este producto' }} </strong
-          >, selecciona como máximo otros dos productos que quieras mantener.
+          <strong> {{ editForm.get('nombre')?.value || 'este producto' }} </strong>, selecciona como máximo otros dos productos que quieras
+          mantener.
         </p>
 
         <div class="featured-product-list">
