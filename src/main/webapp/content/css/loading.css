@@ -1,152 +1,459 @@
-@keyframes lds-pacman-1 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  50% {
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-  }
-  100% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-}
-@-webkit-keyframes lds-pacman-1 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  50% {
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-  }
-  100% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-}
-@keyframes lds-pacman-2 {
-  0% {
-    -webkit-transform: rotate(180deg);
-    transform: rotate(180deg);
-  }
-  50% {
-    -webkit-transform: rotate(225deg);
-    transform: rotate(225deg);
-  }
-  100% {
-    -webkit-transform: rotate(180deg);
-    transform: rotate(180deg);
-  }
-}
-@-webkit-keyframes lds-pacman-2 {
-  0% {
-    -webkit-transform: rotate(180deg);
-    transform: rotate(180deg);
-  }
-  50% {
-    -webkit-transform: rotate(225deg);
-    transform: rotate(225deg);
-  }
-  100% {
-    -webkit-transform: rotate(180deg);
-    transform: rotate(180deg);
-  }
-}
-@keyframes lds-pacman-3 {
-  0% {
-    -webkit-transform: translate(190px, 0);
-    transform: translate(190px, 0);
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    -webkit-transform: translate(70px, 0);
-    transform: translate(70px, 0);
-    opacity: 1;
-  }
-}
-@-webkit-keyframes lds-pacman-3 {
-  0% {
-    -webkit-transform: translate(190px, 0);
-    transform: translate(190px, 0);
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    -webkit-transform: translate(70px, 0);
-    transform: translate(70px, 0);
-    opacity: 1;
-  }
+/* =========================================================
+    DETALL SUBLIM - APP LOADING
+   ========================================================= */
+
+.ds-app-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(circle at 35% 42%, rgba(216, 75, 138, 0.08), transparent 28%),
+    radial-gradient(circle at 65% 58%, rgba(0, 217, 192, 0.07), transparent 30%), #ffffff;
+
+  overflow: hidden;
 }
 
-.app-loading {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  position: relative;
+.ds-loader {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  top: 10em;
-}
-.app-loading p {
-  display: block;
-  font-size: 1.17em;
-  margin-inline-start: 0;
-  margin-inline-end: 0;
-  font-weight: normal;
+
+  padding: 2rem;
 }
 
-.app-loading .lds-pacman {
-  position: relative;
-  margin: auto;
-  width: 200px !important;
-  height: 200px !important;
-  -webkit-transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
-  transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+/* =========================================================
+    MARCA
+   ========================================================= */
+
+.ds-brand-build {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 1.25rem;
+
+  animation: ds-brand-float 3.2s ease-in-out 1.4s infinite;
 }
-.app-loading .lds-pacman > div:nth-child(2) div {
-  position: absolute;
-  top: 40px;
-  left: 40px;
-  width: 120px;
-  height: 60px;
-  border-radius: 120px 120px 0 0;
-  background: #bbcedd;
-  -webkit-animation: lds-pacman-1 1s linear infinite;
-  animation: lds-pacman-1 1s linear infinite;
-  -webkit-transform-origin: 60px 60px;
-  transform-origin: 60px 60px;
+
+/* =========================================================
+    SÍMBOLO
+   ========================================================= */
+
+.ds-loading-logo {
+  width: 9rem;
+  height: 9rem;
+  overflow: visible;
+  display: block;
 }
-.app-loading .lds-pacman > div:nth-child(2) div:nth-child(2) {
-  -webkit-animation: lds-pacman-2 1s linear infinite;
-  animation: lds-pacman-2 1s linear infinite;
+
+/* =========================================================
+    CONTORNO
+   ========================================================= */
+
+.ds-loading-outline {
+  fill: none;
+
+  stroke: #1e1e1e;
+  stroke-width: 33;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+
+  opacity: 0;
+
+  animation: ds-outline-draw 0.95s ease forwards;
 }
-.app-loading .lds-pacman > div:nth-child(1) div {
-  position: absolute;
-  top: 97px;
-  left: -8px;
-  width: 24px;
-  height: 10px;
-  background-image: url('/content/images/logo-jhipster.png');
-  background-size: contain;
-  -webkit-animation: lds-pacman-3 1s linear infinite;
-  animation: lds-pacman-3 1.5s linear infinite;
+
+/* =========================================================
+    PIEZAS
+   ========================================================= */
+
+.ds-loading-piece {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
 }
-.app-loading .lds-pacman > div:nth-child(1) div:nth-child(1) {
-  -webkit-animation-delay: -0.67s;
-  animation-delay: -1s;
+
+/* Rosa */
+
+.ds-loading-magenta {
+  fill: #d84b8a;
+  animation: ds-magenta-enter 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.28s forwards;
 }
-.app-loading .lds-pacman > div:nth-child(1) div:nth-child(2) {
-  -webkit-animation-delay: -0.33s;
-  animation-delay: -0.5s;
+
+/* Cyan */
+
+.ds-loading-cyan {
+  fill: #22d8c8;
+  animation: ds-cyan-enter 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards;
 }
-.app-loading .lds-pacman > div:nth-child(1) div:nth-child(3) {
-  -webkit-animation-delay: 0s;
-  animation-delay: 0s;
+
+/* Amarillo */
+
+.ds-loading-yellow {
+  fill: #f2d33b;
+  animation: ds-yellow-pop 0.5s cubic-bezier(0.22, 1, 0.36, 1) 1.02s forwards;
+}
+
+/* =========================================================
+    TEXTO
+   ========================================================= */
+
+.ds-loading-wordmark {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+
+  color: #1e1e1e;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  font-weight: 700;
+
+  line-height: 0.93;
+
+  letter-spacing: -0.045em;
+}
+
+.ds-loading-word {
+  display: block;
+
+  opacity: 0;
+
+  transform: translateX(-18px);
+}
+
+.ds-loading-word-first {
+  animation: ds-word-in 0.55s 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.ds-loading-word-second {
+  animation: ds-word-in 0.55s 1.06s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* =========================================================
+    TEXTO INFERIOR
+   ========================================================= */
+
+.ds-loading-caption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.4rem;
+
+  margin-top: 1.6rem;
+
+  color: #8a8f9c;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 0.78rem;
+  font-weight: 500;
+
+  letter-spacing: 0.035em;
+
+  opacity: 0;
+
+  transform: translateY(6px);
+
+  animation: ds-caption-in 0.5s 1.25s ease-out forwards;
+}
+
+/* =========================================================
+    PUNTOS
+   ========================================================= */
+
+.ds-loading-dots {
+  display: inline-flex;
+
+  gap: 0.22rem;
+}
+
+.ds-loading-dots span {
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: #d84b8a;
+
+  animation: ds-dot 1.1s ease-in-out infinite;
+}
+
+.ds-loading-dots span:nth-child(2) {
+  background: #f8d545;
+
+  animation-delay: 0.15s;
+}
+
+.ds-loading-dots span:nth-child(3) {
+  background: #00d9c0;
+
+  animation-delay: 0.3s;
+}
+
+/* =========================================================
+    ANIMACIONES
+   ========================================================= */
+
+/*
+ * Las piezas empiezan juntas, como pequeños bloques,
+ * y se desplazan hasta construir el isotipo.
+ */
+@keyframes ds-outline-draw {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 0.25;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes ds-magenta-enter {
+  0% {
+    opacity: 0;
+    transform: translate(-14px, -10px) scale(0.72);
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes ds-cyan-enter {
+  0% {
+    opacity: 0;
+    transform: translate(14px, 12px) scale(0.72);
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes ds-yellow-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.25) rotate(-10deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.08) rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes ds-brand-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Dibuja el contorno del logo */
+
+@keyframes ds-draw-outline {
+  0% {
+    opacity: 0;
+
+    stroke-dashoffset: 1;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Aparece Detall / Sublim */
+
+@keyframes ds-word-in {
+  0% {
+    opacity: 0;
+
+    transform: translateX(-18px);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform: translateX(0);
+  }
+}
+
+/* Texto inferior */
+
+@keyframes ds-caption-in {
+  from {
+    opacity: 0;
+
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+/* Pequeño asentamiento cuando termina de construirse */
+
+@keyframes ds-brand-settle {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.025);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Movimiento casi imperceptible mientras esperamos */
+
+@keyframes ds-brand-breathe {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+/* Puntos de carga */
+
+@keyframes ds-dot {
+  0%,
+  100% {
+    opacity: 0.35;
+
+    transform: translateY(0);
+  }
+
+  50% {
+    opacity: 1;
+
+    transform: translateY(-3px);
+  }
+}
+
+/* =========================================================
+    RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 480px) {
+  .ds-brand-build {
+    gap: 0.65rem;
+  }
+
+  .ds-loading-logo {
+    width: 84px;
+  }
+
+  .ds-loading-wordmark {
+    font-size: 1.9rem;
+  }
+
+  .ds-loading-caption {
+    margin-top: 1.35rem;
+
+    font-size: 0.72rem;
+  }
+}
+
+/* =========================================================
+    ACCESIBILIDAD
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-app-loading *,
+  .ds-app-loading *::before,
+  .ds-app-loading *::after {
+    animation: none !important;
+
+    transform: none !important;
+
+    opacity: 1 !important;
+  }
+
+  .ds-loading-outline {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* =========================================================
+    ERROR DE ARRANQUE JHIPSTER
+   ========================================================= */
+
+.app-loading {
+  max-width: 900px;
+
+  margin: 5rem auto;
+  padding: 2rem;
+
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.ds-app-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(circle at 35% 42%, rgba(216, 75, 138, 0.08), transparent 28%),
+    radial-gradient(circle at 65% 58%, rgba(0, 217, 192, 0.07), transparent 30%), #ffffff;
+
+  overflow: hidden;
+
+  opacity: 1;
+  visibility: visible;
+
+  transition:
+    opacity 0.55s ease,
+    visibility 0.55s ease;
+}
+
+.ds-app-loading--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }

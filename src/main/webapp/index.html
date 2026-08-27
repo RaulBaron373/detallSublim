@@ -21,21 +21,98 @@
         your experience.
       </p>
     <![endif]-->
-    <jhi-app>
-      <div class="app-loading">
-        <div class="lds-pacman">
-          <div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-          <div>
-            <div></div>
-            <div></div>
-            <div></div>
+
+    <!-- ================================================
+      DETALL SUBLIM - PANTALLA DE CARGA
+    ================================================ -->
+
+    <div id="ds-app-loader" class="ds-app-loading" role="status" aria-live="polite" aria-label="Cargando Detall Sublim">
+      <div class="ds-loader">
+        <div class="ds-brand-build" aria-hidden="true">
+          <!-- Símbolo -->
+          <svg class="ds-loading-logo" viewBox="0 0 574 683" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Contorno -->
+            <path
+              class="ds-loading-outline"
+              pathLength="1"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="miter"
+              d="
+            M 166 33
+            H 540
+            V 516
+            C 540 590 481 649 407 649
+            H 33
+            V 166
+            C 33 93 93 33 166 33
+            Z
+          "
+            />
+
+            <!-- D superior invertida (magenta) -->
+            <path
+              class="ds-loading-piece ds-loading-magenta"
+              d="
+            M 357 87
+            H 242
+            A 162 162 0 0 0 242 411
+            H 357
+            Z
+          "
+            />
+
+            <!-- D inferior derecha (cian) -->
+            <path
+              class="ds-loading-piece ds-loading-cyan"
+              d="
+            M 218 274
+            H 333
+            A 162 162 0 0 1 333 598
+            H 218
+            Z
+          "
+            />
+
+            <!-- Solape amarillo -->
+            <rect class="ds-loading-piece ds-loading-yellow" x="219" y="274" width="137" height="137" />
+          </svg>
+
+          <!-- Nombre -->
+          <div class="ds-loading-wordmark">
+            <span class="ds-loading-word ds-loading-word-first"> Detall </span>
+
+            <span class="ds-loading-word ds-loading-word-second"> Sublim </span>
           </div>
         </div>
+
+        <!-- Texto inferior -->
+        <div class="ds-loading-caption" aria-hidden="true">
+          <span>Preparando cada detalle</span>
+
+          <span class="ds-loading-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </div>
       </div>
+    </div>
+
+    <!-- ================================================
+      APLICACIÓN ANGULAR
+================================================ -->
+
+    <jhi-app>
+      <div class="app-loading">
+        <div id="jhipster-error" style="display: none">
+          <!-- Mantén aquí todo el contenido de error
+            de JHipster que ya tienes -->
+        </div>
+      </div>
+    </jhi-app>
+
+    <jhi-app>
       <div class="app-loading">
         <div id="jhipster-error" style="display: none">
           <!-- This content is for troubleshooting purpose and will be removed when app renders -->
@@ -104,12 +181,63 @@
       <h1>You must enable JavaScript to view this page.</h1>
     </noscript>
     <script type="text/javascript">
-      // show an error message if the app loading takes more than 4 sec
+      const DETALL_SUBLIM_MIN_LOADING_TIME = 3000;
+
+      const loadingStartedAt = Date.now();
+
+      let appIsReady = false;
+      let minimumTimePassed = false;
+
+      function hideDetallSublimLoader() {
+        if (!appIsReady || !minimumTimePassed) {
+          return;
+        }
+
+        const loader = document.getElementById('ds-app-loader');
+
+        if (!loader) {
+          return;
+        }
+
+        loader.classList.add('ds-app-loading--hidden');
+
+        setTimeout(() => {
+          loader.remove();
+        }, 600);
+      }
+
+      window.addEventListener(
+        'detall-sublim-app-ready',
+        function () {
+          appIsReady = true;
+
+          hideDetallSublimLoader();
+        },
+        { once: true },
+      );
+
+      const elapsedTime = Date.now() - loadingStartedAt;
+
+      const remainingTime = Math.max(0, DETALL_SUBLIM_MIN_LOADING_TIME - elapsedTime);
+
+      setTimeout(function () {
+        minimumTimePassed = true;
+
+        hideDetallSublimLoader();
+      }, remainingTime);
+
+      // Error de arranque
       window.onload = function () {
-        setTimeout(showError, 4000);
+        setTimeout(showError, 10000);
       };
+
       function showError() {
+        if (appIsReady) {
+          return;
+        }
+
         const errorElm = document.getElementById('jhipster-error');
+
         if (errorElm?.style) {
           errorElm.style.display = 'block';
         }

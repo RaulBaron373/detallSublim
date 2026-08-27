@@ -11,6 +11,9 @@ if (!environment.DEBUG_INFO_ENABLED) {
 }
 
 bootstrapApplication(AppComponent, appConfig)
-  // eslint-disable-next-line no-console
-  .then(() => console.log('Application started'))
+  .then(() => {
+    // eslint-disable-next-line no-console
+    console.log('Application started');
+    window.dispatchEvent(new CustomEvent('detall-sublim-app-ready'));
+  })
   .catch((err: unknown) => console.error(err));
