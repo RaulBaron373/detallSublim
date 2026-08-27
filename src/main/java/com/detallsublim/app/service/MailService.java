@@ -84,10 +84,16 @@ public class MailService {
             message.setSubject(subject);
             message.setText(content, isHtml);
             if (isHtml) {
-                ClassPathResource logo = new ClassPathResource("templates/mail/logo-detall-sublim-color.png");
+                ClassPathResource lightLogo = new ClassPathResource("templates/mail/logo-detall-sublim-color.png");
 
-                if (logo.exists()) {
-                    message.addInline("detallSublimLogo", logo, "image/png");
+                ClassPathResource darkLogo = new ClassPathResource("templates/mail/logo-detall-sublim-color-white.png");
+
+                if (lightLogo.exists()) {
+                    message.addInline("detallSublimLogoLight", lightLogo, "image/png");
+                }
+
+                if (darkLogo.exists()) {
+                    message.addInline("detallSublimLogoDark", darkLogo, "image/png");
                 }
             }
             javaMailSender.send(mimeMessage);
@@ -124,10 +130,155 @@ public class MailService {
         <html lang="es">
         <head>
             <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+            <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1.0"
+            >
+
+            <meta
+                name="color-scheme"
+                content="light dark"
+            >
+
+            <meta
+                name="supported-color-schemes"
+                content="light dark"
+            >
+
+            <style>
+                .ds-logo-dark {
+                    display: none !important;
+                    max-height: 0 !important;
+                    overflow: hidden !important;
+                    mso-hide: all !important;
+                }
+
+                @media (prefers-color-scheme: dark) {
+                    body,
+                    .ds-email-background {
+                        background: #111318 !important;
+                    }
+
+                    .ds-email-card {
+                        background: #1b1d23 !important;
+                        border-color: #30333b !important;
+                    }
+
+                    .ds-logo-light {
+                        display: none !important;
+                        max-height: 0 !important;
+                        overflow: hidden !important;
+                    }
+
+                    .ds-logo-dark {
+                        display: block !important;
+                        max-height: none !important;
+                        overflow: visible !important;
+                        mso-hide: none !important;
+                    }
+
+                    .ds-email-card [style*="color:#081a35"],
+                    .ds-email-card [style*="color:#202534"] {
+                        color: #f5f6fa !important;
+                    }
+
+                    .ds-email-card [style*="color:#555b68"] {
+                        color: #c8ccd5 !important;
+                    }
+
+                    .ds-email-card [style*="color:#8a8f9c"] {
+                        color: #aeb3bd !important;
+                    }
+
+                    .ds-email-card [style*="background:#f7f8fa"] {
+                        background: #23262d !important;
+                    }
+
+                    .ds-email-card [style*="background:#fafafb"] {
+                        background: #16181d !important;
+                    }
+
+                    .ds-email-card [style*="background:#fff8fb"] {
+                        background: #2a2026 !important;
+                    }
+
+                    .ds-email-card [style*="border:1px solid #eceef2"] {
+                        border-color: #343844 !important;
+                    }
+
+                    .ds-email-card [style*="border:1px solid #f6d9e7"] {
+                        border-color: #533041 !important;
+                    }
+
+                    .ds-email-card [style*="border-top:1px solid #eeeeef"] {
+                        border-color: #30333b !important;
+                    }
+                }
+
+                [data-ogsc] .ds-email-background {
+                    background: #111318 !important;
+                }
+
+                [data-ogsc] .ds-email-card {
+                    background: #1b1d23 !important;
+                    border-color: #30333b !important;
+                }
+
+                [data-ogsc] .ds-logo-light {
+                    display: none !important;
+                    max-height: 0 !important;
+                    overflow: hidden !important;
+                }
+
+                [data-ogsc] .ds-logo-dark {
+                    display: block !important;
+                    max-height: none !important;
+                    overflow: visible !important;
+                }
+
+                [data-ogsc] .ds-email-card [style*="color:#081a35"],
+                [data-ogsc] .ds-email-card [style*="color:#202534"] {
+                    color: #f5f6fa !important;
+                }
+
+                [data-ogsc] .ds-email-card [style*="color:#555b68"] {
+                    color: #c8ccd5 !important;
+                }
+
+                [data-ogsc] .ds-email-card [style*="color:#8a8f9c"] {
+                    color: #aeb3bd !important;
+                }
+
+                [data-ogsc] .ds-email-card [style*="background:#f7f8fa"] {
+                    background: #23262d !important;
+                }
+
+                [data-ogsc] .ds-email-card [style*="background:#fafafb"] {
+                    background: #16181d !important;
+                }
+
+                [data-ogsc] .ds-email-card [style*="background:#fff8fb"] {
+                    background: #2a2026 !important;
+                }
+
+                [data-ogsc] .ds-email-card [style*="border:1px solid #eceef2"] {
+                    border-color: #343844 !important;
+                }
+
+                [data-ogsc] .ds-email-card [style*="border:1px solid #f6d9e7"] {
+                    border-color: #533041 !important;
+                }
+
+                [data-ogsc] .ds-email-card [style*="border-top:1px solid #eeeeef"] {
+                    border-color: #30333b !important;
+                }
+            </style>
         </head>
 
-        <body style="
+        <body
+            class="ds-email-background"
+            style="
             margin:0;
             padding:0;
             background:#f5f6fa;
@@ -136,6 +287,7 @@ public class MailService {
         ">
 
             <table
+                class="ds-email-background"
                 role="presentation"
                 width="100%%"
                 cellspacing="0"
@@ -147,6 +299,7 @@ public class MailService {
                     <td align="center" style="padding:40px 16px;">
 
                         <table
+                            class="ds-email-card"
                             role="presentation"
                             width="100%%"
                             cellspacing="0"
@@ -168,17 +321,37 @@ public class MailService {
                                     align="center"
                                     style="padding:32px 32px 24px;"
                                 >
-                                    <img
-                                        src="cid:detallSublimLogo"
-                                        alt="Detall Sublim"
-                                        width="190"
-                                        style="
-                                            display:block;
-                                            max-width:190px;
-                                            height:auto;
-                                            border:0;
-                                        "
-                                    >
+                                    <!-- LOGO MODO CLARO -->
+                                <img
+                                    class="ds-logo-light"
+                                    src="cid:detallSublimLogoLight"
+                                    alt="Detall Sublim"
+                                    width="190"
+                                    style="
+                                        display:block;
+                                        max-width:190px;
+                                        height:auto;
+                                        border:0;
+                                        margin:0 auto;
+                                    "
+                                >
+
+                                <!-- LOGO MODO OSCURO -->
+                                <img
+                                    class="ds-logo-dark"
+                                    src="cid:detallSublimLogoDark"
+                                    alt="Detall Sublim"
+                                    width="190"
+                                    style="
+                                        display:none;
+                                        max-height:0;
+                                        overflow:hidden;
+                                        max-width:190px;
+                                        height:auto;
+                                        border:0;
+                                        margin:0 auto;
+                                    "
+                                >
                                 </td>
                             </tr>
 
