@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import dayjs from 'dayjs/esm';
 import { RouterModule } from '@angular/router';
+import dayjs from 'dayjs/esm';
+
+import SharedModule from 'app/shared/shared.module';
 import { MensajeContactoService } from 'app/entities/mensaje-contacto/service/mensaje-contacto.service';
 import { NewMensajeContacto } from 'app/entities/mensaje-contacto/mensaje-contacto.model';
 
 @Component({
   selector: 'jhi-contact',
-  imports: [FormsModule, RouterModule],
+  imports: [FormsModule, RouterModule, SharedModule],
   standalone: true,
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
@@ -20,6 +22,7 @@ export class ContactComponent {
     asunto: '',
     mensaje: '',
   };
+
   successMessage = '';
   errorMessage = '';
 
@@ -31,6 +34,7 @@ export class ContactComponent {
 
     if (!this.form.nombre.trim() || !this.form.email.trim() || !this.form.asunto.trim() || !this.form.mensaje.trim()) {
       this.errorMessage = 'Debes completar todos los campos obligatorios.';
+
       return;
     }
 

@@ -1010,3 +1010,131 @@
     line-height: 1.4;
   }
 }
+
+/* =========================================================
+    HERO - ENTRADA INICIAL
+   ========================================================= */
+
+.ds-hero-content .ds-badge,
+.ds-hero-content .ds-hero-title,
+.ds-hero-content .ds-hero-description,
+.ds-hero-content .ds-hero-actions,
+.ds-hero-content .ds-hero-stats,
+.ds-hero-visual {
+  opacity: 0;
+
+  will-change: opacity, transform;
+}
+
+/* Badge */
+
+.ds-hero-content .ds-badge {
+  transform: translate3d(0, 18px, 0);
+}
+
+/* Título */
+
+.ds-hero-content .ds-hero-title {
+  transform: translate3d(0, 24px, 0);
+}
+
+/* Descripción */
+
+.ds-hero-content .ds-hero-description {
+  transform: translate3d(0, 22px, 0);
+}
+
+/* Botones */
+
+.ds-hero-content .ds-hero-actions {
+  transform: translate3d(0, 20px, 0);
+}
+
+/* Estadísticas */
+
+.ds-hero-content .ds-hero-stats {
+  transform: translate3d(0, 18px, 0);
+}
+
+/* Logo */
+
+.ds-hero-visual {
+  transform: translate3d(28px, 0, 0) scale(0.97);
+}
+
+/* =========================================================
+    APP CARGADA
+   ========================================================= */
+
+:host-context(.ds-app-loaded) .ds-hero-content .ds-badge {
+  animation: ds-hero-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+:host-context(.ds-app-loaded) .ds-hero-content .ds-hero-title {
+  animation: ds-hero-enter 0.8s 0.08s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+:host-context(.ds-app-loaded) .ds-hero-content .ds-hero-description {
+  animation: ds-hero-enter 0.8s 0.16s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+:host-context(.ds-app-loaded) .ds-hero-content .ds-hero-actions {
+  animation: ds-hero-enter 0.8s 0.24s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+:host-context(.ds-app-loaded) .ds-hero-content .ds-hero-stats {
+  animation: ds-hero-enter 0.8s 0.34s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+:host-context(.ds-app-loaded) .ds-hero-visual {
+  animation: ds-hero-visual-enter 1s 0.12s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* =========================================================
+    KEYFRAMES
+   ========================================================= */
+
+@keyframes ds-hero-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes ds-hero-visual-enter {
+  from {
+    opacity: 0;
+
+    transform: translate3d(28px, 0, 0) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* =========================================================
+    ACCESIBILIDAD
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-hero-content .ds-badge,
+  .ds-hero-content .ds-hero-title,
+  .ds-hero-content .ds-hero-description,
+  .ds-hero-content .ds-hero-actions,
+  .ds-hero-content .ds-hero-stats,
+  .ds-hero-visual {
+    opacity: 1;
+
+    transform: none;
+
+    animation: none;
+  }
+}

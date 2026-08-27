@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+
+import SharedModule from 'app/shared/shared.module';
 import { ProductoService } from 'app/entities/producto/service/producto.service';
 import { IProducto } from 'app/entities/producto/producto.model';
 import { CategoriaService } from 'app/entities/categoria/service/categoria.service';
@@ -9,7 +10,7 @@ import { ICategoria } from 'app/entities/categoria/categoria.model';
 @Component({
   selector: 'jhi-catalog',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [SharedModule, RouterLink],
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.scss',
 })
@@ -48,6 +49,7 @@ export class CatalogComponent implements OnInit {
 
     if (nombreCategoria === 'Todos') {
       this.productosFiltrados = [...this.productos];
+
       return;
     }
 

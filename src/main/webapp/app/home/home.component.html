@@ -56,20 +56,31 @@
 
 <section class="ds-technologies ds-bg-soft-cyan">
   <div class="ds-container">
-    <div class="ds-tech-header">
-      <h2 class="ds-section-title">{{ t.technologiesTitle }}</h2>
+    <div class="ds-tech-header" dsScrollReveal reveal="fade-up">
+      <h2 class="ds-section-title">
+        {{ t.technologiesTitle }}
+      </h2>
+
       <p class="ds-section-subtitle">
         {{ t.technologiesSubtitle }}
       </p>
     </div>
 
     <div class="ds-tech-grid">
-      <article class="ds-tech-card" *ngFor="let tech of t.technologies">
+      <article
+        class="ds-tech-card"
+        *ngFor="let tech of t.technologies; let i = index"
+        dsScrollReveal
+        reveal="scale-up"
+        [revealDelay]="i * 110"
+      >
         <div class="ds-tech-icon" [ngClass]="tech.iconClass">
           {{ tech.icon }}
         </div>
 
-        <h3>{{ tech.title }}</h3>
+        <h3>
+          {{ tech.title }}
+        </h3>
 
         <p>
           {{ tech.description }}
@@ -78,25 +89,34 @@
     </div>
 
     <div class="ds-tech-highlight">
-      <div class="ds-tech-highlight-text">
+      <div class="ds-tech-highlight-text" dsScrollReveal reveal="fade-left">
         <h3>{{ t.highlightTitle }}</h3>
-        <p>{{ t.highlightText1 }}</p>
-        <p>{{ t.highlightText2 }}</p>
+
+        <p>
+          {{ t.highlightText1 }}
+        </p>
+
+        <p>
+          {{ t.highlightText2 }}
+        </p>
       </div>
 
-      <div class="ds-tech-stats">
+      <div class="ds-tech-stats" dsScrollReveal reveal="fade-right" [revealDelay]="120">
         <div class="ds-tech-stat-card ds-tech-stat-pink">
           <strong>99%</strong>
           <span>{{ t.stats.satisfaction }}</span>
         </div>
+
         <div class="ds-tech-stat-card ds-tech-stat-cyan">
           <strong>24h</strong>
           <span>{{ t.stats.response }}</span>
         </div>
+
         <div class="ds-tech-stat-card ds-tech-stat-yellow">
           <strong>1000+</strong>
           <span>{{ t.stats.projects }}</span>
         </div>
+
         <div class="ds-tech-stat-card ds-tech-stat-pink-soft">
           <strong>4</strong>
           <span>{{ t.stats.techniques }}</span>
@@ -108,15 +128,24 @@
 
 <section class="ds-products">
   <div class="ds-container">
-    <div class="ds-products-header">
-      <h2 class="ds-section-title">{{ 'global.public.home.featuredProducts' | translate }}</h2>
+    <div class="ds-products-header" dsScrollReveal reveal="fade-up">
+      <h2 class="ds-section-title">
+        {{ 'global.public.home.featuredProducts' | translate }}
+      </h2>
+
       <p class="ds-section-subtitle">
         {{ 'global.public.home.featuredSubtitle' | translate }}
       </p>
     </div>
 
     <div class="catalog-grid">
-      <article class="catalog-card" *ngFor="let producto of featuredProducts">
+      <article
+        class="catalog-card"
+        *ngFor="let producto of featuredProducts; let i = index"
+        dsScrollReveal
+        reveal="scale-up"
+        [revealDelay]="i * 120"
+      >
         <div class="catalog-card-image">
           @if (producto.imagenUrl) {
             <img class="ds-product-image" [src]="producto.imagenUrl" [alt]="producto.nombre ?? 'Producto Detall Sublim'" />
@@ -130,19 +159,24 @@
             {{ producto.categoria?.nombre }}
           </span>
 
-          <h3>{{ producto.nombre }}</h3>
+          <h3>
+            {{ producto.nombre }}
+          </h3>
 
-          <p>{{ producto.descripcion }}</p>
+          <p>
+            {{ producto.descripcion }}
+          </p>
 
           <div class="catalog-card-footer">
             <span class="catalog-price"> Desde {{ producto.precioBase }} € </span>
+
             <a [routerLink]="['/solicitar-presupuesto']" [queryParams]="{ producto: producto.id }" class="catalog-link"> Solicitar </a>
           </div>
         </div>
       </article>
     </div>
 
-    <div class="ds-products-cta">
+    <div class="ds-products-cta" dsScrollReveal reveal="fade-up" [revealDelay]="180">
       <a routerLink="/catalogo" class="ds-btn ds-btn-primary">
         {{ 'global.public.home.fullCatalog' | translate }}
       </a>
@@ -153,12 +187,17 @@
 <section class="ds-final-cta">
   <div class="ds-container">
     <div class="ds-final-cta-box">
-      <div class="ds-final-cta-content">
-        <span class="ds-final-cta-tag">{{ 'global.public.home.finalTag' | translate }}</span>
+      <div class="ds-final-cta-content" dsScrollReveal reveal="fade-left">
+        <span class="ds-final-cta-tag">
+          {{ 'global.public.home.finalTag' | translate }}
+        </span>
 
         <h2 class="ds-final-cta-title">
           {{ 'global.public.home.finalTitle' | translate }}
-          <span class="ds-gradient-text">{{ 'global.public.home.finalHighlight' | translate }}</span>
+
+          <span class="ds-gradient-text">
+            {{ 'global.public.home.finalHighlight' | translate }}
+          </span>
         </h2>
 
         <p class="ds-final-cta-description">
@@ -176,25 +215,33 @@
         </div>
       </div>
 
-      <div class="ds-final-cta-side">
+      <div class="ds-final-cta-side" dsScrollReveal reveal="fade-right" [revealDelay]="140">
         <div class="ds-final-contact-card">
-          <h3>{{ 'global.public.home.quickContact' | translate }}</h3>
+          <h3>
+            {{ 'global.public.home.quickContact' | translate }}
+          </h3>
 
           <ul class="ds-final-contact-list">
             <li>
               <strong>Email:</strong>
+
               <a href="mailto:pedidosdetallsublim@gmail.com"> pedidosdetallsublim&#64;gmail.com </a>
+
               <a href="mailto:detallsublim.es@gmail.com"> detallsublim.es&#64;gmail.com </a>
             </li>
 
             <li>
               <strong>Teléfono:</strong>
+
               <a href="tel:+34618006543"> +34 618 006 543 </a>
             </li>
 
             <li>
-              <strong>{{ 'global.public.home.attention' | translate }}:</strong>
-              <span>{{ 'global.public.home.customResponse' | translate }}</span>
+              <strong> {{ 'global.public.home.attention' | translate }}: </strong>
+
+              <span>
+                {{ 'global.public.home.customResponse' | translate }}
+              </span>
             </li>
 
             <li class="ds-location-item">

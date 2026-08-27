@@ -106,15 +106,6 @@
     <jhi-app>
       <div class="app-loading">
         <div id="jhipster-error" style="display: none">
-          <!-- Mantén aquí todo el contenido de error
-            de JHipster que ya tienes -->
-        </div>
-      </div>
-    </jhi-app>
-
-    <jhi-app>
-      <div class="app-loading">
-        <div id="jhipster-error" style="display: none">
           <!-- This content is for troubleshooting purpose and will be removed when app renders -->
           <h1>An error has occurred :-(</h1>
           <h2>Usual error causes</h2>
@@ -201,6 +192,15 @@
 
         loader.classList.add('ds-app-loading--hidden');
 
+        /*
+         * Mientras el loader termina su fade-out,
+         * permitimos que la interfaz principal empiece
+         * su animación de entrada.
+         */
+        setTimeout(() => {
+          document.documentElement.classList.add('ds-app-loaded');
+        }, 180);
+
         setTimeout(() => {
           loader.remove();
         }, 600);
@@ -236,7 +236,17 @@
           return;
         }
 
+        const loader = document.getElementById('ds-app-loader');
+
         const errorElm = document.getElementById('jhipster-error');
+
+        if (loader) {
+          loader.classList.add('ds-app-loading--hidden');
+
+          setTimeout(() => {
+            loader.remove();
+          }, 600);
+        }
 
         if (errorElm?.style) {
           errorElm.style.display = 'block';

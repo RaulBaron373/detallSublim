@@ -7,12 +7,12 @@ import { NewSolicitudPresupuesto } from 'app/entities/solicitud-presupuesto/soli
 import { ActivatedRoute } from '@angular/router';
 import { ProductoService } from 'app/entities/producto/service/producto.service';
 import { IProducto } from 'app/entities/producto/producto.model';
-import { CommonModule } from '@angular/common';
+import SharedModule from 'app/shared/shared.module';
 
 @Component({
   selector: 'jhi-quote-request',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, SharedModule],
   templateUrl: './quote-request.component.html',
   styleUrl: './quote-request.component.scss',
 })

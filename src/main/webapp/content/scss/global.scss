@@ -1349,3 +1349,83 @@ USER VIEW
   justify-content: flex-end;
   margin-top: 2rem;
 }
+
+/* ==============================================================
+    DETALL SUBLIM - SCROLL REVEAL
+=============================================================== */
+
+.ds-reveal {
+  --ds-reveal-delay: 0ms;
+
+  opacity: 0;
+
+  will-change: opacity, transform;
+
+  transition:
+    opacity 0.7s ease var(--ds-reveal-delay),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--ds-reveal-delay);
+}
+
+/* ==============================================================
+    FADE UP
+=============================================================== */
+
+.ds-reveal--fade-up {
+  transform: translate3d(0, 28px, 0);
+}
+
+/* ==============================================================
+    FADE LEFT
+    Entra desde la izquierda
+=============================================================== */
+
+.ds-reveal--fade-left {
+  transform: translate3d(-28px, 0, 0);
+}
+
+/* ==============================================================
+    FADE RIGHT
+    Entra desde la derecha
+=============================================================== */
+
+.ds-reveal--fade-right {
+  transform: translate3d(28px, 0, 0);
+}
+
+/* ==============================================================
+    SCALE UP
+=============================================================== */
+
+.ds-reveal--scale-up {
+  transform: translate3d(0, 14px, 0) scale(0.97);
+}
+
+/* ==============================================================
+    ELEMENTO VISIBLE
+=============================================================== */
+
+.ds-reveal--visible {
+  opacity: 1;
+
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* ==============================================================
+    ACCESIBILIDAD
+=============================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-reveal,
+  .ds-reveal--fade-up,
+  .ds-reveal--fade-left,
+  .ds-reveal--fade-right,
+  .ds-reveal--scale-up {
+    opacity: 1;
+
+    transform: none;
+
+    transition: none;
+
+    will-change: auto;
+  }
+}

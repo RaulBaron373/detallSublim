@@ -6,27 +6,33 @@
   </div>
 
   <div class="ds-container">
-    <div class="about-header">
-      <span class="about-tag">Sobre nosotros</span>
+    <!-- CABECERA -->
+    <div class="about-header" dsScrollReveal reveal="fade-up">
+      <span class="about-tag"> Sobre nosotros </span>
+
       <h1>Quiénes somos</h1>
+
       <p class="about-subtitle">
         En <strong>Detall Sublim</strong> nos dedicamos a la personalización de productos como camisetas, tazas, gorras y otros artículos,
         ofreciendo soluciones adaptadas tanto a particulares como a empresas.
       </p>
     </div>
 
+    <!-- MISIÓN / ENFOQUE -->
     <div class="about-intro">
       <div class="about-intro-content">
-        <div class="about-block">
+        <div class="about-block" dsScrollReveal reveal="fade-left">
           <h2>Nuestra misión</h2>
+
           <p>
             Ofrecer productos personalizados de calidad, adaptados a las necesidades de cada cliente, cuidando cada detalle del proceso para
             garantizar un resultado final que cumpla con sus expectativas.
           </p>
         </div>
 
-        <div class="about-block">
+        <div class="about-block" dsScrollReveal reveal="fade-right" [revealDelay]="120">
           <h2>Nuestro enfoque</h2>
+
           <p>
             Trabajamos de forma cercana y personalizada, ayudando al cliente a definir su idea antes de realizar el encargo. De esta forma
             conseguimos que cada producto refleje exactamente lo que el cliente necesita.
@@ -35,39 +41,50 @@
       </div>
     </div>
 
+    <!-- VALORES -->
     <section class="about-values">
-      <div class="about-values-header">
+      <div class="about-values-header" dsScrollReveal reveal="fade-up">
         <h2>Qué nos diferencia</h2>
+
         <p>Nuestro trabajo combina atención personalizada, flexibilidad y compromiso con la calidad.</p>
       </div>
 
       <div class="about-cards">
-        <div class="about-card pink">
+        <div class="about-card pink" dsScrollReveal reveal="scale-up">
           <div class="icon">❤</div>
+
           <h3>Atención personalizada</h3>
+
           <p>Cada cliente recibe asesoramiento adaptado a sus necesidades.</p>
         </div>
 
-        <div class="about-card cyan">
+        <div class="about-card cyan" dsScrollReveal reveal="scale-up" [revealDelay]="110">
           <div class="icon">★</div>
+
           <h3>Calidad garantizada</h3>
+
           <p>Resultados profesionales y duraderos en cada producto.</p>
         </div>
 
-        <div class="about-card yellow">
+        <div class="about-card yellow" dsScrollReveal reveal="scale-up" [revealDelay]="220">
           <div class="icon">✦</div>
+
           <h3>Flexibilidad</h3>
+
           <p>Trabajamos con pedidos pequeños y grandes proyectos.</p>
         </div>
       </div>
     </section>
 
-    <div class="about-clients">
+    <!-- CLIENTES -->
+    <div class="about-clients" dsScrollReveal reveal="fade-up">
       <h2>Trabajamos para</h2>
+
       <p>
         Tanto particulares como empresas que buscan productos personalizados para eventos, promociones, regalos corporativos o cualquier
         tipo de necesidad específica.
       </p>
+
       <p>Nuestro objetivo es transformar ideas en productos únicos que marquen la diferencia.</p>
     </div>
   </div>

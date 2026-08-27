@@ -9,12 +9,20 @@ import TranslateDirective from './language/translate.directive';
 import { AlertComponent } from './alert/alert.component';
 import { AlertErrorComponent } from './alert/alert-error.component';
 import HasAnyAuthorityDirective from './auth/has-any-authority.directive';
+import { ScrollRevealDirective } from './directives/scroll-reveal.directive';
 
 /**
  * Application wide Module
  */
 @NgModule({
-  imports: [AlertComponent, AlertErrorComponent, FindLanguageFromKeyPipe, TranslateDirective, HasAnyAuthorityDirective],
+  imports: [
+    AlertComponent,
+    AlertErrorComponent,
+    FindLanguageFromKeyPipe,
+    TranslateDirective,
+    HasAnyAuthorityDirective,
+    ScrollRevealDirective,
+  ],
   exports: [
     CommonModule,
     NgbModule,
@@ -25,6 +33,7 @@ import HasAnyAuthorityDirective from './auth/has-any-authority.directive';
     FindLanguageFromKeyPipe,
     TranslateDirective,
     HasAnyAuthorityDirective,
+    ScrollRevealDirective,
   ],
 })
 export default class SharedModule {}

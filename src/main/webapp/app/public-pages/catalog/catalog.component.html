@@ -6,16 +6,20 @@
   </div>
 
   <div class="ds-container">
-    <div class="catalog-header">
-      <span class="catalog-tag">Nuestro catálogo</span>
+    <!-- CABECERA -->
+    <div class="catalog-header" dsScrollReveal reveal="fade-up">
+      <span class="catalog-tag"> Nuestro catálogo </span>
+
       <h1>Productos personalizados para cada ocasión</h1>
+
       <p class="catalog-subtitle">
         Explora una selección de productos que podemos personalizar para particulares, eventos, promociones y empresas. Cada artículo puede
         adaptarse a tus necesidades mediante distintas técnicas y acabados.
       </p>
     </div>
 
-    <section class="catalog-filters">
+    <!-- FILTROS -->
+    <section class="catalog-filters" dsScrollReveal reveal="fade-up" [revealDelay]="100">
       <button class="catalog-filter" [class.active]="categoriaSeleccionada === 'Todos'" (click)="filtrarProductos('Todos')">Todos</button>
 
       <button
@@ -28,8 +32,15 @@
       </button>
     </section>
 
+    <!-- PRODUCTOS -->
     <section class="catalog-grid">
-      <article class="catalog-card" *ngFor="let producto of productosFiltrados">
+      <article
+        class="catalog-card"
+        *ngFor="let producto of productosFiltrados; let i = index"
+        dsScrollReveal
+        reveal="scale-up"
+        [revealDelay]="(i % 6) * 80"
+      >
         <div class="catalog-card-image">
           <img *ngIf="producto.imagenUrl" [src]="producto.imagenUrl" [alt]="producto.nombre" />
 
@@ -41,28 +52,44 @@
             {{ producto.categoria?.nombre }}
           </span>
 
-          <h2>{{ producto.nombre }}</h2>
+          <h2>
+            {{ producto.nombre }}
+          </h2>
 
-          <p>{{ producto.descripcion }}</p>
+          <p>
+            {{ producto.descripcion }}
+          </p>
 
           <div class="catalog-card-footer">
             <span class="catalog-price"> Desde {{ producto.precioBase }} € </span>
 
-            <a [routerLink]="['/solicitar-presupuesto']" [queryParams]="{ producto: producto.id }" class="catalog-link"> Solicitar </a>
+            <a
+              [routerLink]="['/solicitar-presupuesto']"
+              [queryParams]="{
+                producto: producto.id,
+              }"
+              class="catalog-link"
+            >
+              Solicitar
+            </a>
           </div>
         </div>
       </article>
     </section>
 
+    <!-- CTA -->
     <section class="catalog-cta">
-      <div class="catalog-cta-box">
+      <div class="catalog-cta-box" dsScrollReveal reveal="fade-up">
         <div class="catalog-cta-text">
           <h2>¿No encuentras lo que necesitas?</h2>
+
           <p>Podemos estudiar tu idea y proponerte una solución personalizada según el tipo de producto, cantidad y acabado que busques.</p>
         </div>
+
         <div class="catalog-cta-actions">
-          <a routerLink="/solicitar-presupuesto" class="ds-btn ds-btn-primary">Solicitar presupuesto</a>
-          <a routerLink="/contacto" class="ds-btn ds-btn-outline">Contactar</a>
+          <a routerLink="/solicitar-presupuesto" class="ds-btn ds-btn-primary"> Solicitar presupuesto </a>
+
+          <a routerLink="/contacto" class="ds-btn ds-btn-outline"> Contactar </a>
         </div>
       </div>
     </section>
