@@ -50,8 +50,8 @@ class SolicitudPresupuestoResourceIT {
     private static final String DEFAULT_NOMBRE_CLIENTE = "AAAAAAAAAA";
     private static final String UPDATED_NOMBRE_CLIENTE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
-    private static final String UPDATED_EMAIL = "BBBBBBBBBB";
+    private static final String DEFAULT_EMAIL = "default@example.com";
+    private static final String UPDATED_EMAIL = "updated@example.com";
 
     private static final String DEFAULT_TELEFONO = "AAAAAAAAAA";
     private static final String UPDATED_TELEFONO = "BBBBBBBBBB";

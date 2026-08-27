@@ -39,8 +39,8 @@ class MensajeContactoResourceIT {
     private static final String DEFAULT_NOMBRE = "AAAAAAAAAA";
     private static final String UPDATED_NOMBRE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
-    private static final String UPDATED_EMAIL = "BBBBBBBBBB";
+    private static final String DEFAULT_EMAIL = "default@example.com";
+    private static final String UPDATED_EMAIL = "updated@example.com";
 
     private static final String DEFAULT_TELEFONO = "AAAAAAAAAA";
     private static final String UPDATED_TELEFONO = "BBBBBBBBBB";

@@ -5,6 +5,7 @@ import static com.detallsublim.app.web.rest.TestUtil.createUpdateProxyForBean;
 import static com.detallsublim.app.web.rest.TestUtil.sameNumber;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -45,6 +46,9 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class ProductoResourceIT {
 
+    private static final Boolean DEFAULT_DESTACADO = false;
+    private static final Boolean UPDATED_DESTACADO = true;
+
     private static final String DEFAULT_NOMBRE = "AAAAAAAAAA";
     private static final String UPDATED_NOMBRE = "BBBBBBBBBB";
 
@@ -60,8 +64,10 @@ class ProductoResourceIT {
     private static final Integer DEFAULT_PLAZO_ESTIMADO_DIAS = 1;
     private static final Integer UPDATED_PLAZO_ESTIMADO_DIAS = 2;
 
-    private static final String DEFAULT_IMAGEN_URL = "AAAAAAAAAA";
-    private static final String UPDATED_IMAGEN_URL = "BBBBBBBBBB";
+    private static final String DEFAULT_IMAGEN_URL =
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=";
+    private static final String UPDATED_IMAGEN_URL =
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=";
 
     private static final Boolean DEFAULT_ACTIVO = false;
     private static final Boolean UPDATED_ACTIVO = true;
@@ -111,7 +117,8 @@ class ProductoResourceIT {
             .personalizable(DEFAULT_PERSONALIZABLE)
             .plazoEstimadoDias(DEFAULT_PLAZO_ESTIMADO_DIAS)
             .imagenUrl(DEFAULT_IMAGEN_URL)
-            .activo(DEFAULT_ACTIVO);
+            .activo(DEFAULT_ACTIVO)
+            .destacado(DEFAULT_DESTACADO);
     }
 
     /**
@@ -128,7 +135,8 @@ class ProductoResourceIT {
             .personalizable(UPDATED_PERSONALIZABLE)
             .plazoEstimadoDias(UPDATED_PLAZO_ESTIMADO_DIAS)
             .imagenUrl(UPDATED_IMAGEN_URL)
-            .activo(UPDATED_ACTIVO);
+            .activo(UPDATED_ACTIVO)
+            .destacado(UPDATED_DESTACADO);
     }
 
     @BeforeEach

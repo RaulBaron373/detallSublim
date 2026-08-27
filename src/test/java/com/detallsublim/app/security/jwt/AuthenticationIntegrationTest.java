@@ -4,6 +4,7 @@ import com.detallsublim.app.config.SecurityConfiguration;
 import com.detallsublim.app.config.SecurityJwtConfiguration;
 import com.detallsublim.app.config.WebConfigurer;
 import com.detallsublim.app.management.SecurityMetersService;
+import com.detallsublim.app.service.RateLimitService;
 import com.detallsublim.app.web.rest.AuthenticateController;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -27,6 +28,7 @@ import tech.jhipster.config.JHipsterProperties;
         SecurityMetersService.class,
         AuthenticateController.class,
         JwtAuthenticationTestUtils.class,
+        RateLimitService.class,
     }
 )
 public @interface AuthenticationIntegrationTest {

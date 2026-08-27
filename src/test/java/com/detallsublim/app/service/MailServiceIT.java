@@ -8,6 +8,7 @@ import com.detallsublim.app.IntegrationTest;
 import com.detallsublim.app.config.Constants;
 import com.detallsublim.app.domain.User;
 import jakarta.mail.Multipart;
+import jakarta.mail.Part;
 import jakarta.mail.Session;
 import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMessage;
@@ -82,12 +83,14 @@ class MailServiceIT {
         mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, true);
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
+        message.saveChanges();
+        String html = extractTextContent(message);
         assertThat(message.getSubject()).isEqualTo("testSubject");
         assertThat(message.getAllRecipients()[0]).hasToString("john.doe@example.com");
         assertThat(message.getFrom()[0]).hasToString(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getContent()).isInstanceOf(String.class);
-        assertThat(message.getContent()).hasToString("testContent");
-        assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
+        assertThat(message.getContent()).isInstanceOf(Multipart.class);
+        assertThat(html).isEqualTo("testContent");
+        assertThat(message.getContentType()).startsWith("multipart/");
     }
 
     @Test
@@ -133,11 +136,17 @@ class MailServiceIT {
         mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title");
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
+        message.saveChanges();
+        String html = extractTextContent(message);
         assertThat(message.getSubject()).isEqualTo("test title");
         assertThat(message.getAllRecipients()[0]).hasToString(user.getEmail());
         assertThat(message.getFrom()[0]).hasToString(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getContent().toString()).isEqualToNormalizingNewlines("<html>test title, http://127.0.0.1:8080, john</html>\n");
-        assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
+        assertThat(message.getSubject()).isEqualTo("test title");
+        assertThat(message.getAllRecipients()[0]).hasToString(user.getEmail());
+        assertThat(message.getFrom()[0]).hasToString(jHipsterProperties.getMail().getFrom());
+        assertThat(message.getContent()).isInstanceOf(Multipart.class);
+        assertThat(html).contains("test title").contains("http://127.0.0.1:8080").contains("john").contains("Detall Sublim");
+        assertThat(message.getContentType()).startsWith("multipart/");
     }
 
     @Test
@@ -149,10 +158,13 @@ class MailServiceIT {
         mailService.sendActivationEmail(user);
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
+        message.saveChanges();
+        String html = extractTextContent(message);
         assertThat(message.getAllRecipients()[0]).hasToString(user.getEmail());
         assertThat(message.getFrom()[0]).hasToString(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getContent().toString()).isNotEmpty();
-        assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
+        assertThat(message.getContent()).isInstanceOf(Multipart.class);
+        assertThat(html).isNotBlank().contains("Detall Sublim");
+        assertThat(message.getContentType()).startsWith("multipart/");
     }
 
     @Test
@@ -164,10 +176,13 @@ class MailServiceIT {
         mailService.sendCreationEmail(user);
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
+        message.saveChanges();
+        String html = extractTextContent(message);
         assertThat(message.getAllRecipients()[0]).hasToString(user.getEmail());
         assertThat(message.getFrom()[0]).hasToString(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getContent().toString()).isNotEmpty();
-        assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
+        assertThat(message.getContent()).isInstanceOf(Multipart.class);
+        assertThat(html).isNotBlank().contains("Detall Sublim");
+        assertThat(message.getContentType()).startsWith("multipart/");
     }
 
     @Test
@@ -179,10 +194,13 @@ class MailServiceIT {
         mailService.sendPasswordResetMail(user);
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
+        message.saveChanges();
+        String html = extractTextContent(message);
         assertThat(message.getAllRecipients()[0]).hasToString(user.getEmail());
         assertThat(message.getFrom()[0]).hasToString(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getContent().toString()).isNotEmpty();
-        assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
+        assertThat(message.getContent()).isInstanceOf(Multipart.class);
+        assertThat(html).isNotBlank().contains("Detall Sublim");
+        assertThat(message.getContentType()).startsWith("multipart/");
     }
 
     @Test
@@ -214,9 +232,10 @@ class MailServiceIT {
 
             String emailTitle = (String) properties.get("email.test.title");
             assertThat(message.getSubject()).isEqualTo(emailTitle);
-            assertThat(message.getContent().toString()).isEqualToNormalizingNewlines(
-                "<html>" + emailTitle + ", http://127.0.0.1:8080, john</html>\n"
-            );
+            String html = extractTextContent(message);
+            assertThat(message.getSubject()).isEqualTo(emailTitle);
+            assertThat(html).contains(emailTitle).contains("http://127.0.0.1:8080").contains("john").contains("Detall Sublim");
+            assertThat(message.getContent()).isInstanceOf(Multipart.class);
         }
     }
 
@@ -234,5 +253,25 @@ class MailServiceIT {
             javaLangKey = matcher3.group(1) + "_" + matcher3.group(2) + "_" + matcher3.group(3).toUpperCase();
         }
         return javaLangKey;
+    }
+
+    private String extractTextContent(Part part) throws Exception {
+        Object content = part.getContent();
+
+        if (content instanceof String text) {
+            return text;
+        }
+
+        if (content instanceof Multipart multipart) {
+            for (int i = 0; i < multipart.getCount(); i++) {
+                String text = extractTextContent(multipart.getBodyPart(i));
+
+                if (text != null && !text.isBlank()) {
+                    return text;
+                }
+            }
+        }
+
+        return null;
     }
 }

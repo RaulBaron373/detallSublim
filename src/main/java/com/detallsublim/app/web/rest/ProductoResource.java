@@ -5,7 +5,6 @@ import com.detallsublim.app.service.ProductoService;
 import com.detallsublim.app.service.dto.ProductoDTO;
 import com.detallsublim.app.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -18,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -113,7 +113,7 @@ public class ProductoResource {
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<ProductoDTO> partialUpdateProducto(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @NotNull @RequestBody ProductoDTO productoDTO
+        @Validated(ProductoDTO.PartialUpdate.class) @RequestBody ProductoDTO productoDTO
     ) throws URISyntaxException {
         LOG.debug("REST request to partial update Producto partially : {}, {}", id, productoDTO);
         if (productoDTO.getId() == null) {

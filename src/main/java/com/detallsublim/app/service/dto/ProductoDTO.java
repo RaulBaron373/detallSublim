@@ -3,6 +3,7 @@ package com.detallsublim.app.service.dto;
 import com.detallsublim.app.service.validation.ValidProductImage;
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
+import jakarta.validation.groups.Default;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -13,6 +14,8 @@ import java.util.Objects;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class ProductoDTO implements Serializable {
 
+    public interface PartialUpdate {}
+
     private Long id;
 
     @NotNull
@@ -22,7 +25,7 @@ public class ProductoDTO implements Serializable {
     private String descripcion;
 
     @NotNull
-    @DecimalMin(value = "0")
+    @DecimalMin(value = "0", groups = { Default.class, PartialUpdate.class })
     private BigDecimal precioBase;
 
     @NotNull
@@ -31,7 +34,7 @@ public class ProductoDTO implements Serializable {
     private Integer plazoEstimadoDias;
 
     @Lob
-    @ValidProductImage
+    @ValidProductImage(groups = { Default.class, PartialUpdate.class })
     private String imagenUrl;
 
     @NotNull
