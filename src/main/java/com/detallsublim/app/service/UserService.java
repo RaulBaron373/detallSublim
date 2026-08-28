@@ -181,6 +181,69 @@ public class UserService {
     }
 
     /**
+     * Creates the initial production administrator with a predefined password.
+     * This operation is intended exclusively for production bootstrap.
+     *
+     * @param userDTO administrator information.
+     * @param password initial administrator password.
+     * @return the created administrator.
+     */
+    public User createInitialAdmin(AdminUserDTO userDTO, String password) {
+        User user = new User();
+
+        user.setLogin(userDTO.getLogin().toLowerCase());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+
+        if (userDTO.getEmail() != null) {
+            user.setEmail(userDTO.getEmail().toLowerCase());
+        }
+
+        user.setImageUrl(userDTO.getImageUrl());
+
+        if (userDTO.getLangKey() == null) {
+            user.setLangKey(Constants.DEFAULT_LANGUAGE);
+        } else {
+            user.setLangKey(userDTO.getLangKey());
+        }
+
+        /*
+         * Unlike regular administrative user creation,
+         * the production bootstrap administrator already
+         * receives its definitive password.
+         */
+        user.setPassword(passwordEncoder.encode(password));
+
+        user.setActivated(true);
+
+        /*
+         * The initial administrator does not require
+         * a password-reset token during bootstrap.
+         */
+        user.setResetKey(null);
+        user.setResetDate(null);
+
+        if (userDTO.getAuthorities() != null) {
+            Set<Authority> authorities = userDTO
+                .getAuthorities()
+                .stream()
+                .map(authorityRepository::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toSet());
+
+            user.setAuthorities(authorities);
+        }
+
+        userRepository.save(user);
+        this.clearUserCaches(user);
+
+        LOG.info("Initial production administrator '{}' created", user.getLogin());
+
+        return user;
+    }
+
+    /**
      * Update all information for a specific user, and return the modified user.
      *
      * @param userDTO user to update.
