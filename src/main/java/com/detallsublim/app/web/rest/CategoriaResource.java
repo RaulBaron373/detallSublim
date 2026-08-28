@@ -51,7 +51,7 @@ public class CategoriaResource {
      */
     @PostMapping("")
     public ResponseEntity<CategoriaDTO> createCategoria(@Valid @RequestBody CategoriaDTO categoriaDTO) throws URISyntaxException {
-        LOG.debug("REST request to save Categoria : {}", categoriaDTO);
+        LOG.debug("REST request to save Categoria");
         if (categoriaDTO.getId() != null) {
             throw new BadRequestAlertException("A new categoria cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -76,7 +76,7 @@ public class CategoriaResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody CategoriaDTO categoriaDTO
     ) throws URISyntaxException {
-        LOG.debug("REST request to update Categoria : {}, {}", id, categoriaDTO);
+        LOG.debug("REST request to update Categoria with id {}", id);
         if (categoriaDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -110,7 +110,7 @@ public class CategoriaResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody CategoriaDTO categoriaDTO
     ) throws URISyntaxException {
-        LOG.debug("REST request to partial update Categoria partially : {}, {}", id, categoriaDTO);
+        LOG.debug("REST request to partially update Categoria with id {}", id);
         if (categoriaDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }

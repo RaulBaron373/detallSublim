@@ -37,7 +37,7 @@ public class ProductoService {
      * @return the persisted entity.
      */
     public ProductoDTO save(ProductoDTO productoDTO) {
-        LOG.debug("Request to save Producto : {}", productoDTO);
+        LOG.debug("Request to save Producto");
         Producto producto = productoMapper.toEntity(productoDTO);
         producto = productoRepository.save(producto);
         return productoMapper.toDto(producto);
@@ -50,7 +50,7 @@ public class ProductoService {
      * @return the persisted entity.
      */
     public ProductoDTO update(ProductoDTO productoDTO) {
-        LOG.debug("Request to update Producto : {}", productoDTO);
+        LOG.debug("Request to update Producto with id {}", productoDTO.getId());
         Producto producto = productoMapper.toEntity(productoDTO);
         producto = productoRepository.save(producto);
         return productoMapper.toDto(producto);
@@ -63,7 +63,7 @@ public class ProductoService {
      * @return the persisted entity.
      */
     public Optional<ProductoDTO> partialUpdate(ProductoDTO productoDTO) {
-        LOG.debug("Request to partially update Producto : {}", productoDTO);
+        LOG.debug("Request to partially update Producto with id {}", productoDTO.getId());
 
         return productoRepository
             .findById(productoDTO.getId())

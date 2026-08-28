@@ -61,7 +61,7 @@ public class SolicitudPresupuestoResource {
     public ResponseEntity<SolicitudPresupuestoDTO> createSolicitudPresupuesto(
         @Valid @RequestBody SolicitudPresupuestoDTO solicitudPresupuestoDTO
     ) throws URISyntaxException {
-        LOG.debug("REST request to save SolicitudPresupuesto : {}", solicitudPresupuestoDTO);
+        LOG.debug("REST request to save SolicitudPresupuesto");
         if (solicitudPresupuestoDTO.getId() != null) {
             throw new BadRequestAlertException("A new solicitudPresupuesto cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -86,7 +86,7 @@ public class SolicitudPresupuestoResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody SolicitudPresupuestoDTO solicitudPresupuestoDTO
     ) throws URISyntaxException {
-        LOG.debug("REST request to update SolicitudPresupuesto : {}, {}", id, solicitudPresupuestoDTO);
+        LOG.debug("REST request to update SolicitudPresupuesto with id {}", id);
         if (solicitudPresupuestoDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -120,7 +120,7 @@ public class SolicitudPresupuestoResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody SolicitudPresupuestoDTO solicitudPresupuestoDTO
     ) throws URISyntaxException {
-        LOG.debug("REST request to partial update SolicitudPresupuesto partially : {}, {}", id, solicitudPresupuestoDTO);
+        LOG.debug("REST request to partially update SolicitudPresupuesto with id {}", id);
         if (solicitudPresupuestoDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }

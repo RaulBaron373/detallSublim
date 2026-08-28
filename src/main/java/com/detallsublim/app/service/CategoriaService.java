@@ -38,7 +38,7 @@ public class CategoriaService {
      * @return the persisted entity.
      */
     public CategoriaDTO save(CategoriaDTO categoriaDTO) {
-        LOG.debug("Request to save Categoria : {}", categoriaDTO);
+        LOG.debug("Request to save Categoria");
         Categoria categoria = categoriaMapper.toEntity(categoriaDTO);
         categoria = categoriaRepository.save(categoria);
         return categoriaMapper.toDto(categoria);
@@ -51,7 +51,7 @@ public class CategoriaService {
      * @return the persisted entity.
      */
     public CategoriaDTO update(CategoriaDTO categoriaDTO) {
-        LOG.debug("Request to update Categoria : {}", categoriaDTO);
+        LOG.debug("Request to update Categoria with id {}", categoriaDTO.getId());
         Categoria categoria = categoriaMapper.toEntity(categoriaDTO);
         categoria = categoriaRepository.save(categoria);
         return categoriaMapper.toDto(categoria);
@@ -64,7 +64,7 @@ public class CategoriaService {
      * @return the persisted entity.
      */
     public Optional<CategoriaDTO> partialUpdate(CategoriaDTO categoriaDTO) {
-        LOG.debug("Request to partially update Categoria : {}", categoriaDTO);
+        LOG.debug("Request to partially update Categoria with id {}", categoriaDTO.getId());
 
         return categoriaRepository
             .findById(categoriaDTO.getId())

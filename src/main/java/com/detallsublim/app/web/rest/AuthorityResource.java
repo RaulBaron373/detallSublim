@@ -49,7 +49,7 @@ public class AuthorityResource {
     @PostMapping("")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public ResponseEntity<Authority> createAuthority(@Valid @RequestBody Authority authority) throws URISyntaxException {
-        LOG.debug("REST request to save Authority : {}", authority);
+        LOG.debug("REST request to save Authority");
         if (authorityRepository.existsById(authority.getName())) {
             throw new BadRequestAlertException("authority already exists", ENTITY_NAME, "idexists");
         }
@@ -80,7 +80,7 @@ public class AuthorityResource {
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public ResponseEntity<Authority> getAuthority(@PathVariable("id") String id) {
-        LOG.debug("REST request to get Authority : {}", id);
+        LOG.debug("REST request to get Authority");
         Optional<Authority> authority = authorityRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(authority);
     }
@@ -94,7 +94,7 @@ public class AuthorityResource {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteAuthority(@PathVariable("id") String id) {
-        LOG.debug("REST request to delete Authority : {}", id);
+        LOG.debug("REST request to delete Authority");
         authorityRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id)).build();
     }

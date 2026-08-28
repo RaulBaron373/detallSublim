@@ -56,7 +56,7 @@ public class ProductoResource {
      */
     @PostMapping("")
     public ResponseEntity<ProductoDTO> createProducto(@Valid @RequestBody ProductoDTO productoDTO) throws URISyntaxException {
-        LOG.debug("REST request to save Producto : {}", productoDTO);
+        LOG.debug("REST request to save Producto");
         if (productoDTO.getId() != null) {
             throw new BadRequestAlertException("A new producto cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -81,7 +81,7 @@ public class ProductoResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody ProductoDTO productoDTO
     ) throws URISyntaxException {
-        LOG.debug("REST request to update Producto : {}, {}", id, productoDTO);
+        LOG.debug("REST request to update Producto with id {}", id);
         if (productoDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -115,7 +115,7 @@ public class ProductoResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Validated(ProductoDTO.PartialUpdate.class) @RequestBody ProductoDTO productoDTO
     ) throws URISyntaxException {
-        LOG.debug("REST request to partial update Producto partially : {}, {}", id, productoDTO);
+        LOG.debug("REST request to partially update Producto with id {}", id);
         if (productoDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }

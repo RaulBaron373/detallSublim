@@ -39,11 +39,10 @@ export default class PasswordStrengthBarComponent {
 
   measureStrength(p: string): number {
     let force = 0;
-    const regex = /[$-/:-?{-~!"^_`[\]]/g; // "
     const lowerLetters = /[a-z]+/.test(p);
     const upperLetters = /[A-Z]+/.test(p);
     const numbers = /\d+/.test(p);
-    const symbols = regex.test(p);
+    const symbols = /[^\p{L}\p{N}\s]/u.test(p);
 
     const flags = [lowerLetters, upperLetters, numbers, symbols];
     const passedMatches = flags.filter((isMatchedFlag: boolean) => isMatchedFlag).length;

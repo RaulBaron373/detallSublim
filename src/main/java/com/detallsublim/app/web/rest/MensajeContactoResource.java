@@ -57,7 +57,7 @@ public class MensajeContactoResource {
     @PostMapping("")
     public ResponseEntity<MensajeContactoDTO> createMensajeContacto(@Valid @RequestBody MensajeContactoDTO mensajeContactoDTO)
         throws URISyntaxException {
-        LOG.debug("REST request to save MensajeContacto : {}", mensajeContactoDTO);
+        LOG.debug("REST request to save MensajeContacto");
         if (mensajeContactoDTO.getId() != null) {
             throw new BadRequestAlertException("A new mensajeContacto cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -82,7 +82,7 @@ public class MensajeContactoResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody MensajeContactoDTO mensajeContactoDTO
     ) throws URISyntaxException {
-        LOG.debug("REST request to update MensajeContacto : {}, {}", id, mensajeContactoDTO);
+        LOG.debug("REST request to update MensajeContacto with id {}", id);
         if (mensajeContactoDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -116,7 +116,7 @@ public class MensajeContactoResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody MensajeContactoDTO mensajeContactoDTO
     ) throws URISyntaxException {
-        LOG.debug("REST request to partial update MensajeContacto partially : {}, {}", id, mensajeContactoDTO);
+        LOG.debug("REST request to partially update MensajeContacto with id {}", id);
         if (mensajeContactoDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }

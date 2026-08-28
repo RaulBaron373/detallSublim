@@ -43,7 +43,7 @@ public class MensajeContactoService {
      * @return the persisted entity.
      */
     public MensajeContactoDTO save(MensajeContactoDTO mensajeContactoDTO) {
-        LOG.debug("Request to save MensajeContacto : {}", mensajeContactoDTO);
+        LOG.debug("Request to save MensajeContacto");
 
         MensajeContacto mensajeContacto = mensajeContactoMapper.toEntity(mensajeContactoDTO);
         mensajeContacto = mensajeContactoRepository.save(mensajeContacto);
@@ -88,7 +88,7 @@ public class MensajeContactoService {
      * @return the persisted entity.
      */
     public MensajeContactoDTO update(MensajeContactoDTO mensajeContactoDTO) {
-        LOG.debug("Request to update MensajeContacto : {}", mensajeContactoDTO);
+        LOG.debug("Request to update MensajeContacto with id {}", mensajeContactoDTO.getId());
         MensajeContacto mensajeContacto = mensajeContactoMapper.toEntity(mensajeContactoDTO);
         mensajeContacto = mensajeContactoRepository.save(mensajeContacto);
         return mensajeContactoMapper.toDto(mensajeContacto);
@@ -101,7 +101,7 @@ public class MensajeContactoService {
      * @return the persisted entity.
      */
     public Optional<MensajeContactoDTO> partialUpdate(MensajeContactoDTO mensajeContactoDTO) {
-        LOG.debug("Request to partially update MensajeContacto : {}", mensajeContactoDTO);
+        LOG.debug("Request to partially update MensajeContacto with id {}", mensajeContactoDTO.getId());
 
         return mensajeContactoRepository
             .findById(mensajeContactoDTO.getId())

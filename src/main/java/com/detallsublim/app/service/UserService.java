@@ -54,7 +54,7 @@ public class UserService {
     }
 
     public Optional<User> activateRegistration(String key) {
-        LOG.debug("Activating user for activation key {}", key);
+        LOG.debug("Activating user registration");
         return userRepository
             .findOneByActivationKey(key)
             .map(user -> {
@@ -62,13 +62,13 @@ public class UserService {
                 user.setActivated(true);
                 user.setActivationKey(null);
                 this.clearUserCaches(user);
-                LOG.debug("Activated user: {}", user);
+                LOG.debug("User activated successfully");
                 return user;
             });
     }
 
     public Optional<User> completePasswordReset(String newPassword, String key) {
-        LOG.debug("Reset user password for reset key {}", key);
+        LOG.debug("Resetting user password");
         return userRepository
             .findOneByResetKey(key)
             .filter(user -> user.getResetDate().isAfter(Instant.now().minus(1, ChronoUnit.DAYS)))
@@ -131,7 +131,7 @@ public class UserService {
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
         this.clearUserCaches(newUser);
-        LOG.debug("Created Information for User: {}", newUser);
+        LOG.debug("User created successfully");
         return newUser;
     }
 
@@ -275,7 +275,7 @@ public class UserService {
                     .forEach(managedAuthorities::add);
                 userRepository.save(user);
                 this.clearUserCaches(user);
-                LOG.debug("Changed Information for User: {}", user);
+                LOG.debug("User information updated successfully");
                 return user;
             })
             .map(AdminUserDTO::new);
@@ -287,7 +287,7 @@ public class UserService {
             .ifPresent(user -> {
                 userRepository.delete(user);
                 this.clearUserCaches(user);
-                LOG.debug("Deleted User: {}", user);
+                LOG.debug("User deleted successfully");
             });
     }
 
@@ -329,7 +329,7 @@ public class UserService {
                 String encryptedPassword = passwordEncoder.encode(newPassword);
                 user.setPassword(encryptedPassword);
                 this.clearUserCaches(user);
-                LOG.debug("Changed password for User: {}", user);
+                LOG.debug("User password changed successfully");
             });
     }
 

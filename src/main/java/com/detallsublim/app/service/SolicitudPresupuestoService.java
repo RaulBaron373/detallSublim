@@ -48,7 +48,7 @@ public class SolicitudPresupuestoService {
      * @return the persisted entity.
      */
     public SolicitudPresupuestoDTO save(SolicitudPresupuestoDTO solicitudPresupuestoDTO) {
-        LOG.debug("Request to save SolicitudPresupuesto : {}", solicitudPresupuestoDTO);
+        LOG.debug("Request to save SolicitudPresupuesto");
 
         SolicitudPresupuesto solicitudPresupuesto = solicitudPresupuestoMapper.toEntity(solicitudPresupuestoDTO);
 
@@ -108,7 +108,7 @@ public class SolicitudPresupuestoService {
      * @return the persisted entity.
      */
     public SolicitudPresupuestoDTO update(SolicitudPresupuestoDTO dto) {
-        LOG.debug("Request to update SolicitudPresupuesto : {}", dto);
+        LOG.debug("Request to update SolicitudPresupuesto with id {}", dto.getId());
 
         SolicitudPresupuesto existing = solicitudPresupuestoRepository
             .findById(dto.getId())
@@ -259,7 +259,7 @@ public class SolicitudPresupuestoService {
      * @return the persisted entity.
      */
     public Optional<SolicitudPresupuestoDTO> partialUpdate(SolicitudPresupuestoDTO solicitudPresupuestoDTO) {
-        LOG.debug("Request to partially update SolicitudPresupuesto : {}", solicitudPresupuestoDTO);
+        LOG.debug("Request to partially update SolicitudPresupuesto with id {}", solicitudPresupuestoDTO.getId());
 
         return solicitudPresupuestoRepository
             .findById(solicitudPresupuestoDTO.getId())
