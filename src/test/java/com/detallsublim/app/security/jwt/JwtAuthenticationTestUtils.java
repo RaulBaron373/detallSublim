@@ -57,7 +57,7 @@ public class JwtAuthenticationTestUtils {
     }
 
     public static String createTokenWithDifferentSignature() {
-        JwtEncoder encoder = jwtEncoder("X[REDACTED-HISTORICAL-TEST-JWT]");
+        JwtEncoder encoder = jwtEncoder("AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ==");
 
         var now = Instant.now();
         var past = now.plusSeconds(60);
