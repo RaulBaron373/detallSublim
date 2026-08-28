@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import SharedModule from 'app/shared/shared.module';
 import { LoginService } from 'app/login/login.service';
 import { AccountService } from 'app/core/auth/account.service';
+import { StateStorageService } from 'app/core/auth/state-storage.service';
 
 @Component({
   selector: 'jhi-login',
@@ -26,12 +27,12 @@ export default class LoginComponent implements OnInit, AfterViewInit {
   private readonly accountService = inject(AccountService);
   private readonly loginService = inject(LoginService);
   private readonly router = inject(Router);
+  private readonly stateStorageService = inject(StateStorageService);
 
   ngOnInit(): void {
-    // if already authenticated then navigate to home page
     this.accountService.identity().subscribe(() => {
       if (this.accountService.isAuthenticated()) {
-        this.router.navigate(['']);
+        this.router.navigate(['/panel']);
       }
     });
   }
@@ -41,13 +42,17 @@ export default class LoginComponent implements OnInit, AfterViewInit {
   }
 
   login(): void {
+    /*
+     * El login administrativo siempre debe terminar en /panel.
+     * Eliminamos cualquier URL almacenada anteriormente para impedir
+     * que una navegación previa interfiera con la redirección.
+     */
+    this.stateStorageService.clearUrl();
+
     this.loginService.login(this.loginForm.getRawValue()).subscribe({
       next: () => {
         this.authenticationError.set(false);
-        if (!this.router.getCurrentNavigation()) {
-          // There were no routing during login (eg from navigationToStoredUrl)
-          this.router.navigate(['/panel']);
-        }
+        this.router.navigate(['/panel']);
       },
       error: () => this.authenticationError.set(true),
     });

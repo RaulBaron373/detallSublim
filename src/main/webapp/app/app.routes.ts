@@ -51,14 +51,6 @@ const routes: Routes = [
     title: 'Solicitud de presupuesto',
   },
   {
-    path: 'panel',
-    loadComponent: () => import('./panel/panel.component').then(m => m.PanelComponent),
-    data: {
-      authorities: [Authority.ADMIN, Authority.VIEWER, Authority.USER],
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
     path: '',
     loadComponent: () => import('./layouts/navbar/navbar.component'),
     outlet: 'navbar',

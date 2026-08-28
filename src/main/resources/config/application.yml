@@ -199,7 +199,7 @@ jhipster:
   #   allow-credentials: true
   #   max-age: 1800
   mail:
-    from: detallSublim@localhost
+    from: ${MAIL_USERNAME:detallSublim@localhost}
   api-docs:
     default-include-pattern: /api/**
     management-include-pattern: /management/**

@@ -8,7 +8,6 @@ import HasAnyAuthorityDirective from 'app/shared/auth/has-any-authority.directiv
 import { LANGUAGES } from 'app/config/language.constants';
 import { AccountService } from 'app/core/auth/account.service';
 import { LoginService } from 'app/login/login.service';
-import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
 import { environment } from 'environments/environment';
 import ActiveMenuDirective from './active-menu.directive';
@@ -21,10 +20,8 @@ import NavbarItem from './navbar-item.model';
   imports: [RouterModule, SharedModule, HasAnyAuthorityDirective, ActiveMenuDirective],
 })
 export default class NavbarComponent implements OnInit {
-  inProduction?: boolean;
   isNavbarCollapsed = signal(true);
   languages = LANGUAGES;
-  openAPIEnabled?: boolean;
   version = '';
   account = inject(AccountService).trackCurrentAccount();
   entitiesNavbarItems: NavbarItem[] = [];
@@ -32,7 +29,6 @@ export default class NavbarComponent implements OnInit {
   private readonly loginService = inject(LoginService);
   private readonly translateService = inject(TranslateService);
   private readonly stateStorageService = inject(StateStorageService);
-  private readonly profileService = inject(ProfileService);
   private readonly router = inject(Router);
 
   constructor() {
@@ -44,10 +40,6 @@ export default class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.entitiesNavbarItems = EntityNavbarItems;
-    this.profileService.getProfileInfo().subscribe(profileInfo => {
-      this.inProduction = profileInfo.inProduction;
-      this.openAPIEnabled = profileInfo.openAPIEnabled;
-    });
   }
 
   changeLanguage(languageKey: string): void {
