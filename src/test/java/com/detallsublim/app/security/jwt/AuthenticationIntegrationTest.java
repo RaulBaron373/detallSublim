@@ -17,7 +17,7 @@ import tech.jhipster.config.JHipsterProperties;
 @Retention(RetentionPolicy.RUNTIME)
 @SpringBootTest(
     properties = {
-        "jhipster.security.authentication.jwt.base64-secret=[REDACTED-HISTORICAL-TEST-JWT]",
+        "jhipster.security.authentication.jwt.base64-secret=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
         "jhipster.security.authentication.jwt.token-validity-in-seconds=60000",
     },
     classes = {
