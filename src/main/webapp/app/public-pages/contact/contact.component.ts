@@ -44,7 +44,7 @@ export class ContactComponent {
       mensaje: this.form.mensaje,
     };
 
-    this.http.post<void>('/api/public/contact', payload).subscribe({
+    this.http.post<unknown>('/api/public/contact', payload).subscribe({
       next: () => {
         this.successMessage = 'Mensaje enviado correctamente.';
 
