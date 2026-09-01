@@ -1,0 +1,42 @@
+version: 2
+
+updates:
+  # Frontend / Node.js / Angular
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: Europe/Madrid
+    open-pull-requests-limit: 5
+    groups:
+      npm-minor-patch:
+        update-types:
+          - minor
+          - patch
+
+  # Backend / Java / Spring Boot
+  - package-ecosystem: maven
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:15'
+      timezone: Europe/Madrid
+    open-pull-requests-limit: 5
+    groups:
+      maven-minor-patch:
+        update-types:
+          - minor
+          - patch
+
+  # GitHub Actions
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:30'
+      timezone: Europe/Madrid
+    open-pull-requests-limit: 5
