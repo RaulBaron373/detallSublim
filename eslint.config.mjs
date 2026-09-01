@@ -50,7 +50,7 @@ export default tseslint.config(
         'error',
         {
           type: 'attribute',
-          prefix: 'jhi',
+          prefix: ['jhi', 'ds'],
           style: 'camelCase',
         },
       ],

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
@@ -14,7 +14,7 @@ import SharedModule from 'app/shared/shared.module';
   templateUrl: './quote-request.component.html',
   styleUrl: './quote-request.component.scss',
 })
-export class QuoteRequestComponent {
+export class QuoteRequestComponent implements OnInit {
   form = {
     nombreCliente: '',
     email: '',
@@ -76,7 +76,7 @@ export class QuoteRequestComponent {
       productoId: this.form.producto ? Number(this.form.producto) : null,
     };
 
-    this.http.post<void>('/api/public/quote-request', payload).subscribe({
+    this.http.post<unknown>('/api/public/quote-request', payload).subscribe({
       next: () => {
         this.successMessage = 'Solicitud enviada correctamente.';
 
