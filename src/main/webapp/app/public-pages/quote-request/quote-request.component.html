@@ -53,9 +53,11 @@
               <select [(ngModel)]="form.producto" name="producto" id="product">
                 <option value="">Selecciona una opción</option>
 
-                <option *ngFor="let producto of productos" [value]="producto.id">
-                  {{ producto.nombre }}
-                </option>
+                @for (producto of productos; track producto) {
+                  <option [value]="producto.id">
+                    {{ producto.nombre }}
+                  </option>
+                }
               </select>
             </div>
 

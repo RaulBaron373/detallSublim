@@ -1,4 +1,4 @@
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, provideZoneChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import AppComponent from './app/app.component';
@@ -10,7 +10,7 @@ if (!environment.DEBUG_INFO_ENABLED) {
   enableProdMode();
 }
 
-bootstrapApplication(AppComponent, appConfig)
+bootstrapApplication(AppComponent, { ...appConfig, providers: [provideZoneChangeDetection(), ...appConfig.providers] })
   .then(() => {
     // eslint-disable-next-line no-console
     console.log('Application started');

@@ -67,25 +67,19 @@
     </div>
 
     <div class="ds-tech-grid">
-      <article
-        class="ds-tech-card"
-        *ngFor="let tech of t.technologies; let i = index"
-        dsScrollReveal
-        reveal="scale-up"
-        [revealDelay]="i * 110"
-      >
-        <div class="ds-tech-icon" [ngClass]="tech.iconClass">
-          {{ tech.icon }}
-        </div>
-
-        <h3>
-          {{ tech.title }}
-        </h3>
-
-        <p>
-          {{ tech.description }}
-        </p>
-      </article>
+      @for (tech of t.technologies; track tech; let i = $index) {
+        <article class="ds-tech-card" dsScrollReveal reveal="scale-up" [revealDelay]="i * 110">
+          <div class="ds-tech-icon" [ngClass]="tech.iconClass">
+            {{ tech.icon }}
+          </div>
+          <h3>
+            {{ tech.title }}
+          </h3>
+          <p>
+            {{ tech.description }}
+          </p>
+        </article>
+      }
     </div>
 
     <div class="ds-tech-highlight">
@@ -139,41 +133,32 @@
     </div>
 
     <div class="catalog-grid">
-      <article
-        class="catalog-card"
-        *ngFor="let producto of featuredProducts; let i = index"
-        dsScrollReveal
-        reveal="scale-up"
-        [revealDelay]="i * 120"
-      >
-        <div class="catalog-card-image">
-          @if (producto.imagenUrl) {
-            <img class="ds-product-image" [src]="producto.imagenUrl" [alt]="producto.nombre ?? 'Producto Detall Sublim'" />
-          } @else {
-            <div class="catalog-no-image">Sin imagen</div>
-          }
-        </div>
-
-        <div class="catalog-card-content">
-          <span class="catalog-card-category">
-            {{ producto.categoria?.nombre }}
-          </span>
-
-          <h3>
-            {{ producto.nombre }}
-          </h3>
-
-          <p>
-            {{ producto.descripcion }}
-          </p>
-
-          <div class="catalog-card-footer">
-            <span class="catalog-price"> Desde {{ producto.precioBase }} € </span>
-
-            <a [routerLink]="['/solicitar-presupuesto']" [queryParams]="{ producto: producto.id }" class="catalog-link"> Solicitar </a>
+      @for (producto of featuredProducts; track producto; let i = $index) {
+        <article class="catalog-card" dsScrollReveal reveal="scale-up" [revealDelay]="i * 120">
+          <div class="catalog-card-image">
+            @if (producto.imagenUrl) {
+              <img class="ds-product-image" [src]="producto.imagenUrl" [alt]="producto.nombre ?? 'Producto Detall Sublim'" />
+            } @else {
+              <div class="catalog-no-image">Sin imagen</div>
+            }
           </div>
-        </div>
-      </article>
+          <div class="catalog-card-content">
+            <span class="catalog-card-category">
+              {{ producto.categoria?.nombre }}
+            </span>
+            <h3>
+              {{ producto.nombre }}
+            </h3>
+            <p>
+              {{ producto.descripcion }}
+            </p>
+            <div class="catalog-card-footer">
+              <span class="catalog-price"> Desde {{ producto.precioBase }} € </span>
+              <a [routerLink]="['/solicitar-presupuesto']" [queryParams]="{ producto: producto.id }" class="catalog-link"> Solicitar </a>
+            </div>
+          </div>
+        </article>
+      }
     </div>
 
     <div class="ds-products-cta" dsScrollReveal reveal="fade-up" [revealDelay]="180">
