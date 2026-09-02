@@ -22,59 +22,54 @@
     <section class="catalog-filters" dsScrollReveal reveal="fade-up" [revealDelay]="100">
       <button class="catalog-filter" [class.active]="categoriaSeleccionada === 'Todos'" (click)="filtrarProductos('Todos')">Todos</button>
 
-      <button
-        class="catalog-filter"
-        *ngFor="let categoria of categorias"
-        [class.active]="categoriaSeleccionada === categoria.nombre"
-        (click)="filtrarProductos(categoria.nombre ?? '')"
-      >
-        {{ categoria.nombre }}
-      </button>
+      @for (categoria of categorias; track categoria) {
+        <button
+          class="catalog-filter"
+          [class.active]="categoriaSeleccionada === categoria.nombre"
+          (click)="filtrarProductos(categoria.nombre ?? '')"
+        >
+          {{ categoria.nombre }}
+        </button>
+      }
     </section>
 
     <!-- PRODUCTOS -->
     <section class="catalog-grid">
-      <article
-        class="catalog-card"
-        *ngFor="let producto of productosFiltrados; let i = index"
-        dsScrollReveal
-        reveal="scale-up"
-        [revealDelay]="(i % 6) * 80"
-      >
-        <div class="catalog-card-image">
-          <img *ngIf="producto.imagenUrl" [src]="producto.imagenUrl" [alt]="producto.nombre" />
-
-          <div *ngIf="!producto.imagenUrl" class="catalog-no-image">Sin imagen</div>
-        </div>
-
-        <div class="catalog-card-content">
-          <span class="catalog-card-category">
-            {{ producto.categoria?.nombre }}
-          </span>
-
-          <h2>
-            {{ producto.nombre }}
-          </h2>
-
-          <p>
-            {{ producto.descripcion }}
-          </p>
-
-          <div class="catalog-card-footer">
-            <span class="catalog-price"> Desde {{ producto.precioBase }} € </span>
-
-            <a
-              [routerLink]="['/solicitar-presupuesto']"
-              [queryParams]="{
-                producto: producto.id,
-              }"
-              class="catalog-link"
-            >
-              Solicitar
-            </a>
+      @for (producto of productosFiltrados; track producto; let i = $index) {
+        <article class="catalog-card" dsScrollReveal reveal="scale-up" [revealDelay]="(i % 6) * 80">
+          <div class="catalog-card-image">
+            @if (producto.imagenUrl) {
+              <img [src]="producto.imagenUrl" [alt]="producto.nombre" />
+            }
+            @if (!producto.imagenUrl) {
+              <div class="catalog-no-image">Sin imagen</div>
+            }
           </div>
-        </div>
-      </article>
+          <div class="catalog-card-content">
+            <span class="catalog-card-category">
+              {{ producto.categoria?.nombre }}
+            </span>
+            <h2>
+              {{ producto.nombre }}
+            </h2>
+            <p>
+              {{ producto.descripcion }}
+            </p>
+            <div class="catalog-card-footer">
+              <span class="catalog-price"> Desde {{ producto.precioBase }} € </span>
+              <a
+                [routerLink]="['/solicitar-presupuesto']"
+                [queryParams]="{
+                  producto: producto.id,
+                }"
+                class="catalog-link"
+              >
+                Solicitar
+              </a>
+            </div>
+          </div>
+        </article>
+      }
     </section>
 
     <!-- CTA -->
