@@ -112,7 +112,7 @@ spring:
 # ===================================================================
 server:
   port: 8080
-  forward-headers-strategy: framework
+  forward-headers-strategy: ${SERVER_FORWARD_HEADERS_STRATEGY:none}
   shutdown: graceful # see https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-graceful-shutdown
   compression:
     enabled: true
@@ -142,16 +142,16 @@ jhipster:
         # - In a separate `application-prod.yml` file, in the same folder as your executable JAR file
         # - In the `JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET` environment variable
         base64-secret: ${JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET}
-        # Token is valid 24 hours
-        token-validity-in-seconds: 86400
-        token-validity-in-seconds-for-remember-me: 2592000
+        # Access token is valid for 1 hour by default.
+        # It can be overridden securely through the deployment environment.
+        token-validity-in-seconds: ${JWT_TOKEN_VALIDITY_IN_SECONDS:3600}
     content-security-policy: >-
       default-src 'self';
       base-uri 'self';
       object-src 'none';
       frame-ancestors 'self';
       form-action 'self';
-      script-src 'self' 'unsafe-inline';
+      script-src 'self';
       style-src 'self' 'unsafe-inline';
       img-src 'self' data:;
       font-src 'self' data:;

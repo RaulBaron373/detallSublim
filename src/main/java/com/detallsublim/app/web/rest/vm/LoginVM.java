@@ -16,8 +16,6 @@ public class LoginVM {
     @Size(min = 4, max = 100)
     private String password;
 
-    private boolean rememberMe;
-
     public String getUsername() {
         return username;
     }
@@ -34,20 +32,11 @@ public class LoginVM {
         this.password = password;
     }
 
-    public boolean isRememberMe() {
-        return rememberMe;
-    }
-
-    public void setRememberMe(boolean rememberMe) {
-        this.rememberMe = rememberMe;
-    }
-
     // prettier-ignore
     @Override
     public String toString() {
         return "LoginVM{" +
             "username='" + username + '\'' +
-            ", rememberMe=" + rememberMe +
             '}';
     }
 }

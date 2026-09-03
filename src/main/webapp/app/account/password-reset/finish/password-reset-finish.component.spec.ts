@@ -20,7 +20,7 @@ describe('PasswordResetFinishComponent', () => {
         FormBuilder,
         {
           provide: ActivatedRoute,
-          useValue: { queryParams: of({ key: 'XYZPDQ' }) },
+          useValue: { fragment: of('key=XYZPDQ') },
         },
       ],
     })
@@ -37,6 +37,16 @@ describe('PasswordResetFinishComponent', () => {
   it('should define its initial state', () => {
     expect(comp.initialized()).toBe(true);
     expect(comp.key()).toEqual('XYZPDQ');
+  });
+
+  it('should remove the reset token from the browser URL after reading it', () => {
+    const replaceStateSpy = jest.spyOn(window.history, 'replaceState');
+
+    comp.ngOnInit();
+
+    expect(replaceStateSpy).toHaveBeenCalledWith(null, '', window.location.pathname);
+
+    replaceStateSpy.mockRestore();
   });
 
   it('sets focus after the view has been initialized', () => {

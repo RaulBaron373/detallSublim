@@ -33,6 +33,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -281,6 +282,50 @@ class ProductoResourceIT {
             .andExpect(jsonPath("$.[*].plazoEstimadoDias").value(hasItem(DEFAULT_PLAZO_ESTIMADO_DIAS)))
             .andExpect(jsonPath("$.[*].imagenUrl").value(hasItem(DEFAULT_IMAGEN_URL)))
             .andExpect(jsonPath("$.[*].activo").value(hasItem(DEFAULT_ACTIVO)));
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void getAllProductosAsViewerIsAllowed() throws Exception {
+        restProductoMockMvc.perform(get(ENTITY_API_URL)).andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void createProductoAsViewerIsForbidden() throws Exception {
+        ProductoDTO productoDTO = productoMapper.toDto(producto);
+
+        restProductoMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(productoDTO)))
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void updateProductoAsViewerIsForbidden() throws Exception {
+        restProductoMockMvc
+            .perform(put(ENTITY_API_URL_ID, 1L).contentType(MediaType.APPLICATION_JSON).content("{}"))
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void patchProductoAsViewerIsForbidden() throws Exception {
+        restProductoMockMvc
+            .perform(patch(ENTITY_API_URL_ID, 1L).contentType("application/merge-patch+json").content("{}"))
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void deleteProductoAsViewerIsForbidden() throws Exception {
+        restProductoMockMvc.perform(delete(ENTITY_API_URL_ID, 1L)).andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void getAllProductosAsAnonymousIsUnauthorized() throws Exception {
+        restProductoMockMvc.perform(get(ENTITY_API_URL)).andExpect(status().isUnauthorized());
     }
 
     @SuppressWarnings({ "unchecked" })

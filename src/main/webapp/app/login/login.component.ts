@@ -21,7 +21,6 @@ export default class LoginComponent implements OnInit, AfterViewInit {
   loginForm = new FormGroup({
     username: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     password: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    rememberMe: new FormControl(false, { nonNullable: true, validators: [Validators.required] }),
   });
 
   private readonly accountService = inject(AccountService);

@@ -22,6 +22,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -192,6 +193,50 @@ class CategoriaResourceIT {
             .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
             .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION)))
             .andExpect(jsonPath("$.[*].activa").value(hasItem(DEFAULT_ACTIVA)));
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void getAllCategoriasAsViewerIsAllowed() throws Exception {
+        restCategoriaMockMvc.perform(get(ENTITY_API_URL)).andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void createCategoriaAsViewerIsForbidden() throws Exception {
+        CategoriaDTO categoriaDTO = categoriaMapper.toDto(categoria);
+
+        restCategoriaMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(categoriaDTO)))
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void updateCategoriaAsViewerIsForbidden() throws Exception {
+        restCategoriaMockMvc
+            .perform(put(ENTITY_API_URL_ID, 1L).contentType(MediaType.APPLICATION_JSON).content("{}"))
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void patchCategoriaAsViewerIsForbidden() throws Exception {
+        restCategoriaMockMvc
+            .perform(patch(ENTITY_API_URL_ID, 1L).contentType("application/merge-patch+json").content("{}"))
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void deleteCategoriaAsViewerIsForbidden() throws Exception {
+        restCategoriaMockMvc.perform(delete(ENTITY_API_URL_ID, 1L)).andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void getAllCategoriasAsAnonymousIsUnauthorized() throws Exception {
+        restCategoriaMockMvc.perform(get(ENTITY_API_URL)).andExpect(status().isUnauthorized());
     }
 
     @Test

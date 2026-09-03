@@ -176,7 +176,7 @@ public class UserService {
         }
         userRepository.save(user);
         this.clearUserCaches(user);
-        LOG.debug("Created Information for User: {}", user);
+        LOG.debug("User created successfully");
         return user;
     }
 
@@ -313,7 +313,7 @@ public class UserService {
                 user.setImageUrl(imageUrl);
                 userRepository.save(user);
                 this.clearUserCaches(user);
-                LOG.debug("Changed Information for User: {}", user);
+                LOG.debug("User information changed successfully");
             });
     }
 

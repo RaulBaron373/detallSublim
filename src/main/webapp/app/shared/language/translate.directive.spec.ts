@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import TranslateDirective from './translate.directive';
+import { of } from 'rxjs';
 
 @Component({
   imports: [TranslateDirective],
@@ -31,5 +32,16 @@ describe('TranslateDirective Tests', () => {
     fixture.detectChanges();
 
     expect(spy).toHaveBeenCalled();
+  });
+
+  it('should sanitize unsafe translated HTML before rendering it', () => {
+    jest.spyOn(translateService, 'get').mockReturnValue(of('<img src="x" onerror="alert(1)"><strong>Safe content</strong>'));
+
+    fixture.detectChanges();
+
+    const element: HTMLElement = fixture.nativeElement.querySelector('div');
+
+    expect(element.innerHTML).not.toContain('onerror');
+    expect(element.innerHTML).toContain('<strong>Safe content</strong>');
   });
 });

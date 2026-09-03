@@ -90,7 +90,7 @@ public class PublicSubmissionResource {
         @Valid @RequestBody PublicSolicitudPresupuestoVM requestBody,
         HttpServletRequest request
     ) {
-        String rateLimitKey = rateLimitService.clientKey("public-contact", request);
+        String rateLimitKey = rateLimitService.clientKey("public-quote-request", request);
 
         RateLimitService.Result limit = rateLimitService.consume(rateLimitKey, 5, Duration.ofMinutes(10));
 

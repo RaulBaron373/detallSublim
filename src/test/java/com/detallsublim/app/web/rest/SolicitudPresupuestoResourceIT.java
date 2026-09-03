@@ -34,6 +34,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -309,6 +310,50 @@ class SolicitudPresupuestoResourceIT {
             .andExpect(jsonPath("$.[*].fechaSolicitud").value(hasItem(DEFAULT_FECHA_SOLICITUD.toString())))
             .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO.toString())))
             .andExpect(jsonPath("$.[*].observacionesInternas").value(hasItem(DEFAULT_OBSERVACIONES_INTERNAS)));
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void getAllSolicitudPresupuestosAsViewerIsAllowed() throws Exception {
+        restSolicitudPresupuestoMockMvc.perform(get(ENTITY_API_URL)).andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void createSolicitudPresupuestoAsViewerIsForbidden() throws Exception {
+        SolicitudPresupuestoDTO solicitudPresupuestoDTO = solicitudPresupuestoMapper.toDto(solicitudPresupuesto);
+
+        restSolicitudPresupuestoMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(solicitudPresupuestoDTO)))
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void updateSolicitudPresupuestoAsViewerIsForbidden() throws Exception {
+        restSolicitudPresupuestoMockMvc
+            .perform(put(ENTITY_API_URL_ID, 1L).contentType(MediaType.APPLICATION_JSON).content("{}"))
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void patchSolicitudPresupuestoAsViewerIsForbidden() throws Exception {
+        restSolicitudPresupuestoMockMvc
+            .perform(patch(ENTITY_API_URL_ID, 1L).contentType("application/merge-patch+json").content("{}"))
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void deleteSolicitudPresupuestoAsViewerIsForbidden() throws Exception {
+        restSolicitudPresupuestoMockMvc.perform(delete(ENTITY_API_URL_ID, 1L)).andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void getAllSolicitudPresupuestosAsAnonymousIsUnauthorized() throws Exception {
+        restSolicitudPresupuestoMockMvc.perform(get(ENTITY_API_URL)).andExpect(status().isUnauthorized());
     }
 
     @SuppressWarnings({ "unchecked" })
