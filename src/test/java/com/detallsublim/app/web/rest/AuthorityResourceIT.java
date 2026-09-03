@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -134,6 +135,32 @@ class AuthorityResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].name").value(hasItem(authority.getName())));
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_USER" })
+    void getAllAuthoritiesAsUserIsForbidden() throws Exception {
+        restAuthorityMockMvc.perform(get(ENTITY_API_URL)).andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void getAllAuthoritiesAsViewerIsForbidden() throws Exception {
+        restAuthorityMockMvc.perform(get(ENTITY_API_URL)).andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void getAllAuthoritiesAsAnonymousIsUnauthorized() throws Exception {
+        restAuthorityMockMvc.perform(get(ENTITY_API_URL)).andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_USER" })
+    void createAuthorityAsUserIsForbidden() throws Exception {
+        restAuthorityMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(authority)))
+            .andExpect(status().isForbidden());
     }
 
     @Test

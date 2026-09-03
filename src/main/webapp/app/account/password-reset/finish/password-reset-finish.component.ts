@@ -36,10 +36,17 @@ export default class PasswordResetFinishComponent implements OnInit, AfterViewIn
   private readonly route = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      if (params.key) {
-        this.key.set(params.key);
+    this.route.fragment.subscribe(fragment => {
+      const params = new URLSearchParams(fragment ?? '');
+
+      const key = params.get('key');
+
+      if (key) {
+        this.key.set(key);
+
+        window.history.replaceState(null, '', window.location.pathname);
       }
+
       this.initialized.set(true);
     });
   }

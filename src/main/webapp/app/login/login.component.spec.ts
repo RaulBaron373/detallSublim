@@ -106,13 +106,11 @@ describe('LoginComponent', () => {
       const credentials = {
         username: 'admin',
         password: 'admin',
-        rememberMe: true,
       };
 
       comp.loginForm.patchValue({
         username: 'admin',
         password: 'admin',
-        rememberMe: true,
       });
 
       // WHEN

@@ -46,9 +46,6 @@ public class AuthenticateController {
     @Value("${jhipster.security.authentication.jwt.token-validity-in-seconds:0}")
     private long tokenValidityInSeconds;
 
-    @Value("${jhipster.security.authentication.jwt.token-validity-in-seconds-for-remember-me:0}")
-    private long tokenValidityInSecondsForRememberMe;
-
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     private final RateLimitService rateLimitService;
@@ -93,7 +90,7 @@ public class AuthenticateController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String jwt = this.createToken(authentication, loginVM.isRememberMe());
+        String jwt = this.createToken(authentication);
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
@@ -114,16 +111,11 @@ public class AuthenticateController {
         return ResponseEntity.status(principal == null ? HttpStatus.UNAUTHORIZED : HttpStatus.NO_CONTENT).build();
     }
 
-    public String createToken(Authentication authentication, boolean rememberMe) {
+    public String createToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(" "));
 
         Instant now = Instant.now();
-        Instant validity;
-        if (rememberMe) {
-            validity = now.plus(this.tokenValidityInSecondsForRememberMe, ChronoUnit.SECONDS);
-        } else {
-            validity = now.plus(this.tokenValidityInSeconds, ChronoUnit.SECONDS);
-        }
+        Instant validity = now.plus(this.tokenValidityInSeconds, ChronoUnit.SECONDS);
 
         // @formatter:off
         JwtClaimsSet.Builder builder = JwtClaimsSet.builder()

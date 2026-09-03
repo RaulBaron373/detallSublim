@@ -65,30 +65,6 @@ class AuthenticateControllerIT {
     }
 
     @Test
-    @Transactional
-    void testAuthorizeWithRememberMe() throws Exception {
-        User user = new User();
-        user.setLogin("user-jwt-controller-remember-me");
-        user.setEmail("user-jwt-controller-remember-me@example.com");
-        user.setActivated(true);
-        user.setPassword(passwordEncoder.encode("test"));
-
-        userRepository.saveAndFlush(user);
-
-        LoginVM login = new LoginVM();
-        login.setUsername("user-jwt-controller-remember-me");
-        login.setPassword("test");
-        login.setRememberMe(true);
-        mockMvc
-            .perform(post("/api/authenticate").contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(login)))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.id_token").isString())
-            .andExpect(jsonPath("$.id_token").isNotEmpty())
-            .andExpect(header().string("Authorization", not(nullValue())))
-            .andExpect(header().string("Authorization", not(is(emptyString()))));
-    }
-
-    @Test
     void testAuthorizeFails() throws Exception {
         LoginVM login = new LoginVM();
         login.setUsername("wrong-user");

@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -275,6 +276,58 @@ class MensajeContactoResourceIT {
             .andExpect(jsonPath("$.[*].mensaje").value(hasItem(DEFAULT_MENSAJE)))
             .andExpect(jsonPath("$.[*].fechaEnvio").value(hasItem(DEFAULT_FECHA_ENVIO.toString())))
             .andExpect(jsonPath("$.[*].atendido").value(hasItem(DEFAULT_ATENDIDO)));
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void getAllMensajeContactosAsViewerIsAllowed() throws Exception {
+        restMensajeContactoMockMvc.perform(get(ENTITY_API_URL)).andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void createMensajeContactoAsViewerIsForbidden() throws Exception {
+        MensajeContactoDTO mensajeContactoDTO = mensajeContactoMapper.toDto(mensajeContacto);
+
+        restMensajeContactoMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(mensajeContactoDTO)))
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void updateMensajeContactoAsViewerIsForbidden() throws Exception {
+        restMensajeContactoMockMvc
+            .perform(put(ENTITY_API_URL_ID, 1L).contentType(MediaType.APPLICATION_JSON).content("{}"))
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void patchMensajeContactoAsViewerIsForbidden() throws Exception {
+        restMensajeContactoMockMvc
+            .perform(patch(ENTITY_API_URL_ID, 1L).contentType("application/merge-patch+json").content("{}"))
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void deleteMensajeContactoAsViewerIsForbidden() throws Exception {
+        restMensajeContactoMockMvc.perform(delete(ENTITY_API_URL_ID, 1L)).andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(authorities = { "ROLE_VIEWER" })
+    void responderMensajeAsViewerIsForbidden() throws Exception {
+        restMensajeContactoMockMvc
+            .perform(post(ENTITY_API_URL + "/1/responder").contentType(MediaType.TEXT_PLAIN).content("Respuesta de prueba"))
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void getAllMensajeContactosAsAnonymousIsUnauthorized() throws Exception {
+        restMensajeContactoMockMvc.perform(get(ENTITY_API_URL)).andExpect(status().isUnauthorized());
     }
 
     @Test

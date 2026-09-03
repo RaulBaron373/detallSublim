@@ -26,6 +26,14 @@ export default tseslint.config(
     },
   },
   {
+    files: ['src/main/webapp/content/js/**/*.js'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+      },
+    },
+  },
+  {
     files: ['src/main/webapp/**/*.ts'],
     extends: [...tseslint.configs.strictTypeChecked, ...tseslint.configs.stylistic, ...angular.configs.tsRecommended],
     languageOptions: {
