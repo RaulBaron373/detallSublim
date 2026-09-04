@@ -7,6 +7,7 @@ import com.detallsublim.app.web.filter.SpaWebFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
@@ -17,6 +18,7 @@ import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthen
 import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.header.HeaderWriterFilter;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
@@ -61,6 +63,15 @@ public class SecurityConfiguration {
                             "payment=(), " +
                             "sync-xhr=()"
                         )
+                    )
+                    .addObjectPostProcessor(
+                        new ObjectPostProcessor<HeaderWriterFilter>() {
+                            @Override
+                            public HeaderWriterFilter postProcess(HeaderWriterFilter filter) {
+                                filter.setShouldWriteHeadersEagerly(true);
+                                return filter;
+                            }
+                        }
                     )
             )
             .authorizeHttpRequests(authz ->

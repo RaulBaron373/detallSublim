@@ -78,6 +78,13 @@
         <spotless-maven-plugin.version>2.44.4</spotless-maven-plugin.version>
         <spring.profiles.active>dev</spring.profiles.active>
         <springdoc-openapi-starter-webmvc-api.version>2.8.8</springdoc-openapi-starter-webmvc-api.version>
+        <spring-framework.version>6.2.19</spring-framework.version>
+        <thymeleaf.version>3.1.5.RELEASE</thymeleaf.version>
+        <jackson-bom.version>2.18.10</jackson-bom.version>
+        <undertow.version>2.3.24.Final</undertow.version>
+        <commons-compress.version>1.28.0</commons-compress.version>
+        <commons-lang3.version>3.18.0</commons-lang3.version>
+        <log4j2.version>2.25.5</log4j2.version>
     </properties>
 
     <dependencyManagement>
@@ -97,6 +104,11 @@
                 <artifactId>commons-text</artifactId>
                 <version>${commons-text.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${commons-compress.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
@@ -109,10 +121,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-loader-tools</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
