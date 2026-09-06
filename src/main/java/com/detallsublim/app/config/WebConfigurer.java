@@ -56,13 +56,18 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
     }
 
     private void setLocationForStaticAssets(WebServerFactory server) {
-        if (server instanceof ConfigurableServletWebServerFactory servletWebServer) {
-            File root;
-            String prefixPath = resolvePathPrefix();
-            root = Path.of(prefixPath + "target/classes/static/").toFile();
-            if (root.exists() && root.isDirectory()) {
-                servletWebServer.setDocumentRoot(root);
-            }
+        if (!(server instanceof ConfigurableServletWebServerFactory servletWebServer)) {
+            return;
+        }
+
+        var classResource = this.getClass().getResource("");
+        if (classResource == null || !"file".equalsIgnoreCase(classResource.getProtocol())) {
+            return;
+        }
+
+        File root = Path.of(resolvePathPrefix() + "target/classes/static/").toFile();
+        if (root.exists() && root.isDirectory()) {
+            servletWebServer.setDocumentRoot(root);
         }
     }
 
