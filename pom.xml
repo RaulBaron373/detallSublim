@@ -46,7 +46,7 @@
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <commons-text.version>1.12.0</commons-text.version>
         <jib-maven-plugin.architecture>amd64</jib-maven-plugin.architecture>
-        <jib-maven-plugin.image>eclipse-temurin:21-jre-jammy</jib-maven-plugin.image>
+        <jib-maven-plugin.image>eclipse-temurin@sha256:eebd356ad7358b7094758e5787a6726f332917cfd56feab6457c56dab895cdbf</jib-maven-plugin.image>
         <jib-maven-plugin.version>3.4.5</jib-maven-plugin.version>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <liquibase-plugin.password/>
@@ -659,7 +659,7 @@
                             </platforms>
                         </from>
                         <to>
-                            <image>detallsublim:latest</image>
+                            <image>detallsublim:${project.version}</image>
                         </to>
                         <container>
                             <entrypoint>
@@ -674,7 +674,7 @@
                                 <SPRING_OUTPUT_ANSI_ENABLED>ALWAYS</SPRING_OUTPUT_ANSI_ENABLED>
                                 <JHIPSTER_SLEEP>0</JHIPSTER_SLEEP>
                             </environment>
-                            <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                            <creationTime>EPOCH</creationTime>
                             <user>1000</user>
                         </container>
                         <extraDirectories>
