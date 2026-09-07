@@ -49,7 +49,7 @@ describe('MainComponent', () => {
   });
 
   describe('page title', () => {
-    const defaultPageTitle = 'global.title';
+    const defaultPageTitle = 'Detall Sublim';
     const parentRoutePageTitle = 'parentTitle';
     const childRoutePageTitle = 'childTitle';
     const langChangeEvent: LangChangeEvent = { lang: 'es', translations: {} as InterpolatableTranslationObject };
@@ -69,7 +69,7 @@ describe('MainComponent', () => {
         tick();
 
         // THEN
-        expect(document.title).toBe(`${defaultPageTitle} translated`);
+        expect(document.title).toBe(defaultPageTitle);
       }));
 
       it('should set page title to root route pageTitle if there is no child routes', fakeAsync(() => {
@@ -81,7 +81,7 @@ describe('MainComponent', () => {
         tick();
 
         // THEN
-        expect(document.title).toBe(`${parentRoutePageTitle} translated`);
+        expect(document.title).toBe(`Detall Sublim - ${parentRoutePageTitle}`);
       }));
 
       it('should set page title to child route pageTitle if child routes exist and pageTitle is set for child route', fakeAsync(() => {
@@ -99,7 +99,7 @@ describe('MainComponent', () => {
         tick();
 
         // THEN
-        expect(document.title).toBe(`${childRoutePageTitle} translated`);
+        expect(document.title).toBe(`Detall Sublim - ${childRoutePageTitle}`);
       }));
 
       it('should set page title to parent route pageTitle if child routes exists but pageTitle is not set for child route data', fakeAsync(() => {
@@ -117,7 +117,7 @@ describe('MainComponent', () => {
         tick();
 
         // THEN
-        expect(document.title).toBe(`${parentRoutePageTitle} translated`);
+        expect(document.title).toBe(`Detall Sublim - ${parentRoutePageTitle}`);
       }));
     });
 
@@ -127,7 +127,7 @@ describe('MainComponent', () => {
         translateService.onLangChange.emit(langChangeEvent);
 
         // THEN
-        expect(document.title).toBe(`${defaultPageTitle} translated`);
+        expect(document.title).toBe(defaultPageTitle);
       });
 
       it('should set page title to root route pageTitle if there is no child routes', fakeAsync(() => {
@@ -140,7 +140,7 @@ describe('MainComponent', () => {
         tick();
 
         // THEN
-        expect(document.title).toBe(`${parentRoutePageTitle} translated`);
+        expect(document.title).toBe(`Detall Sublim - ${parentRoutePageTitle}`);
 
         // GIVEN
         document.title = 'other title';
@@ -149,7 +149,7 @@ describe('MainComponent', () => {
         translateService.onLangChange.emit(langChangeEvent);
 
         // THEN
-        expect(document.title).toBe(`${parentRoutePageTitle} translated`);
+        expect(document.title).toBe(`Detall Sublim - ${parentRoutePageTitle}`);
       }));
 
       it('should set page title to child route pageTitle if child routes exist and pageTitle is set for child route', fakeAsync(() => {
@@ -167,7 +167,7 @@ describe('MainComponent', () => {
         tick();
 
         // THEN
-        expect(document.title).toBe(`${childRoutePageTitle} translated`);
+        expect(document.title).toBe(`Detall Sublim - ${childRoutePageTitle}`);
 
         // GIVEN
         document.title = 'other title';
@@ -176,7 +176,7 @@ describe('MainComponent', () => {
         translateService.onLangChange.emit(langChangeEvent);
 
         // THEN
-        expect(document.title).toBe(`${childRoutePageTitle} translated`);
+        expect(document.title).toBe(`Detall Sublim - ${childRoutePageTitle}`);
       }));
 
       it('should set page title to parent route pageTitle if child routes exists but pageTitle is not set for child route data', fakeAsync(() => {
@@ -194,7 +194,7 @@ describe('MainComponent', () => {
         tick();
 
         // THEN
-        expect(document.title).toBe(`${parentRoutePageTitle} translated`);
+        expect(document.title).toBe(`Detall Sublim - ${parentRoutePageTitle}`);
 
         // GIVEN
         document.title = 'other title';
@@ -203,7 +203,7 @@ describe('MainComponent', () => {
         translateService.onLangChange.emit(langChangeEvent);
 
         // THEN
-        expect(document.title).toBe(`${parentRoutePageTitle} translated`);
+        expect(document.title).toBe(`Detall Sublim - ${parentRoutePageTitle}`);
       }));
     });
   });

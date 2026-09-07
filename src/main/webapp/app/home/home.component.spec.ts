@@ -6,6 +6,7 @@ import { Subject, of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
+import { PublicCatalogService } from 'app/core/catalog/public-catalog.service';
 
 import HomeComponent from './home.component';
 
@@ -14,6 +15,7 @@ describe('Home Component', () => {
   let fixture: ComponentFixture<HomeComponent>;
   let mockAccountService: AccountService;
   let mockRouter: Router;
+  let publicCatalogService: PublicCatalogService;
   const account: Account = {
     activated: true,
     authorities: [],
@@ -40,6 +42,8 @@ describe('Home Component', () => {
     mockAccountService = TestBed.inject(AccountService);
     mockAccountService.identity = jest.fn(() => of(null));
     mockAccountService.getAuthenticationState = jest.fn(() => of(null));
+    publicCatalogService = TestBed.inject(PublicCatalogService);
+    jest.spyOn(publicCatalogService, 'getProductos').mockReturnValue(of([]));
 
     mockRouter = TestBed.inject(Router);
     jest.spyOn(mockRouter, 'navigate').mockImplementation(() => Promise.resolve(true));
