@@ -6,11 +6,10 @@ import { provideHttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { ProfileInfo } from 'app/layouts/profiles/profile-info.model';
 import { Account } from 'app/core/auth/account.model';
 import { AccountService } from 'app/core/auth/account.service';
-import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { LoginService } from 'app/login/login.service';
+import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
 
 import NavbarComponent from './navbar.component';
 
@@ -18,7 +17,6 @@ describe('Navbar Component', () => {
   let comp: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
   let accountService: AccountService;
-  let profileService: ProfileService;
   const account: Account = {
     activated: true,
     authorities: [],
@@ -43,18 +41,14 @@ describe('Navbar Component', () => {
     fixture = TestBed.createComponent(NavbarComponent);
     comp = fixture.componentInstance;
     accountService = TestBed.inject(AccountService);
-    profileService = TestBed.inject(ProfileService);
   });
 
-  it('should call profileService.getProfileInfo on init', () => {
-    // GIVEN
-    jest.spyOn(profileService, 'getProfileInfo').mockReturnValue(of(new ProfileInfo()));
-
+  it('should initialize entity navbar items on init', () => {
     // WHEN
     comp.ngOnInit();
 
     // THEN
-    expect(profileService.getProfileInfo).toHaveBeenCalled();
+    expect(comp.entitiesNavbarItems).toEqual(EntityNavbarItems);
   });
 
   it('should hold current authenticated user in variable account', () => {

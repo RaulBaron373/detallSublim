@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { AccountService } from 'app/core/auth/account.service';
 import { UserManagementService } from '../service/user-management.service';
 import { User } from '../user-management.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 import UserManagementComponent from './user-management.component';
 
@@ -29,7 +30,7 @@ describe('User Management Component', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [UserManagementComponent],
+      imports: [UserManagementComponent, TranslateModule.forRoot()],
       providers: [provideHttpClient(), { provide: ActivatedRoute, useValue: { data, queryParamMap } }, AccountService],
     })
       .overrideTemplate(UserManagementComponent, '')

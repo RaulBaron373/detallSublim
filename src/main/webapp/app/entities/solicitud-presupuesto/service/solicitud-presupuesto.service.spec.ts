@@ -15,6 +15,7 @@ import { RestSolicitudPresupuesto, SolicitudPresupuestoService } from './solicit
 const requireRestSample: RestSolicitudPresupuesto = {
   ...sampleWithRequiredData,
   fechaSolicitud: sampleWithRequiredData.fechaSolicitud?.toJSON(),
+  fechaEnvioPresupuesto: sampleWithRequiredData.fechaEnvioPresupuesto?.toJSON(),
 };
 
 describe('SolicitudPresupuesto Service', () => {

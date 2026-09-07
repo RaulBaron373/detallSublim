@@ -9,7 +9,7 @@ export const sampleWithRequiredData: ISolicitudPresupuesto = {
   descripcion: '../fake-data/blob/hipster.txt',
   cantidad: 7756,
   fechaSolicitud: dayjs('2026-04-14T15:28'),
-  estado: 'EN_PRODUCCION',
+  estado: 'PENDIENTE',
 };
 
 export const sampleWithPartialData: ISolicitudPresupuesto = {
@@ -32,7 +32,7 @@ export const sampleWithFullData: ISolicitudPresupuesto = {
   descripcion: '../fake-data/blob/hipster.txt',
   cantidad: 20937,
   fechaSolicitud: dayjs('2026-04-13T19:13'),
-  estado: 'EN_REVISION',
+  estado: 'PRESUPUESTADO',
   observacionesInternas: '../fake-data/blob/hipster.txt',
 };
 
