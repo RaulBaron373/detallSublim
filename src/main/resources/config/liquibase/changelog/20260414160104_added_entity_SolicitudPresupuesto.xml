@@ -60,6 +60,8 @@
           Spring Boot configuration key.
     -->
     <changeSet id="20260414160104-1-data" author="jhipster" context="faker">
+        <validCheckSum>9:5ccc7f1cfd1a70a24a80623b02cae697</validCheckSum>
+        
         <loadData
                   file="config/liquibase/fake-data/solicitud_presupuesto.csv"
                   separator=";"

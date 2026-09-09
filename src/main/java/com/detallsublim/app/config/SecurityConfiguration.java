@@ -94,6 +94,7 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET,"/api/public/catalog/**").permitAll()
                     .requestMatchers(HttpMethod.POST,"/api/public/contact").permitAll()
                     .requestMatchers(HttpMethod.POST,"/api/public/quote-request").permitAll()
+                    .requestMatchers(HttpMethod.GET,"/api/public/historias","/api/public/historias/**").permitAll()
                     .requestMatchers("/api/public/**").denyAll()
 
                     .requestMatchers(HttpMethod.GET,"/api/productos/**").hasAnyAuthority(AuthoritiesConstants.ADMIN,AuthoritiesConstants.USER,AuthoritiesConstants.VIEWER)
