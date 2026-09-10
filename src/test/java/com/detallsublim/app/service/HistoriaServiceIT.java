@@ -82,6 +82,16 @@ class HistoriaServiceIT {
     }
 
     @Test
+    void createShouldSafelyTrimSlugHyphens() {
+        HistoriaDTO input = validDto();
+        input.setTitulo("--- Café y Diseño ---");
+
+        HistoriaDTO result = historiaService.create(input);
+
+        assertEquals("cafe-y-diseno", result.getSlug());
+    }
+
+    @Test
     void createShouldGenerateUniqueSlugWhenSlugAlreadyExists() {
         HistoriaDTO first = validDto();
         first.setTitulo("Historia repetida");

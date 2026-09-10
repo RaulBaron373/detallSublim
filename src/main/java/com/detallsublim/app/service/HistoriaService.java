@@ -255,15 +255,16 @@ public class HistoriaService {
         String baseSlug = Normalizer.normalize(titulo, Normalizer.Form.NFD)
             .replaceAll("\\p{M}+", "")
             .toLowerCase(Locale.ROOT)
-            .replaceAll("[^a-z0-9]+", "-")
-            .replaceAll("^-+|-+$", "");
+            .replaceAll("[^a-z0-9]+", "-");
+
+        baseSlug = trimHyphens(baseSlug);
 
         if (baseSlug.isBlank()) {
             baseSlug = "historia";
         }
 
         if (baseSlug.length() > MAX_SLUG_BASE_LENGTH) {
-            baseSlug = baseSlug.substring(0, MAX_SLUG_BASE_LENGTH).replaceAll("-+$", "");
+            baseSlug = trimHyphens(baseSlug.substring(0, MAX_SLUG_BASE_LENGTH));
         }
 
         String candidate = baseSlug;
@@ -275,6 +276,21 @@ public class HistoriaService {
         }
 
         return candidate;
+    }
+
+    private String trimHyphens(String value) {
+        int start = 0;
+        int end = value.length();
+
+        while (start < end && value.charAt(start) == '-') {
+            start++;
+        }
+
+        while (end > start && value.charAt(end - 1) == '-') {
+            end--;
+        }
+
+        return value.substring(start, end);
     }
 
     private void registerAfterCommitFileDeletion(List<String> storageKeys) {
