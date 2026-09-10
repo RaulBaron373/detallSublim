@@ -1,0 +1,134 @@
+<section class="historia-detail-page">
+  <div class="historia-detail-background" aria-hidden="true">
+    <div class="historia-detail-blob historia-detail-blob-pink"></div>
+    <div class="historia-detail-blob historia-detail-blob-cyan"></div>
+    <div class="historia-detail-blob historia-detail-blob-yellow"></div>
+    <div class="historia-detail-grid-pattern"></div>
+  </div>
+
+  <div class="ds-container">
+    @if (isLoading) {
+      <div class="historia-detail-status" role="status" aria-live="polite">
+        <div class="spinner-border" aria-hidden="true"></div>
+        <p>Cargando historia...</p>
+      </div>
+    }
+
+    @if (!isLoading && notFound) {
+      <div class="historia-detail-status" role="alert">
+        <span class="historia-detail-status-tag">Historia no encontrada</span>
+        <h1>Esta historia no está disponible</h1>
+        <p>Puede que haya sido retirada, todavía no esté publicada o que la dirección no sea correcta.</p>
+        <a routerLink="/historias" class="ds-btn ds-btn-primary">Volver a Historias</a>
+      </div>
+    }
+
+    @if (!isLoading && hasError) {
+      <div class="historia-detail-status" role="alert">
+        <span class="historia-detail-status-tag">Algo ha ocurrido</span>
+        <h1>No hemos podido cargar la historia</h1>
+        <p>Ha ocurrido un problema al obtener el contenido. Puedes intentarlo de nuevo.</p>
+
+        <div class="historia-detail-status-actions">
+          <button type="button" class="ds-btn ds-btn-primary" (click)="loadHistoria()">Reintentar</button>
+          <a routerLink="/historias" class="ds-btn ds-btn-outline">Volver</a>
+        </div>
+      </div>
+    }
+
+    @if (!isLoading && !hasError && !notFound && historia) {
+      <article class="historia-detail">
+        <section class="historia-detail-hero" [class.historia-detail-hero--without-cover]="!portada?.url">
+          <div class="historia-detail-hero-copy" dsScrollReveal reveal="fade-up">
+            <a routerLink="/historias" class="historia-detail-back">
+              <span aria-hidden="true">←</span>
+              Todas las historias
+            </a>
+
+            <div class="historia-detail-eyebrow">
+              <span class="historia-detail-tag">Historia Detall Sublim</span>
+
+              @if (historia.fechaPublicacion) {
+                <time [attr.datetime]="historia.fechaPublicacion">
+                  {{ historia.fechaPublicacion | date: 'dd/MM/yyyy' }}
+                </time>
+              }
+            </div>
+
+            <h1>{{ historia.titulo }}</h1>
+
+            <p class="historia-detail-summary">
+              {{ historia.resumen }}
+            </p>
+
+            <div class="historia-detail-hero-accent" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+
+          @if (portada?.url) {
+            <figure class="historia-detail-cover" dsScrollReveal reveal="scale-up" [revealDelay]="100">
+              <div class="historia-detail-cover-stage">
+                <span class="historia-detail-cover-orbit historia-detail-cover-orbit--one" aria-hidden="true"></span>
+                <span class="historia-detail-cover-orbit historia-detail-cover-orbit--two" aria-hidden="true"></span>
+
+                <img [src]="portada!.url" [alt]="portada!.textoAlternativo || historia.titulo" />
+              </div>
+
+              @if (portada?.textoAlternativo) {
+                <figcaption>{{ portada!.textoAlternativo }}</figcaption>
+              }
+            </figure>
+          }
+        </section>
+
+        <section class="historia-detail-story" aria-label="Contenido de la historia">
+          @for (section of storySections; track section.id; let first = $first) {
+            <div class="historia-detail-story-section">
+              @if (section.paragraph) {
+                <div class="historia-detail-paragraph" [class.historia-detail-paragraph--lead]="first" dsScrollReveal reveal="fade-up">
+                  <span class="historia-detail-paragraph-marker" aria-hidden="true"></span>
+                  <p>{{ section.paragraph }}</p>
+                </div>
+              }
+
+              @for (media of section.images; track media.image.id; let imageIndex = $index) {
+                <figure
+                  class="historia-detail-story-media"
+                  [class.historia-detail-story-media--wide]="media.layout === 'wide'"
+                  [class.historia-detail-story-media--left]="media.layout === 'offset-left'"
+                  [class.historia-detail-story-media--right]="media.layout === 'offset-right'"
+                  dsScrollReveal
+                  reveal="scale-up"
+                  [revealDelay]="80 + imageIndex * 60"
+                >
+                  <div class="historia-detail-story-media-surface">
+                    <img [src]="media.image.url" [alt]="media.image.textoAlternativo || historia.titulo" loading="lazy" />
+                  </div>
+
+                  @if (media.image.textoAlternativo) {
+                    <figcaption>{{ media.image.textoAlternativo }}</figcaption>
+                  }
+                </figure>
+              }
+            </div>
+          }
+        </section>
+
+        <footer class="historia-detail-footer" dsScrollReveal reveal="fade-up">
+          <div class="historia-detail-footer-copy">
+            <span>¿Tienes una idea parecida?</span>
+            <h2>Podemos ayudarte a convertirla en algo único.</h2>
+          </div>
+
+          <div class="historia-detail-footer-actions">
+            <a routerLink="/solicitar-presupuesto" class="ds-btn ds-btn-primary">Solicitar presupuesto</a>
+            <a routerLink="/historias" class="ds-btn ds-btn-outline">Ver más historias</a>
+          </div>
+        </footer>
+      </article>
+    }
+  </div>
+</section>

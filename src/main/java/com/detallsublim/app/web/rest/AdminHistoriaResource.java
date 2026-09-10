@@ -1,6 +1,7 @@
 package com.detallsublim.app.web.rest;
 
 import com.detallsublim.app.service.HistoriaImagenService;
+import com.detallsublim.app.service.HistoriaImagenService.PublicImage;
 import com.detallsublim.app.service.HistoriaService;
 import com.detallsublim.app.service.dto.HistoriaDTO;
 import com.detallsublim.app.service.dto.HistoriaImagenDTO;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -148,6 +150,22 @@ public class AdminHistoriaResource {
         historiaService.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Obtiene una imagen de una Historia para administración.
+     *
+     * Permite visualizar imágenes de Historias en BORRADOR o PUBLICADAS.
+     */
+    @GetMapping("/{id}/imagenes/{imagenId}")
+    public ResponseEntity<byte[]> getImagen(@PathVariable("id") Long id, @PathVariable("imagenId") Long imagenId) {
+        LOG.debug("REST request to get admin image {} from Historia {}", imagenId, id);
+
+        PublicImage image = historiaImagenService.loadAdminImage(id, imagenId);
+
+        MediaType mediaType = MediaType.parseMediaType(image.contentType());
+
+        return ResponseEntity.ok().contentType(mediaType).cacheControl(CacheControl.noStore()).body(image.content());
     }
 
     /**

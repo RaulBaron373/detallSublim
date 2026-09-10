@@ -1,0 +1,858 @@
+@keyframes historiaDetailBlobFloat {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(18px, -18px) scale(1.04);
+  }
+}
+
+.historia-detail-page {
+  position: relative;
+
+  min-height: 100vh;
+  padding: 9rem 0 6rem;
+  overflow: hidden;
+
+  background:
+    radial-gradient(circle at 14% 18%, rgba(0, 217, 192, 0.08), transparent 26rem),
+    radial-gradient(circle at 87% 12%, rgba(216, 75, 138, 0.1), transparent 28rem),
+    linear-gradient(180deg, #ffffff 0%, #fbfcfd 52%, #ffffff 100%);
+}
+
+.historia-detail-background {
+  position: absolute;
+  inset: 0;
+
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+.historia-detail-blob {
+  position: absolute;
+
+  width: 24rem;
+  height: 24rem;
+
+  border-radius: 999px;
+  filter: blur(85px);
+  opacity: 0.18;
+
+  animation: historiaDetailBlobFloat 12s ease-in-out infinite;
+}
+
+.historia-detail-blob-pink {
+  top: 3rem;
+  right: -6rem;
+
+  background: rgba(216, 75, 138, 0.48);
+}
+
+.historia-detail-blob-cyan {
+  top: 38rem;
+  left: -8rem;
+
+  background: rgba(0, 217, 192, 0.42);
+
+  animation-delay: 2s;
+}
+
+.historia-detail-blob-yellow {
+  right: 8%;
+  bottom: 6rem;
+
+  background: rgba(248, 213, 69, 0.42);
+
+  animation-delay: 4s;
+}
+
+.historia-detail-grid-pattern {
+  position: absolute;
+  inset: 0;
+
+  opacity: 0.18;
+
+  background-image:
+    linear-gradient(rgba(21, 25, 34, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(21, 25, 34, 0.035) 1px, transparent 1px);
+  background-size: 42px 42px;
+
+  mask-image: linear-gradient(to bottom, black, transparent 48%);
+}
+
+/* =====================================================
+   STATES
+   ===================================================== */
+
+.historia-detail-status {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  max-width: 760px;
+  min-height: 340px;
+  margin: 0 auto;
+  padding: 3rem;
+
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 1.9rem;
+  backdrop-filter: blur(14px);
+
+  box-shadow: 0 24px 65px rgba(21, 25, 34, 0.09);
+
+  text-align: center;
+}
+
+.historia-detail-status .spinner-border {
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: auto 0 1rem;
+
+  color: var(--ds-color-primary);
+}
+
+.historia-detail-status-tag {
+  display: inline-flex;
+
+  margin-bottom: 1rem;
+  padding: 0.5rem 0.9rem;
+
+  color: var(--ds-color-primary);
+
+  background: rgba(216, 75, 138, 0.1);
+  border-radius: 999px;
+
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.historia-detail-status h1 {
+  margin-bottom: 0.8rem;
+
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.historia-detail-status p {
+  max-width: 560px;
+  margin-bottom: 1.5rem;
+
+  line-height: 1.7;
+}
+
+.historia-detail-status-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+/* =====================================================
+   ARTICLE / HERO
+   ===================================================== */
+
+.historia-detail {
+  position: relative;
+  z-index: 2;
+
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.historia-detail-hero {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+
+  margin-bottom: clamp(4rem, 8vw, 7rem);
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  border-radius: 2.25rem;
+  backdrop-filter: blur(16px);
+
+  box-shadow: 0 28px 80px rgba(21, 25, 34, 0.1);
+}
+
+.historia-detail-hero::before {
+  position: absolute;
+  top: -1px;
+  left: clamp(1.5rem, 6vw, 5rem);
+
+  width: 130px;
+  height: 4px;
+
+  content: '';
+
+  background: linear-gradient(90deg, #d84b8a, #f8d545, #00d9c0);
+  border-radius: 999px;
+}
+
+.historia-detail-hero--without-cover {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.historia-detail-hero--without-cover .historia-detail-hero-copy {
+  max-width: 850px;
+  margin-inline: auto;
+
+  text-align: center;
+}
+
+.historia-detail-hero-copy {
+  min-width: 0;
+}
+
+.historia-detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+
+  margin-bottom: 2.25rem;
+
+  color: rgba(21, 25, 34, 0.68);
+
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.historia-detail-back:hover {
+  color: var(--ds-color-primary);
+
+  transform: translateX(-3px);
+}
+
+.historia-detail-eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem;
+
+  margin-bottom: 1.1rem;
+}
+
+.historia-detail-tag,
+.historia-detail-eyebrow time {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 34px;
+  padding: 0.4rem 0.75rem;
+
+  border-radius: 999px;
+
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.historia-detail-tag {
+  color: var(--ds-color-primary);
+
+  background: rgba(216, 75, 138, 0.1);
+  border: 1px solid rgba(216, 75, 138, 0.12);
+}
+
+.historia-detail-eyebrow time {
+  color: rgba(21, 25, 34, 0.58);
+
+  background: rgba(21, 25, 34, 0.045);
+}
+
+.historia-detail-hero h1 {
+  margin-bottom: 1.25rem;
+
+  font-size: clamp(2.8rem, 6vw, 5.35rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+
+.historia-detail-summary {
+  max-width: 650px;
+  margin-bottom: 1.35rem;
+
+  color: rgba(21, 25, 34, 0.66);
+
+  font-size: clamp(1rem, 1.5vw, 1.18rem);
+  line-height: 1.75;
+}
+
+.historia-detail-hero-accent {
+  display: flex;
+  gap: 0.5rem;
+
+  width: fit-content;
+}
+
+.historia-detail-hero-accent span {
+  display: block;
+
+  height: 5px;
+
+  border-radius: 999px;
+}
+
+.historia-detail-hero-accent span:nth-child(1) {
+  width: 42px;
+
+  background: #d84b8a;
+}
+
+.historia-detail-hero-accent span:nth-child(2) {
+  width: 28px;
+
+  background: #f8d545;
+}
+
+.historia-detail-hero-accent span:nth-child(3) {
+  width: 36px;
+
+  background: #00d9c0;
+}
+
+/* =====================================================
+   COVER — ORIGINAL ASPECT RATIO
+   ===================================================== */
+
+.historia-detail-cover {
+  position: relative;
+
+  min-width: 0;
+  margin: 0;
+
+  text-align: center;
+}
+
+.historia-detail-cover-stage {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 440px;
+  padding: clamp(1.2rem, 3vw, 2rem);
+  overflow: hidden;
+
+  background:
+    radial-gradient(circle at 18% 18%, rgba(248, 213, 69, 0.3), transparent 11rem),
+    radial-gradient(circle at 82% 78%, rgba(0, 217, 192, 0.22), transparent 13rem),
+    linear-gradient(145deg, rgba(216, 75, 138, 0.1), rgba(255, 255, 255, 0.82));
+  border: 1px solid rgba(216, 75, 138, 0.12);
+  border-radius: 1.8rem;
+}
+
+.historia-detail-cover-stage img {
+  position: relative;
+  z-index: 2;
+
+  display: block;
+
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 640px;
+
+  object-fit: contain;
+
+  border-radius: 1.25rem;
+
+  box-shadow: 0 22px 55px rgba(21, 25, 34, 0.18);
+}
+
+.historia-detail-cover-orbit {
+  position: absolute;
+
+  border: 1px solid rgba(216, 75, 138, 0.18);
+  border-radius: 999px;
+}
+
+.historia-detail-cover-orbit--one {
+  top: 8%;
+  right: 5%;
+
+  width: 160px;
+  height: 160px;
+}
+
+.historia-detail-cover-orbit--two {
+  bottom: 10%;
+  left: 4%;
+
+  width: 95px;
+  height: 95px;
+
+  border-color: rgba(0, 217, 192, 0.28);
+}
+
+.historia-detail-cover figcaption {
+  margin-top: 0.7rem;
+  padding-inline: 1rem;
+
+  color: rgba(21, 25, 34, 0.48);
+
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+/* =====================================================
+   EDITORIAL STORY
+   ===================================================== */
+
+.historia-detail-story {
+  position: relative;
+
+  max-width: 1010px;
+  margin: 0 auto clamp(4.5rem, 8vw, 7rem);
+}
+
+.historia-detail-story::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+
+  width: 1px;
+
+  content: '';
+
+  background: linear-gradient(to bottom, transparent, rgba(216, 75, 138, 0.12) 12%, rgba(0, 217, 192, 0.12) 55%, transparent);
+
+  transform: translateX(-50%);
+}
+
+.historia-detail-story-section {
+  position: relative;
+
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.historia-detail-paragraph {
+  position: relative;
+  z-index: 2;
+
+  max-width: 790px;
+  margin-inline: auto;
+  padding: clamp(1.15rem, 2vw, 1.5rem) clamp(1.15rem, 3vw, 2rem);
+
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(21, 25, 34, 0.055);
+  border-radius: 1.4rem;
+
+  box-shadow: 0 16px 42px rgba(21, 25, 34, 0.055);
+}
+
+.historia-detail-paragraph-marker {
+  position: absolute;
+  top: 1.45rem;
+  left: -5px;
+
+  width: 10px;
+  height: 42px;
+
+  background: linear-gradient(180deg, #d84b8a, #f8d545);
+  border-radius: 999px;
+}
+
+.historia-detail-paragraph p {
+  margin: 0;
+
+  color: rgba(21, 25, 34, 0.76);
+
+  font-size: 1.02rem;
+  line-height: 1.95;
+}
+
+.historia-detail-paragraph--lead {
+  padding: clamp(1.35rem, 2.5vw, 1.8rem) clamp(1.2rem, 3vw, 2.2rem);
+}
+
+.historia-detail-paragraph--lead p {
+  color: rgba(21, 25, 34, 0.82);
+
+  font-size: 1.09rem;
+}
+
+.historia-detail-paragraph--lead p::first-letter {
+  float: left;
+
+  margin: 0.08em 0.12em 0 0;
+
+  color: var(--ds-color-primary);
+
+  font-size: 3.15em;
+  font-weight: 600;
+  line-height: 0.82;
+}
+
+/* =====================================================
+   INLINE STORY IMAGES — NO CROP / NO DISTORTION
+   ===================================================== */
+
+.historia-detail-story-media {
+  position: relative;
+  z-index: 2;
+
+  width: min(100%, 780px);
+  margin: clamp(2rem, 4vw, 3.5rem) auto 0;
+}
+
+.historia-detail-story-media--wide {
+  width: min(100%, 980px);
+}
+
+.historia-detail-story-media--left {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.historia-detail-story-media--right {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.historia-detail-story-media-surface {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: clamp(0.75rem, 2vw, 1.25rem);
+
+  background:
+    radial-gradient(circle at 10% 15%, rgba(0, 217, 192, 0.13), transparent 12rem),
+    radial-gradient(circle at 90% 90%, rgba(216, 75, 138, 0.13), transparent 14rem), rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(21, 25, 34, 0.06);
+  border-radius: 1.8rem;
+
+  box-shadow: 0 22px 58px rgba(21, 25, 34, 0.09);
+}
+
+.historia-detail-story-media img {
+  display: block;
+
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 720px;
+
+  object-fit: contain;
+
+  border-radius: 1.25rem;
+}
+
+.historia-detail-story-media figcaption {
+  max-width: 680px;
+  margin: 0.7rem auto 0;
+
+  color: rgba(21, 25, 34, 0.48);
+
+  font-size: 0.76rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+/* =====================================================
+   CTA
+   ===================================================== */
+
+.historia-detail-footer {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  overflow: hidden;
+
+  background:
+    radial-gradient(circle at 8% 0%, rgba(216, 75, 138, 0.26), transparent 18rem),
+    radial-gradient(circle at 88% 110%, rgba(0, 217, 192, 0.18), transparent 18rem), linear-gradient(135deg, #151922 0%, #1d2330 100%);
+  border-radius: 2rem;
+
+  box-shadow: 0 26px 70px rgba(21, 25, 34, 0.17);
+}
+
+.historia-detail-footer-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.historia-detail-footer span {
+  display: block;
+
+  margin-bottom: 0.45rem;
+
+  color: rgba(255, 255, 255, 0.62);
+
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.historia-detail-footer h2 {
+  max-width: 610px;
+  margin-bottom: 0;
+
+  color: #fff;
+
+  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  line-height: 1.22;
+}
+
+.historia-detail-footer-actions {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+
+  flex-shrink: 0;
+}
+
+.historia-detail-footer .ds-btn-outline {
+  color: #fff;
+
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.historia-detail-footer .ds-btn-outline:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* =====================================================
+   TABLET
+   ===================================================== */
+
+@media (max-width: 991.98px) {
+  .historia-detail-page {
+    padding-top: 8rem;
+  }
+
+  .historia-detail-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .historia-detail-cover {
+    width: min(100%, 720px);
+    margin-inline: auto;
+  }
+
+  .historia-detail-cover-stage {
+    min-height: 360px;
+  }
+
+  .historia-detail-story-media--left,
+  .historia-detail-story-media--right {
+    margin-inline: auto;
+  }
+
+  .historia-detail-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 576px) {
+  .historia-detail-page {
+    padding: 6.7rem 0 3rem;
+
+    background:
+      radial-gradient(circle at 10% 12%, rgba(0, 217, 192, 0.075), transparent 16rem),
+      radial-gradient(circle at 90% 8%, rgba(216, 75, 138, 0.09), transparent 18rem), #fff;
+  }
+
+  .historia-detail-blob {
+    width: 15rem;
+    height: 15rem;
+  }
+
+  .historia-detail-status {
+    min-height: 260px;
+    padding: 1.5rem;
+
+    border-radius: 1.4rem;
+  }
+
+  .historia-detail-status h1 {
+    font-size: 1.8rem;
+  }
+
+  .historia-detail-status-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    width: 100%;
+  }
+
+  .historia-detail-status-actions .ds-btn {
+    width: 100%;
+  }
+
+  .historia-detail-hero {
+    gap: 1.5rem;
+
+    margin-bottom: 3.5rem;
+    padding: 1.1rem;
+
+    border-radius: 1.55rem;
+  }
+
+  .historia-detail-back {
+    margin-bottom: 1.35rem;
+
+    font-size: 0.82rem;
+  }
+
+  .historia-detail-eyebrow {
+    gap: 0.45rem;
+
+    margin-bottom: 0.85rem;
+  }
+
+  .historia-detail-tag,
+  .historia-detail-eyebrow time {
+    min-height: 30px;
+    padding: 0.35rem 0.6rem;
+
+    font-size: 0.7rem;
+  }
+
+  .historia-detail-hero h1 {
+    margin-bottom: 0.9rem;
+
+    font-size: clamp(2.35rem, 13vw, 3.2rem);
+    line-height: 1;
+  }
+
+  .historia-detail-summary {
+    margin-bottom: 1rem;
+
+    font-size: 0.93rem;
+    line-height: 1.65;
+  }
+
+  .historia-detail-cover-stage {
+    min-height: 0;
+    padding: 0.8rem;
+
+    border-radius: 1.25rem;
+  }
+
+  .historia-detail-cover-stage img {
+    max-height: 500px;
+
+    border-radius: 0.95rem;
+  }
+
+  .historia-detail-cover figcaption {
+    font-size: 0.7rem;
+  }
+
+  .historia-detail-story {
+    margin-bottom: 3.5rem;
+  }
+
+  .historia-detail-story::before {
+    display: none;
+  }
+
+  .historia-detail-story-section {
+    margin-bottom: 2.2rem;
+  }
+
+  .historia-detail-paragraph {
+    padding: 1rem 1.05rem;
+
+    border-radius: 1.15rem;
+  }
+
+  .historia-detail-paragraph-marker {
+    top: 1rem;
+    left: -3px;
+
+    width: 6px;
+    height: 32px;
+  }
+
+  .historia-detail-paragraph p,
+  .historia-detail-paragraph--lead p {
+    font-size: 0.94rem;
+    line-height: 1.82;
+  }
+
+  .historia-detail-paragraph--lead p::first-letter {
+    font-size: 2.8em;
+  }
+
+  .historia-detail-story-media,
+  .historia-detail-story-media--wide {
+    width: 100%;
+    margin-top: 1.65rem;
+  }
+
+  .historia-detail-story-media-surface {
+    padding: 0.55rem;
+
+    border-radius: 1.25rem;
+  }
+
+  .historia-detail-story-media img {
+    max-height: 540px;
+
+    border-radius: 0.95rem;
+  }
+
+  .historia-detail-story-media figcaption {
+    margin-top: 0.55rem;
+
+    font-size: 0.7rem;
+  }
+
+  .historia-detail-footer {
+    gap: 1.4rem;
+    padding: 1.4rem;
+
+    border-radius: 1.5rem;
+  }
+
+  .historia-detail-footer h2 {
+    font-size: 1.5rem;
+  }
+
+  .historia-detail-footer-actions {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 0.65rem;
+
+    width: 100%;
+  }
+
+  .historia-detail-footer-actions .ds-btn {
+    width: 100%;
+    padding-inline: 0.55rem;
+
+    font-size: 0.78rem;
+    text-align: center;
+    white-space: nowrap;
+  }
+}

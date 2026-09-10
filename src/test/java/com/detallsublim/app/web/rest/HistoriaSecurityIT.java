@@ -178,6 +178,62 @@ class HistoriaSecurityIT {
     }
 
     @Test
+    @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
+    void adminShouldAccessDraftHistoriaImage() throws Exception {
+        Instant now = Instant.now();
+        byte[] imageContent = new byte[] { 5, 6, 7, 8 };
+        String storageKey = fileStorageService.store(imageContent, "png");
+
+        Historia historia = new Historia()
+            .titulo("Historia borrador con imagen administrativa")
+            .slug("historia-borrador-imagen-admin-security-test")
+            .resumen("Resumen de prueba")
+            .contenido("Contenido de prueba")
+            .estado(EstadoHistoria.BORRADOR)
+            .fechaCreacion(now)
+            .fechaActualizacion(now);
+
+        HistoriaImagen imagen = new HistoriaImagen()
+            .storageKey(storageKey)
+            .nombreOriginal("admin-security-test.png")
+            .contentType("image/png")
+            .tamanoBytes((long) imageContent.length)
+            .textoAlternativo("Imagen administrativa de prueba")
+            .orden(0)
+            .portada(false);
+
+        historia.addImagen(imagen);
+        historia = historiaRepository.saveAndFlush(historia);
+
+        try {
+            mockMvc
+                .perform(get("/api/admin/historias/" + historia.getId() + "/imagenes/" + imagen.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("image/png"))
+                .andExpect(content().bytes(imageContent));
+        } finally {
+            try {
+                historiaRepository.deleteById(historia.getId());
+                historiaRepository.flush();
+            } finally {
+                fileStorageService.delete(storageKey);
+            }
+        }
+    }
+
+    @Test
+    @WithUnauthenticatedMockUser
+    void anonymousUserShouldNotAccessAdminHistoriaImage() throws Exception {
+        mockMvc.perform(get("/api/admin/historias/1/imagenes/1")).andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser(authorities = AuthoritiesConstants.USER)
+    void normalUserShouldNotAccessAdminHistoriaImage() throws Exception {
+        mockMvc.perform(get("/api/admin/historias/1/imagenes/1")).andExpect(status().isForbidden());
+    }
+
+    @Test
     @WithUnauthenticatedMockUser
     void anonymousUserShouldNotAccessAdminHistorias() throws Exception {
         mockMvc.perform(get("/api/admin/historias")).andExpect(status().isUnauthorized());

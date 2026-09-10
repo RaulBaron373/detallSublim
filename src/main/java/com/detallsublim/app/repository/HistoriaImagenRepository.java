@@ -18,5 +18,7 @@ public interface HistoriaImagenRepository extends JpaRepository<HistoriaImagen, 
 
     boolean existsByHistoriaIdAndPortadaTrue(Long historiaId);
 
+    Optional<HistoriaImagen> findOneByIdAndHistoriaId(Long id, Long historiaId);
+
     Optional<HistoriaImagen> findOneByIdAndHistoriaEstado(Long id, EstadoHistoria estado);
 }

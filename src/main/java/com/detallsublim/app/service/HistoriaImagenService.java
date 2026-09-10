@@ -349,6 +349,37 @@ public class HistoriaImagenService {
     }
 
     /**
+     * Recupera una imagen perteneciente a una Historia para administración.
+     *
+     * Permite consultar imágenes de Historias en BORRADOR o PUBLICADAS,
+     * siempre que la imagen pertenezca a la Historia indicada.
+     */
+    @Transactional(readOnly = true)
+    public PublicImage loadAdminImage(Long historiaId, Long imagenId) {
+        LOG.debug("Request to load admin Historia image {} from Historia {}", imagenId, historiaId);
+
+        if (historiaId == null || imagenId == null) {
+            throw HistoriaServiceException.badRequest("La historia y la imagen son obligatorias.");
+        }
+
+        HistoriaImagen imagen = historiaImagenRepository
+            .findOneByIdAndHistoriaId(imagenId, historiaId)
+            .orElseThrow(() -> HistoriaServiceException.notFound("La imagen indicada no pertenece a esta historia."));
+
+        String storageKey = imagen.getStorageKey();
+
+        if (!fileStorageService.exists(storageKey)) {
+            LOG.warn("Historia image file is missing for image id {}", imagenId);
+
+            throw HistoriaServiceException.notFound("La imagen solicitada no existe.");
+        }
+
+        byte[] content = fileStorageService.load(storageKey);
+
+        return new PublicImage(content, imagen.getContentType());
+    }
+
+    /**
      * Recupera una imagen perteneciente exclusivamente a una Historia publicada.
      */
     @Transactional(readOnly = true)

@@ -363,6 +363,54 @@ class HistoriaImagenServiceIT {
     }
 
     @Test
+    void loadAdminImageShouldAllowDraftHistoriaImage() {
+        Historia historia = persistHistoria(EstadoHistoria.BORRADOR);
+
+        historiaImagenService.addImage(historia.getId(), multipart("borrador.png", "image/png", validPng()), null, false);
+
+        HistoriaImagen imagen = historiaImagenRepository.findAllByHistoriaIdOrderByOrdenAsc(historia.getId()).get(0);
+
+        HistoriaImagenService.PublicImage result = historiaImagenService.loadAdminImage(historia.getId(), imagen.getId());
+
+        assertEquals("image/png", result.contentType());
+        assertEquals(validPng().length, result.content().length);
+    }
+
+    @Test
+    void loadAdminImageShouldRejectImageFromAnotherHistoria() {
+        Historia historia1 = persistHistoria(EstadoHistoria.BORRADOR);
+        Historia historia2 = persistHistoria(EstadoHistoria.BORRADOR);
+
+        historiaImagenService.addImage(historia2.getId(), multipart("ajena.png", "image/png", validPng()), null, false);
+
+        Long foreignImageId = historiaImagenRepository.findAllByHistoriaIdOrderByOrdenAsc(historia2.getId()).get(0).getId();
+
+        HistoriaServiceException exception = assertThrows(HistoriaServiceException.class, () ->
+            historiaImagenService.loadAdminImage(historia1.getId(), foreignImageId)
+        );
+
+        assertEquals(404, exception.getStatusCode().value());
+    }
+
+    @Test
+    void loadAdminImageShouldReturnNotFoundWhenPhysicalFileIsMissing() {
+        Historia historia = persistHistoria(EstadoHistoria.BORRADOR);
+
+        HistoriaImagen imagen = metadataImage(UUID.randomUUID() + ".png", 0, false);
+
+        historia.addImagen(imagen);
+        historiaRepository.saveAndFlush(historia);
+
+        Long imageId = historiaImagenRepository.findAllByHistoriaIdOrderByOrdenAsc(historia.getId()).get(0).getId();
+
+        HistoriaServiceException exception = assertThrows(HistoriaServiceException.class, () ->
+            historiaImagenService.loadAdminImage(historia.getId(), imageId)
+        );
+
+        assertEquals(404, exception.getStatusCode().value());
+    }
+
+    @Test
     void loadPublishedImageShouldReturnNotFoundWhenPhysicalFileIsMissing() {
         Historia historia = persistHistoria(EstadoHistoria.PUBLICADA);
 

@@ -1,0 +1,511 @@
+@keyframes historiasBlobFloat {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(18px, -24px) scale(1.04);
+  }
+
+  66% {
+    transform: translate(-12px, 14px) scale(0.97);
+  }
+}
+
+.historias-page {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  padding: 10rem 0 6rem;
+
+  background: linear-gradient(135deg, rgba(216, 75, 138, 0.05) 0%, rgba(0, 217, 192, 0.05) 50%, rgba(248, 213, 69, 0.05) 100%);
+}
+
+.historias-background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.historias-blob {
+  position: absolute;
+  width: 20rem;
+  height: 20rem;
+
+  border-radius: 999px;
+  filter: blur(70px);
+  opacity: 0.16;
+
+  animation: historiasBlobFloat 11s ease-in-out infinite;
+}
+
+.historias-blob-pink {
+  top: 3rem;
+  right: 8%;
+  background: rgba(216, 75, 138, 0.55);
+}
+
+.historias-blob-cyan {
+  top: 18rem;
+  left: 3%;
+  background: rgba(0, 217, 192, 0.45);
+  animation-delay: 2s;
+}
+
+.historias-blob-yellow {
+  right: 24%;
+  bottom: 3rem;
+  background: rgba(248, 213, 69, 0.42);
+  animation-delay: 4s;
+}
+
+/* =====================================================
+    CABECERA
+   ===================================================== */
+
+.historias-header {
+  position: relative;
+  z-index: 2;
+
+  max-width: 880px;
+  margin: 0 auto 3.5rem;
+
+  text-align: center;
+}
+
+.historias-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 1.25rem;
+  padding: 0.55rem 1rem;
+
+  border: 1px solid rgba(216, 75, 138, 0.16);
+  border-radius: 999px;
+
+  background: rgba(216, 75, 138, 0.09);
+  color: var(--ds-color-primary);
+
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.historias-header h1 {
+  margin-bottom: 1rem;
+
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 1.05;
+}
+
+.historias-subtitle {
+  max-width: 800px;
+  margin: 0 auto;
+
+  font-size: 1.08rem;
+  line-height: 1.8;
+}
+
+/* =====================================================
+    ESTADOS
+   ===================================================== */
+
+.historias-status {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  max-width: 720px;
+  min-height: 280px;
+
+  margin: 0 auto;
+  padding: 2.5rem;
+
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 1.75rem;
+
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(12px);
+
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.07);
+
+  text-align: center;
+}
+
+.historias-status .spinner-border {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 1rem;
+
+  color: var(--ds-color-primary);
+}
+
+.historias-status h2 {
+  margin-bottom: 0.75rem;
+  font-size: 1.55rem;
+}
+
+.historias-status p {
+  max-width: 520px;
+  margin-bottom: 1.25rem;
+
+  line-height: 1.7;
+}
+
+.historias-status-empty p {
+  margin-bottom: 0;
+}
+
+/* =====================================================
+    GRID
+   ===================================================== */
+
+.historias-grid {
+  position: relative;
+  z-index: 2;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+/* =====================================================
+    TARJETA
+   ===================================================== */
+
+.historia-card {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 1.7rem;
+
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
+
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+.historia-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 58px rgba(0, 0, 0, 0.12);
+}
+
+.historia-card-image {
+  display: block;
+
+  width: 100%;
+  height: 245px;
+
+  overflow: hidden;
+
+  background: #f3f4f6;
+  text-decoration: none;
+}
+
+.historia-card-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 0.4s ease;
+}
+
+.historia-card:hover .historia-card-image img {
+  transform: scale(1.05);
+}
+
+.historia-no-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  background:
+    radial-gradient(circle at 20% 25%, rgba(216, 75, 138, 0.2), transparent 35%),
+    radial-gradient(circle at 80% 70%, rgba(0, 217, 192, 0.18), transparent 35%), linear-gradient(135deg, #f8f9fb 0%, #eef1f5 100%);
+
+  color: rgba(21, 25, 34, 0.55);
+
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.historia-card-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  padding: 1.5rem;
+}
+
+.historia-date {
+  display: block;
+
+  margin-bottom: 0.75rem;
+
+  color: var(--ds-color-primary);
+
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.historia-card-content h2 {
+  margin-bottom: 0.8rem;
+
+  font-size: 1.4rem;
+  line-height: 1.25;
+}
+
+.historia-card-content h2 a {
+  color: var(--ds-color-text);
+  text-decoration: none;
+
+  transition: color 0.25s ease;
+}
+
+.historia-card-content h2 a:hover {
+  color: var(--ds-color-primary);
+}
+
+.historia-card-content p {
+  margin-bottom: 1.25rem;
+
+  line-height: 1.7;
+}
+
+.historia-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+
+  align-self: flex-start;
+
+  margin-top: auto;
+
+  color: var(--ds-color-text);
+
+  font-weight: 600;
+  text-decoration: none;
+
+  transition:
+    color 0.25s ease,
+    gap 0.25s ease;
+}
+
+.historia-link:hover {
+  gap: 0.65rem;
+  color: var(--ds-color-primary);
+}
+
+/* =====================================================
+    PAGINACIÓN
+   ===================================================== */
+
+.historias-pagination {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  justify-content: center;
+
+  margin-top: 3rem;
+}
+
+/* ng-bootstrap necesita ::ng-deep para personalización local */
+:host ::ng-deep .historias-pagination .pagination {
+  gap: 0.35rem;
+  margin-bottom: 0;
+}
+
+:host ::ng-deep .historias-pagination .page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 2.7rem;
+  height: 2.7rem;
+
+  border: 1px solid rgba(216, 75, 138, 0.12);
+  border-radius: 0.8rem;
+
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--ds-color-text);
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+:host ::ng-deep .historias-pagination .page-item.active .page-link {
+  border-color: var(--ds-color-primary);
+  background: var(--ds-color-primary);
+  color: #ffffff;
+}
+
+:host ::ng-deep .historias-pagination .page-item.disabled .page-link {
+  opacity: 0.45;
+}
+
+/* =====================================================
+    TABLET
+   ===================================================== */
+
+@media (max-width: 991.98px) {
+  .historias-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .historias-blob {
+    width: 15rem;
+    height: 15rem;
+  }
+}
+
+/* =====================================================
+    MÓVIL
+   ===================================================== */
+
+@media (max-width: 576px) {
+  .historias-page {
+    padding: 7rem 0 3rem;
+  }
+
+  .historias-header {
+    margin-bottom: 2rem;
+  }
+
+  .historias-tag {
+    margin-bottom: 1rem;
+    padding: 0.45rem 0.85rem;
+
+    font-size: 0.85rem;
+  }
+
+  .historias-header h1 {
+    margin-bottom: 0.8rem;
+
+    font-size: 2rem;
+    line-height: 1.08;
+  }
+
+  .historias-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .historias-status {
+    min-height: 230px;
+    padding: 1.5rem;
+
+    border-radius: 1.4rem;
+  }
+
+  .historias-status h2 {
+    font-size: 1.3rem;
+  }
+
+  .historias-status p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .historias-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .historia-card {
+    display: grid;
+    grid-template-columns: 125px minmax(0, 1fr);
+
+    min-height: 175px;
+
+    border-radius: 1.35rem;
+  }
+
+  .historia-card:hover {
+    transform: none;
+  }
+
+  .historia-card-image {
+    width: 100%;
+    height: 100%;
+    min-height: 175px;
+  }
+
+  .historia-card:hover .historia-card-image img {
+    transform: none;
+  }
+
+  .historia-card-content {
+    min-width: 0;
+    padding: 1rem;
+  }
+
+  .historia-date {
+    margin-bottom: 0.45rem;
+
+    font-size: 0.72rem;
+  }
+
+  .historia-card-content h2 {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    margin-bottom: 0.45rem;
+
+    font-size: 1.05rem;
+    line-height: 1.2;
+  }
+
+  .historia-card-content p {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    margin-bottom: 0.65rem;
+
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+
+  .historia-link {
+    gap: 0.3rem;
+
+    font-size: 0.8rem;
+  }
+
+  .historias-pagination {
+    margin-top: 2rem;
+  }
+
+  :host ::ng-deep .historias-pagination .pagination {
+    gap: 0.2rem;
+  }
+
+  :host ::ng-deep .historias-pagination .page-link {
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0.4rem;
+
+    font-size: 0.8rem;
+  }
+}

@@ -1,0 +1,104 @@
+<section class="historias-page">
+  <div class="historias-background" aria-hidden="true">
+    <div class="historias-blob historias-blob-pink"></div>
+    <div class="historias-blob historias-blob-cyan"></div>
+    <div class="historias-blob historias-blob-yellow"></div>
+  </div>
+
+  <div class="ds-container">
+    <!-- CABECERA -->
+    <header class="historias-header" dsScrollReveal reveal="fade-up">
+      <span class="historias-tag">Historias</span>
+
+      <h1>Ideas, proyectos y trabajos que cuentan una historia</h1>
+
+      <p class="historias-subtitle">
+        Descubre algunos de nuestros proyectos, procesos creativos y trabajos de personalización realizados para convertir cada idea en algo
+        único.
+      </p>
+    </header>
+
+    <!-- CARGANDO -->
+    @if (isLoading) {
+      <div class="historias-status" role="status" aria-live="polite">
+        <div class="spinner-border" aria-hidden="true"></div>
+        <p>Cargando historias...</p>
+      </div>
+    }
+
+    <!-- ERROR -->
+    @if (!isLoading && hasError) {
+      <div class="historias-status historias-status-error" role="alert">
+        <h2>No hemos podido cargar las historias</h2>
+        <p>Ha ocurrido un problema al obtener el contenido. Puedes intentarlo de nuevo.</p>
+
+        <button type="button" class="ds-btn ds-btn-primary" (click)="loadPage()">Reintentar</button>
+      </div>
+    }
+
+    <!-- SIN RESULTADOS -->
+    @if (!isLoading && !hasError && historias.length === 0) {
+      <div class="historias-status historias-status-empty">
+        <h2>Próximamente habrá nuevas historias</h2>
+        <p>Estamos preparando contenido para mostrarte algunos de nuestros trabajos y procesos creativos.</p>
+      </div>
+    }
+
+    <!-- HISTORIAS -->
+    @if (!isLoading && !hasError && historias.length > 0) {
+      <section class="historias-grid" aria-label="Listado de historias">
+        @for (historia of historias; track historia.id; let i = $index) {
+          <article class="historia-card" dsScrollReveal reveal="scale-up" [revealDelay]="(i % 6) * 80">
+            <a class="historia-card-image" [routerLink]="['/historias', historia.slug]" [attr.aria-label]="'Leer ' + historia.titulo">
+              @if (historia.portadaUrl) {
+                <img [src]="historia.portadaUrl" [alt]="historia.portadaTextoAlternativo || historia.titulo" loading="lazy" />
+              } @else {
+                <div class="historia-no-image" aria-hidden="true">
+                  <span>Detall Sublim</span>
+                </div>
+              }
+            </a>
+
+            <div class="historia-card-content">
+              @if (historia.fechaPublicacion) {
+                <time class="historia-date" [attr.datetime]="historia.fechaPublicacion">
+                  {{ historia.fechaPublicacion | date: 'dd/MM/yyyy' }}
+                </time>
+              }
+
+              <h2>
+                <a [routerLink]="['/historias', historia.slug]">
+                  {{ historia.titulo }}
+                </a>
+              </h2>
+
+              <p>
+                {{ historia.resumen }}
+              </p>
+
+              <a class="historia-link" [routerLink]="['/historias', historia.slug]">
+                Leer historia
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </article>
+        }
+      </section>
+
+      <!-- PAGINACIÓN -->
+      @if (totalItems > itemsPerPage) {
+        <nav class="historias-pagination" aria-label="Paginación de historias">
+          <ngb-pagination
+            [collectionSize]="totalItems"
+            [(page)]="page"
+            [pageSize]="itemsPerPage"
+            [maxSize]="5"
+            [rotate]="true"
+            [boundaryLinks]="true"
+            (pageChange)="loadPage($event)"
+          />
+        </nav>
+      }
+    }
+  </div>
+</section>

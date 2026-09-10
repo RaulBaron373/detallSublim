@@ -16,6 +16,33 @@ const routes: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
+    path: 'panel/historias',
+    loadComponent: () => import('./panel/historias/historias-admin.component').then(m => m.HistoriasAdminComponent),
+    title: 'Gestión de Historias',
+    data: {
+      authorities: [Authority.ADMIN],
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'panel/historias/nueva',
+    loadComponent: () => import('./panel/historias/form/historia-form.component').then(m => m.HistoriaFormComponent),
+    title: 'Nueva historia',
+    data: {
+      authorities: [Authority.ADMIN],
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'panel/historias/:id/editar',
+    loadComponent: () => import('./panel/historias/form/historia-form.component').then(m => m.HistoriaFormComponent),
+    title: 'Editar historia',
+    data: {
+      authorities: [Authority.ADMIN],
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
     path: '',
     loadComponent: () => import('./home/home.component'),
     title: 'Inicio',
@@ -49,6 +76,16 @@ const routes: Routes = [
     path: 'solicitar-presupuesto',
     loadComponent: () => import('./public-pages/quote-request/quote-request.component').then(m => m.QuoteRequestComponent),
     title: 'Solicitud de presupuesto',
+  },
+  {
+    path: 'historias',
+    loadComponent: () => import('./public-pages/historias/historias.component').then(m => m.HistoriasComponent),
+    title: 'Historias',
+  },
+  {
+    path: 'historias/:slug',
+    loadComponent: () => import('./public-pages/historias/detail/historia-detail.component').then(m => m.HistoriaDetailComponent),
+    title: 'Historia',
   },
   {
     path: '',
