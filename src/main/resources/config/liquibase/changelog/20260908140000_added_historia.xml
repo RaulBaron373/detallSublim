@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20260908140000-1" author="RaulBaron373">
+
+        <createTable tableName="historia">
+
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="titulo" type="varchar(160)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="slug" type="varchar(180)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="resumen" type="varchar(300)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="contenido" type="${clobType}">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="estado" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="fecha_creacion" type="${datetimeType}">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="fecha_actualizacion" type="${datetimeType}">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="fecha_publicacion" type="${datetimeType}">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
+
+        <createIndex
+            indexName="idx_historia_estado"
+            tableName="historia">
+            <column name="estado"/>
+        </createIndex>
+
+        <createIndex
+            indexName="idx_historia_fecha_publicacion"
+            tableName="historia">
+            <column name="fecha_publicacion"/>
+        </createIndex>
+
+        <createTable tableName="historia_imagen">
+
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="storage_key" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="nombre_original" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="content_type" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="tamano_bytes" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="texto_alternativo" type="varchar(160)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="orden" type="integer">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="portada" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="historia_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint
+            baseTableName="historia_imagen"
+            baseColumnNames="historia_id"
+            constraintName="fk_historia_imagen_historia"
+            referencedTableName="historia"
+            referencedColumnNames="id"
+            onDelete="CASCADE"/>
+
+        <createIndex
+            indexName="idx_historia_imagen_historia_id"
+            tableName="historia_imagen">
+            <column name="historia_id"/>
+        </createIndex>
+
+    </changeSet>
+
+</databaseChangeLog>

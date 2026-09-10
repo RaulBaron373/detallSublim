@@ -169,3 +169,8 @@ coverage/
 
 secrets/
 *.secret
+
+######################
+# Uploaded files
+######################
+/uploads/

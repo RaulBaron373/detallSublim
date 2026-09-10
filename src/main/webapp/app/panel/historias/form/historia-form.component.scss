@@ -1,0 +1,1036 @@
+/* =====================================================
+    HISTORIA FORM - BASE
+   ===================================================== */
+
+.admin-form-card form {
+  width: 100%;
+}
+
+.historia-form__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+
+  margin-bottom: 2rem;
+}
+
+.historia-form__header > div {
+  min-width: 0;
+}
+
+.historia-form__header h1 {
+  margin-bottom: 0.5rem;
+
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.historia-form__header p {
+  max-width: 680px;
+  margin-bottom: 0;
+
+  color: var(--ds-color-text-muted);
+
+  line-height: 1.65;
+}
+
+.admin-form-card .form-control {
+  width: 100%;
+
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 1rem;
+
+  box-shadow: none;
+}
+
+.admin-form-card .form-control:focus {
+  border-color: var(--ds-color-primary);
+  box-shadow: 0 0 0 4px rgba(216, 75, 138, 0.1);
+}
+
+.historia-form__summary {
+  min-height: 120px;
+
+  resize: vertical;
+}
+
+.historia-form__content {
+  min-height: 340px;
+
+  resize: vertical;
+}
+
+.historia-form__field-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+
+  margin-top: 0.45rem;
+
+  color: var(--ds-color-text-muted);
+
+  font-size: 0.78rem;
+}
+
+.historia-form__field-meta span:last-child {
+  flex-shrink: 0;
+}
+
+/* =====================================================
+    METADATA
+   ===================================================== */
+
+.historia-form__metadata {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+
+  margin-top: 2rem;
+  padding: 1.25rem;
+
+  background: rgba(248, 249, 252, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 1.25rem;
+}
+
+.historia-form__metadata > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+
+  min-width: 0;
+}
+
+.historia-form__metadata span {
+  color: var(--ds-color-text-muted);
+
+  font-size: 0.75rem;
+}
+
+.historia-form__metadata strong {
+  min-width: 0;
+
+  color: var(--ds-color-text);
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  overflow-wrap: anywhere;
+}
+
+/* =====================================================
+    STATES
+   ===================================================== */
+
+.historia-form__state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 3rem 1.5rem;
+
+  text-align: center;
+}
+
+.historia-form__state h2 {
+  margin-bottom: 0.5rem;
+}
+
+.historia-form__state p {
+  max-width: 520px;
+  margin-top: 0.75rem;
+  margin-bottom: 1.5rem;
+
+  color: var(--ds-color-text-muted);
+}
+
+/* =====================================================
+    ACTIONS
+   ===================================================== */
+
+.historia-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.75rem;
+
+  margin-top: 2rem;
+}
+
+.historia-form__actions .btn,
+.historia-form__actions .ds-btn {
+  min-height: 46px;
+}
+
+/* =====================================================
+   IMAGE UPLOAD
+   ===================================================== */
+
+.historia-form__images {
+  margin-top: 2.25rem;
+}
+
+.historia-form__images-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+
+  margin-bottom: 1rem;
+}
+
+.historia-form__images-header h2 {
+  margin-bottom: 0.35rem;
+
+  font-size: 1.35rem;
+}
+
+.historia-form__images-header p {
+  max-width: 680px;
+  margin-bottom: 0;
+
+  color: var(--ds-color-text-muted);
+
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.historia-form__images-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 58px;
+  padding: 0.45rem 0.75rem;
+
+  color: var(--ds-color-primary);
+
+  background: rgba(216, 75, 138, 0.1);
+  border-radius: 999px;
+
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.historia-form__upload-card {
+  padding: 1.25rem;
+
+  background: rgba(248, 249, 252, 0.72);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 1.35rem;
+}
+
+.historia-form__upload-card input[type='file'] {
+  overflow: hidden;
+}
+
+.historia-form__upload-card input[type='file']::file-selector-button {
+  margin-right: 0.75rem;
+  padding: 0.6rem 0.8rem;
+
+  color: var(--ds-color-primary);
+
+  background: rgba(216, 75, 138, 0.08);
+  border: 0;
+  border-radius: 0.75rem;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.historia-form__cover-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+
+  margin-top: 0.5rem;
+
+  cursor: pointer;
+}
+
+.historia-form__cover-option input {
+  flex-shrink: 0;
+
+  width: 20px;
+  height: 20px;
+  margin-top: 0.1rem;
+
+  accent-color: var(--ds-color-primary);
+}
+
+.historia-form__cover-option span {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.historia-form__cover-option strong {
+  font-size: 0.9rem;
+}
+
+.historia-form__cover-option small {
+  color: var(--ds-color-text-muted);
+
+  font-size: 0.78rem;
+}
+
+.historia-form__image-error {
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+.historia-form__upload-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: 1rem;
+}
+
+/* =====================================================
+   IMAGE GALLERY
+   ===================================================== */
+
+.historia-form__gallery {
+  margin-top: 1.5rem;
+}
+
+.historia-form__gallery-header {
+  margin-bottom: 1rem;
+}
+
+.historia-form__gallery-header h3 {
+  margin-bottom: 0.25rem;
+
+  font-size: 1.05rem;
+}
+
+.historia-form__gallery-header p {
+  margin-bottom: 0;
+
+  color: var(--ds-color-text-muted);
+
+  font-size: 0.82rem;
+}
+
+.historia-form__gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.historia-form__image-card {
+  overflow: hidden;
+
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 1.25rem;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.historia-form__image-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 10px 28px rgba(20, 20, 30, 0.08);
+}
+
+.historia-form__image-card--cover {
+  border-color: rgba(216, 75, 138, 0.38);
+  box-shadow: 0 8px 24px rgba(216, 75, 138, 0.1);
+}
+
+.historia-form__image-preview {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  aspect-ratio: 16 / 10;
+
+  overflow: hidden;
+
+  background: rgba(248, 249, 252, 0.9);
+}
+
+.historia-form__image-preview img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.historia-form__image-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+
+  color: var(--ds-color-text-muted);
+
+  font-size: 0.78rem;
+}
+
+.historia-form__cover-badge,
+.historia-form__image-order {
+  position: absolute;
+  top: 0.75rem;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 30px;
+
+  border-radius: 999px;
+
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.historia-form__cover-badge {
+  left: 0.75rem;
+  gap: 0.35rem;
+
+  padding: 0.35rem 0.65rem;
+
+  color: #fff;
+  background: rgba(216, 75, 138, 0.92);
+}
+
+.historia-form__image-order {
+  right: 0.75rem;
+
+  min-width: 30px;
+  padding-inline: 0.45rem;
+
+  color: var(--ds-color-text);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.historia-form__image-info {
+  padding: 0.9rem 1rem 0.7rem;
+}
+
+.historia-form__image-info > span {
+  display: block;
+
+  margin-bottom: 0.2rem;
+
+  color: var(--ds-color-text-muted);
+
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.historia-form__image-info p {
+  min-height: 2.7em;
+  margin-bottom: 0;
+
+  color: var(--ds-color-text);
+
+  font-size: 0.82rem;
+  line-height: 1.4;
+
+  overflow-wrap: anywhere;
+}
+
+.historia-form__image-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0 1rem 1rem;
+}
+
+.historia-form__image-action,
+.historia-form__icon-action {
+  min-height: 38px;
+
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  border-radius: 0.8rem;
+
+  background: #fff;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.historia-form__image-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+
+  padding: 0.45rem 0.7rem;
+
+  color: var(--ds-color-text);
+
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.historia-form__image-action:not(:disabled):hover,
+.historia-form__icon-action:not(:disabled):hover {
+  color: var(--ds-color-primary);
+
+  background: rgba(216, 75, 138, 0.06);
+  border-color: rgba(216, 75, 138, 0.28);
+}
+
+.historia-form__image-action:disabled,
+.historia-form__icon-action:disabled {
+  opacity: 0.48;
+
+  cursor: not-allowed;
+}
+
+.historia-form__reorder-actions {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.historia-form__icon-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  padding: 0;
+}
+
+.historia-form__icon-action--danger:not(:disabled):hover {
+  color: #b42318;
+
+  background: rgba(180, 35, 24, 0.06);
+  border-color: rgba(180, 35, 24, 0.2);
+}
+
+.historia-form__delete-confirm {
+  margin: 0 1rem 1rem;
+  padding: 0.8rem;
+
+  background: rgba(220, 53, 69, 0.06);
+  border: 1px solid rgba(220, 53, 69, 0.14);
+  border-radius: 0.9rem;
+}
+
+.historia-form__delete-confirm p {
+  margin-bottom: 0.65rem;
+
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.historia-form__delete-confirm > div {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.historia-form__gallery-empty {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+
+  margin-top: 1.25rem;
+  padding: 1rem 1.1rem;
+
+  color: var(--ds-color-text-muted);
+
+  background: rgba(248, 249, 252, 0.72);
+  border: 1px dashed rgba(0, 0, 0, 0.12);
+  border-radius: 1.1rem;
+}
+
+.historia-form__gallery-empty > fa-icon {
+  flex-shrink: 0;
+
+  font-size: 1.2rem;
+}
+
+.historia-form__gallery-empty strong {
+  display: block;
+
+  margin-bottom: 0.15rem;
+
+  color: var(--ds-color-text);
+
+  font-size: 0.85rem;
+}
+
+.historia-form__gallery-empty p {
+  margin-bottom: 0;
+
+  font-size: 0.78rem;
+}
+
+/* =====================================================
+   PUBLICATION
+   ===================================================== */
+
+.historia-form__publication {
+  margin-top: 2.25rem;
+  padding: 1.25rem;
+
+  background: rgba(248, 249, 252, 0.72);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 1.35rem;
+}
+
+.historia-form__publication-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+
+  margin-bottom: 1rem;
+}
+
+.historia-form__publication-header h2 {
+  margin-bottom: 0.3rem;
+
+  font-size: 1.35rem;
+}
+
+.historia-form__publication-header p {
+  margin-bottom: 0;
+
+  color: var(--ds-color-text-muted);
+
+  font-size: 0.9rem;
+}
+
+.historia-form__publication-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.historia-form__publication-message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+
+  min-width: 0;
+}
+
+.historia-form__publication-message strong {
+  color: var(--ds-color-text);
+
+  font-size: 0.88rem;
+}
+
+.historia-form__publication-message span {
+  color: var(--ds-color-text-muted);
+
+  font-size: 0.8rem;
+  line-height: 1.45;
+
+  overflow-wrap: anywhere;
+}
+
+.historia-form__publication-message--warning strong {
+  color: #9a6700;
+}
+
+.historia-form__publication-message--ready strong {
+  color: #18794e;
+}
+
+.historia-form__publication-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.historia-form__publication-buttons .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+
+  min-height: 42px;
+}
+
+.historia-form__publication-note {
+  display: block;
+
+  margin-top: 0.75rem;
+
+  color: #9a6700;
+
+  font-size: 0.76rem;
+}
+
+/* =====================================================
+   FINAL ACTIONS / DELETE MODAL
+   ===================================================== */
+
+.historia-form__actions {
+  justify-content: space-between;
+}
+
+.historia-form__actions-main {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.historia-form__delete-action {
+  color: #fff;
+
+  background: linear-gradient(135deg, #d94a58 0%, #bd3348 100%);
+  border: 0;
+
+  box-shadow: 0 10px 24px rgba(189, 51, 72, 0.2);
+}
+
+.historia-form__delete-action:hover:not(:disabled) {
+  color: #fff;
+
+  background: linear-gradient(135deg, #c83f4d 0%, #a92c3e 100%);
+
+  transform: translateY(-1px);
+}
+
+.historia-form__delete-action:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+.historia-form__unpublish-button {
+  color: #073b3a;
+
+  background: linear-gradient(135deg, #35e2cf 0%, #00cdb8 100%);
+  border: 0;
+
+  box-shadow: 0 10px 24px rgba(0, 205, 184, 0.18);
+}
+
+.historia-form__unpublish-button:hover:not(:disabled) {
+  color: #052f2e;
+
+  background: linear-gradient(135deg, #28d6c4 0%, #00bca9 100%);
+
+  transform: translateY(-1px);
+}
+
+.historia-form__unpublish-button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+.historia-form__modal-backdrop {
+  position: fixed;
+  z-index: 1200;
+  inset: 0;
+
+  display: grid;
+  place-items: center;
+
+  padding: 1.25rem;
+
+  background: rgba(10, 15, 25, 0.48);
+  backdrop-filter: blur(6px);
+}
+
+.historia-form__delete-modal {
+  width: min(100%, 520px);
+  padding: 1.6rem;
+
+  background: #fff;
+  border: 1px solid rgba(189, 51, 72, 0.14);
+  border-radius: 1.6rem;
+
+  box-shadow: 0 28px 80px rgba(10, 15, 25, 0.22);
+}
+
+.historia-form__delete-modal-icon {
+  display: grid;
+  place-items: center;
+
+  width: 52px;
+  height: 52px;
+  margin-bottom: 1rem;
+
+  color: #bd3348;
+
+  background: rgba(189, 51, 72, 0.09);
+  border-radius: 1rem;
+
+  font-size: 1.15rem;
+}
+
+.historia-form__delete-modal-copy > span {
+  display: block;
+
+  margin-bottom: 0.35rem;
+
+  color: #bd3348;
+
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.historia-form__delete-modal-copy h2 {
+  margin-bottom: 0.55rem;
+
+  color: var(--ds-color-text);
+
+  font-size: 1.35rem;
+}
+
+.historia-form__delete-modal-copy p {
+  margin-bottom: 1rem;
+
+  color: var(--ds-color-text-muted);
+
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.historia-form__delete-modal .alert {
+  margin-bottom: 1rem;
+
+  border-radius: 0.9rem;
+
+  font-size: 0.82rem;
+}
+
+.historia-form__delete-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.65rem;
+
+  margin-top: 1.25rem;
+}
+
+.historia-form__delete-modal-actions .btn,
+.historia-form__delete-modal-actions .ds-btn {
+  min-height: 44px;
+}
+
+/* =====================================================
+    TABLET
+   ===================================================== */
+
+@media (max-width: 991.98px) {
+  .historia-form__metadata {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .historia-form__metadata > div:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* =====================================================
+    MOBILE
+   ===================================================== */
+
+@media (max-width: 576px) {
+  .admin-form-page {
+    padding: 6.5rem 0 3rem;
+  }
+
+  .admin-back {
+    margin-bottom: 1.25rem;
+  }
+
+  .admin-form-card {
+    padding: 1.25rem;
+
+    border-radius: 1.5rem;
+  }
+
+  .historia-form__header {
+    display: block;
+
+    margin-bottom: 1.5rem;
+  }
+
+  .historia-form__header h1 {
+    margin-bottom: 0.5rem;
+
+    font-size: 1.65rem;
+  }
+
+  .historia-form__header p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .historia-form__header > .status-badge {
+    margin-top: 1rem;
+  }
+
+  .admin-form-card .form-label {
+    margin-bottom: 0.4rem;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .admin-form-card .form-control {
+    padding: 0.8rem 0.9rem;
+
+    font-size: 0.9rem;
+  }
+
+  .historia-form__summary {
+    min-height: 110px;
+  }
+
+  .historia-form__content {
+    min-height: 280px;
+  }
+
+  .historia-form__field-meta {
+    align-items: flex-start;
+    gap: 0.5rem;
+
+    font-size: 0.72rem;
+  }
+
+  .historia-form__metadata {
+    grid-template-columns: 1fr;
+
+    padding: 1rem;
+  }
+
+  .historia-form__metadata > div:first-child {
+    grid-column: auto;
+  }
+
+  .historia-form__actions {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 0.65rem;
+
+    width: 100%;
+    margin-top: 1.5rem;
+  }
+
+  .historia-form__actions .btn,
+  .historia-form__actions .ds-btn {
+    width: 100%;
+    min-height: 46px;
+    padding-inline: 0.65rem;
+
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .historia-form__gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .historia-form__image-actions {
+    grid-template-columns: 1fr auto auto;
+    padding-inline: 0.85rem;
+  }
+
+  .historia-form__image-info {
+    padding-inline: 0.85rem;
+  }
+
+  .historia-form__delete-confirm {
+    margin-inline: 0.85rem;
+  }
+
+  .historia-form__gallery-empty {
+    align-items: flex-start;
+  }
+
+  .historia-form__publication {
+    padding: 1rem;
+  }
+
+  .historia-form__publication-header {
+    align-items: center;
+  }
+
+  .historia-form__publication-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .historia-form__publication-header p {
+    font-size: 0.82rem;
+  }
+
+  .historia-form__publication-status {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .historia-form__publication-status > .ds-btn {
+    width: 100%;
+  }
+
+  .historia-form__publication-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .historia-form__publication-buttons .btn {
+    width: 100%;
+  }
+
+  .historia-form__actions {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+
+  .historia-form__actions > .historia-form__delete-action {
+    width: 100%;
+  }
+
+  .historia-form__actions-main {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+
+  .historia-form__actions-main .btn,
+  .historia-form__actions-main .ds-btn {
+    width: 100%;
+  }
+
+  .historia-form__delete-modal {
+    padding: 1.25rem;
+
+    border-radius: 1.3rem;
+  }
+
+  .historia-form__delete-modal-actions {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+  }
+
+  .historia-form__delete-modal-actions .btn,
+  .historia-form__delete-modal-actions .ds-btn {
+    width: 100%;
+    padding-inline: 0.6rem;
+
+    font-size: 0.78rem;
+  }
+
+  .historia-form__state {
+    padding: 2rem 0.5rem;
+  }
+}

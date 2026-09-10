@@ -46,6 +46,11 @@
         <p>Revisar contactos recibidos</p>
       </a>
 
+      <a *jhiHasAnyAuthority="'ROLE_ADMIN'" routerLink="/panel/historias" class="panel-card">
+        <h3>Historias</h3>
+        <p>Crear y gestionar historias publicadas y borradores</p>
+      </a>
+
       <a *jhiHasAnyAuthority="'ROLE_ADMIN'" routerLink="/admin/user-management" class="panel-card">
         <h3>Administración</h3>
         <p>Gestión de usuarios</p>

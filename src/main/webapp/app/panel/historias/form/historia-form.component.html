@@ -1,0 +1,513 @@
+<section class="admin-form-page">
+  <div class="ds-container">
+    <div class="admin-back">
+      <a routerLink="/panel/historias" class="admin-back-btn">← Volver a historias</a>
+    </div>
+
+    <div class="admin-form-card">
+      @if (isLoading) {
+        <div class="historia-form__state">
+          <div class="spinner-border" role="status" aria-hidden="true"></div>
+          <p>Cargando historia...</p>
+        </div>
+      } @else if (hasLoadError) {
+        <div class="historia-form__state">
+          <h2>No se pudo cargar la historia</h2>
+          <p>La historia indicada no existe o no se ha podido recuperar.</p>
+
+          <a routerLink="/panel/historias" class="ds-btn ds-btn-primary">Volver a historias</a>
+        </div>
+      } @else {
+        <form novalidate [formGroup]="form" (ngSubmit)="save()">
+          <header class="historia-form__header">
+            <div>
+              <span class="admin-page-tag">
+                {{ isEditMode ? 'Editar historia' : 'Nueva historia' }}
+              </span>
+
+              <h1>{{ isEditMode ? historia?.titulo || 'Editar historia' : 'Crear nueva historia' }}</h1>
+
+              <p>
+                {{
+                  isEditMode
+                    ? 'Actualiza el contenido principal y gestiona después sus imágenes y publicación.'
+                    : 'Primero guarda el contenido principal. Después podrás añadir imágenes y publicar la historia.'
+                }}
+              </p>
+            </div>
+
+            @if (isEditMode && historia) {
+              <span
+                class="status-badge"
+                [class.status-finished]="historia.estado === 'PUBLICADA'"
+                [class.status-pending]="historia.estado === 'BORRADOR'"
+              >
+                {{ historia.estado === 'PUBLICADA' ? 'Publicada' : 'Borrador' }}
+              </span>
+            }
+          </header>
+
+          @if (saveError) {
+            <div class="alert alert-danger" role="alert">No se pudieron guardar los cambios. Inténtalo de nuevo.</div>
+          }
+
+          <div class="mb-4">
+            <label for="historia-titulo" class="form-label">Título</label>
+
+            <input id="historia-titulo" type="text" class="form-control" formControlName="titulo" maxlength="160" autocomplete="off" />
+
+            <div class="historia-form__field-meta">
+              <span>Máximo 160 caracteres.</span>
+              <span>{{ form.controls.titulo.value.length }}/160</span>
+            </div>
+
+            @if (form.controls.titulo.invalid && form.controls.titulo.touched) {
+              <small class="form-text text-danger">El título es obligatorio y no puede superar 160 caracteres.</small>
+            }
+          </div>
+
+          <div class="mb-4">
+            <label for="historia-resumen" class="form-label">Resumen</label>
+
+            <textarea
+              id="historia-resumen"
+              class="form-control historia-form__summary"
+              formControlName="resumen"
+              maxlength="300"
+              rows="4"
+            ></textarea>
+
+            <div class="historia-form__field-meta">
+              <span>Se mostrará en el listado público de historias.</span>
+              <span>{{ form.controls.resumen.value.length }}/300</span>
+            </div>
+
+            @if (form.controls.resumen.invalid && form.controls.resumen.touched) {
+              <small class="form-text text-danger">El resumen es obligatorio y no puede superar 300 caracteres.</small>
+            }
+          </div>
+
+          <div class="mb-4">
+            <label for="historia-contenido" class="form-label">Contenido</label>
+
+            <textarea
+              id="historia-contenido"
+              class="form-control historia-form__content"
+              formControlName="contenido"
+              maxlength="20000"
+              rows="14"
+            ></textarea>
+
+            <div class="historia-form__field-meta">
+              <span>Texto plano. Puedes separar los párrafos con saltos de línea.</span>
+              <span>{{ form.controls.contenido.value.length }}/20000</span>
+            </div>
+
+            @if (form.controls.contenido.invalid && form.controls.contenido.touched) {
+              <small class="form-text text-danger">El contenido es obligatorio y no puede superar 20.000 caracteres.</small>
+            }
+          </div>
+
+          @if (isEditMode && historia) {
+            <div class="historia-form__metadata">
+              <div>
+                <span>Slug</span>
+                <strong>/historias/{{ historia.slug }}</strong>
+              </div>
+
+              <div>
+                <span>Creada</span>
+                <strong>
+                  @if (historia.fechaCreacion) {
+                    {{ historia.fechaCreacion | date: 'dd/MM/yyyy HH:mm' }}
+                  } @else {
+                    —
+                  }
+                </strong>
+              </div>
+
+              <div>
+                <span>Última actualización</span>
+                <strong>
+                  @if (historia.fechaActualizacion) {
+                    {{ historia.fechaActualizacion | date: 'dd/MM/yyyy HH:mm' }}
+                  } @else {
+                    —
+                  }
+                </strong>
+              </div>
+            </div>
+          }
+
+          @if (isEditMode && historia) {
+            <section class="historia-form__images">
+              <div class="historia-form__images-header">
+                <div>
+                  <h2>Imágenes</h2>
+
+                  <p>Añade hasta 10 imágenes en formato JPG, PNG o WebP. Cada archivo puede ocupar como máximo 5 MB.</p>
+                </div>
+
+                <span class="historia-form__images-count"> {{ images.length }}/10 </span>
+              </div>
+
+              <div class="historia-form__upload-card">
+                <div class="mb-3">
+                  <label for="historia-imagen" class="form-label">Seleccionar imagen</label>
+
+                  <input
+                    #imageFileInput
+                    id="historia-imagen"
+                    type="file"
+                    class="form-control"
+                    accept="image/jpeg,image/png,image/webp"
+                    [disabled]="isUploadingImage || images.length >= 10"
+                    (change)="onImageSelected($event)"
+                  />
+
+                  @if (selectedImage) {
+                    <small class="form-text text-muted d-block mt-2">
+                      Archivo seleccionado:
+                      <strong>{{ selectedImage.name }}</strong>
+                    </small>
+                  }
+                </div>
+
+                <div class="mb-3">
+                  <label for="historia-imagen-alt" class="form-label"> Texto alternativo </label>
+
+                  <input
+                    id="historia-imagen-alt"
+                    type="text"
+                    class="form-control"
+                    maxlength="160"
+                    placeholder="Describe brevemente la imagen"
+                    [value]="imageAltText"
+                    [disabled]="isUploadingImage"
+                    (input)="imageAltText = $any($event.target).value"
+                  />
+
+                  <div class="historia-form__field-meta">
+                    <span>Ayuda a describir la imagen para accesibilidad.</span>
+                    <span>{{ imageAltText.length }}/160</span>
+                  </div>
+                </div>
+
+                <label class="historia-form__cover-option">
+                  <input
+                    type="checkbox"
+                    [checked]="imageAsCover"
+                    [disabled]="isUploadingImage"
+                    (change)="imageAsCover = $any($event.target).checked"
+                  />
+
+                  <span>
+                    <strong>Usar como portada</strong>
+                    <small> Será la imagen principal de la historia. </small>
+                  </span>
+                </label>
+
+                @if (imageError) {
+                  <div class="alert alert-danger historia-form__image-error" role="alert">
+                    {{ imageError }}
+                  </div>
+                }
+
+                @if (images.length >= 10) {
+                  <div class="alert alert-warning historia-form__image-error" role="alert">
+                    Esta historia ya contiene el máximo de 10 imágenes.
+                  </div>
+                }
+
+                <div class="historia-form__upload-actions">
+                  <button
+                    type="button"
+                    class="ds-btn ds-btn-primary"
+                    [disabled]="!selectedImage || isUploadingImage || images.length >= 10"
+                    (click)="uploadImage(imageFileInput)"
+                  >
+                    <fa-icon icon="plus"></fa-icon>
+
+                    <span>
+                      {{ isUploadingImage ? 'Subiendo...' : 'Subir imagen' }}
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              @if (images.length > 0) {
+                <div class="historia-form__gallery">
+                  <div class="historia-form__gallery-header">
+                    <h3>Imágenes añadidas</h3>
+                    <p>Define la portada, elimina imágenes o cambia su orden.</p>
+                  </div>
+
+                  <div class="historia-form__gallery-grid">
+                    @for (image of images; track image.id; let index = $index) {
+                      <article class="historia-form__image-card" [class.historia-form__image-card--cover]="image.portada">
+                        <div class="historia-form__image-preview">
+                          @if (imagePreviewUrl(image.id); as previewUrl) {
+                            <img [src]="previewUrl" [alt]="image.textoAlternativo || 'Imagen de la historia'" />
+                          } @else {
+                            <div class="historia-form__image-loading">
+                              <div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>
+                              <span>Cargando imagen...</span>
+                            </div>
+                          }
+
+                          @if (image.portada) {
+                            <span class="historia-form__cover-badge">
+                              <fa-icon icon="heart"></fa-icon>
+                              Portada
+                            </span>
+                          }
+
+                          <span class="historia-form__image-order">{{ index + 1 }}</span>
+                        </div>
+
+                        <div class="historia-form__image-info">
+                          <span>Texto alternativo</span>
+                          <p>{{ image.textoAlternativo || 'Sin texto alternativo' }}</p>
+                        </div>
+
+                        <div class="historia-form__image-actions">
+                          <button
+                            type="button"
+                            class="historia-form__image-action"
+                            [disabled]="image.portada || imageActionId !== null || isReorderingImages"
+                            (click)="setCover(image)"
+                          >
+                            <fa-icon icon="heart"></fa-icon>
+                            <span>{{ image.portada ? 'Portada actual' : 'Hacer portada' }}</span>
+                          </button>
+
+                          <div class="historia-form__reorder-actions">
+                            <button
+                              type="button"
+                              class="historia-form__icon-action"
+                              aria-label="Mover imagen hacia arriba"
+                              title="Mover hacia arriba"
+                              [disabled]="index === 0 || imageActionId !== null || isReorderingImages"
+                              (click)="moveImage(index, -1)"
+                            >
+                              <fa-icon icon="sort-up"></fa-icon>
+                            </button>
+
+                            <button
+                              type="button"
+                              class="historia-form__icon-action"
+                              aria-label="Mover imagen hacia abajo"
+                              title="Mover hacia abajo"
+                              [disabled]="index === images.length - 1 || imageActionId !== null || isReorderingImages"
+                              (click)="moveImage(index, 1)"
+                            >
+                              <fa-icon icon="sort-down"></fa-icon>
+                            </button>
+                          </div>
+
+                          <button
+                            type="button"
+                            class="historia-form__icon-action historia-form__icon-action--danger"
+                            aria-label="Eliminar imagen"
+                            title="Eliminar imagen"
+                            [disabled]="imageActionId !== null || isReorderingImages"
+                            (click)="requestDeleteImage(image.id)"
+                          >
+                            <fa-icon icon="trash-alt"></fa-icon>
+                          </button>
+                        </div>
+
+                        @if (pendingDeleteImageId === image.id) {
+                          <div class="historia-form__delete-confirm">
+                            <p>¿Eliminar esta imagen?</p>
+
+                            <div>
+                              <button type="button" class="btn btn-light btn-sm" (click)="cancelDeleteImage()">Cancelar</button>
+                              <button
+                                type="button"
+                                class="btn btn-danger btn-sm"
+                                [disabled]="imageActionId === image.id"
+                                (click)="deleteImage(image)"
+                              >
+                                {{ imageActionId === image.id ? 'Eliminando...' : 'Eliminar' }}
+                              </button>
+                            </div>
+                          </div>
+                        }
+                      </article>
+                    }
+                  </div>
+                </div>
+              } @else {
+                <div class="historia-form__gallery-empty">
+                  <fa-icon icon="book"></fa-icon>
+
+                  <div>
+                    <strong>Aún no hay imágenes</strong>
+                    <p>Selecciona un archivo arriba para añadir la primera imagen de esta historia.</p>
+                  </div>
+                </div>
+              }
+            </section>
+          }
+
+          @if (isEditMode && historia) {
+            <section class="historia-form__publication">
+              <div class="historia-form__publication-header">
+                <div>
+                  <h2>Publicación</h2>
+                  <p>Controla cuándo esta historia está disponible en la web pública.</p>
+                </div>
+
+                <span
+                  class="status-badge"
+                  [class.status-finished]="historia.estado === 'PUBLICADA'"
+                  [class.status-pending]="historia.estado === 'BORRADOR'"
+                >
+                  {{ historia.estado === 'PUBLICADA' ? 'Publicada' : 'Borrador' }}
+                </span>
+              </div>
+
+              @if (publicationError) {
+                <div class="alert alert-danger mb-3" role="alert">
+                  {{ publicationError }}
+                </div>
+              }
+
+              @if (historia.estado === 'BORRADOR') {
+                <div class="historia-form__publication-status">
+                  @if (form.dirty) {
+                    <div class="historia-form__publication-message historia-form__publication-message--warning">
+                      <strong>Hay cambios sin guardar</strong>
+                      <span>Guarda los cambios del contenido antes de publicar.</span>
+                    </div>
+                  } @else if (!hasSingleCover) {
+                    <div class="historia-form__publication-message historia-form__publication-message--warning">
+                      <strong>Falta una portada válida</strong>
+                      <span>La historia debe tener exactamente una imagen marcada como portada.</span>
+                    </div>
+                  } @else {
+                    <div class="historia-form__publication-message historia-form__publication-message--ready">
+                      <strong>Lista para publicar</strong>
+                      <span>El contenido está guardado y la historia tiene una portada definida.</span>
+                    </div>
+                  }
+
+                  <button type="button" class="ds-btn ds-btn-primary" [disabled]="!canPublish" (click)="publish()">
+                    <fa-icon icon="check"></fa-icon>
+                    <span>{{ isChangingPublication ? 'Publicando...' : 'Publicar historia' }}</span>
+                  </button>
+                </div>
+              } @else {
+                <div class="historia-form__publication-status">
+                  <div class="historia-form__publication-message historia-form__publication-message--ready">
+                    <strong>Historia visible públicamente</strong>
+                    <span>/historias/{{ historia.slug }}</span>
+                  </div>
+
+                  <div class="historia-form__publication-buttons">
+                    <a [routerLink]="['/historias', historia.slug]" class="btn btn-light admin-btn-light">
+                      <fa-icon icon="eye"></fa-icon>
+                      <span>Ver publicada</span>
+                    </a>
+
+                    <button
+                      type="button"
+                      class="ds-btn historia-form__unpublish-button"
+                      [disabled]="form.dirty || isChangingPublication"
+                      (click)="unpublish()"
+                    >
+                      <fa-icon icon="ban"></fa-icon>
+                      <span>{{ isChangingPublication ? 'Despublicando...' : 'Despublicar' }}</span>
+                    </button>
+                  </div>
+                </div>
+
+                @if (form.dirty) {
+                  <small class="historia-form__publication-note">
+                    Guarda los cambios pendientes antes de cambiar el estado de publicación.
+                  </small>
+                }
+              }
+            </section>
+          }
+
+          <div class="historia-form__actions">
+            @if (isEditMode && historia) {
+              <button
+                type="button"
+                class="ds-btn historia-form__delete-action"
+                [disabled]="isDeletingHistoria"
+                (click)="requestDeleteHistoria()"
+              >
+                <fa-icon icon="trash-alt"></fa-icon>
+                <span>Eliminar historia</span>
+              </button>
+            }
+
+            <div class="historia-form__actions-main">
+              <a routerLink="/panel/historias" class="btn btn-light admin-btn-light">Cancelar</a>
+
+              <button type="submit" class="ds-btn ds-btn-primary" [disabled]="form.invalid || isSaving">
+                <fa-icon icon="save"></fa-icon>
+                <span>{{ isSaving ? 'Guardando...' : isEditMode ? 'Guardar cambios' : 'Guardar borrador' }}</span>
+              </button>
+            </div>
+          </div>
+
+          @if (isEditMode && historia && deleteHistoriaRequested) {
+            <div class="historia-form__modal-backdrop" role="presentation" (click)="cancelDeleteHistoria()">
+              <section
+                class="historia-form__delete-modal"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="historia-delete-title"
+                aria-describedby="historia-delete-description"
+                (click)="$event.stopPropagation()"
+              >
+                <div class="historia-form__delete-modal-icon" aria-hidden="true">
+                  <fa-icon icon="trash-alt"></fa-icon>
+                </div>
+
+                <div class="historia-form__delete-modal-copy">
+                  <span>Acción irreversible</span>
+                  <h2 id="historia-delete-title">¿Eliminar "{{ historia.titulo }}"?</h2>
+                  <p id="historia-delete-description">
+                    La historia, todas sus imágenes y su publicación pública se eliminarán definitivamente.
+                  </p>
+                </div>
+
+                @if (deleteHistoriaError) {
+                  <div class="alert alert-danger" role="alert">
+                    {{ deleteHistoriaError }}
+                  </div>
+                }
+
+                <div class="historia-form__delete-modal-actions">
+                  <button
+                    type="button"
+                    class="btn btn-light admin-btn-light"
+                    [disabled]="isDeletingHistoria"
+                    (click)="cancelDeleteHistoria()"
+                  >
+                    Cancelar
+                  </button>
+
+                  <button
+                    type="button"
+                    class="ds-btn historia-form__delete-action"
+                    [disabled]="isDeletingHistoria"
+                    (click)="deleteHistoria()"
+                  >
+                    <fa-icon icon="trash-alt"></fa-icon>
+                    <span>{{ isDeletingHistoria ? 'Eliminando...' : 'Eliminar definitivamente' }}</span>
+                  </button>
+                </div>
+              </section>
+            </div>
+          }
+        </form>
+      }
+    </div>
+  </div>
+</section>

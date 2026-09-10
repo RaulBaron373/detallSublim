@@ -1,0 +1,165 @@
+<section class="admin-page historias-admin">
+  <div class="admin-back">
+    <a routerLink="/panel" class="admin-back-btn">← Volver al panel</a>
+  </div>
+
+  <div class="admin-page-header">
+    <div>
+      <!--<span class="admin-page-tag">Panel interno</span>-->
+
+      <h1>Historias</h1>
+
+      <p class="admin-page-subtitle">Gestiona borradores, publicaciones e imágenes de las historias.</p>
+    </div>
+
+    <div class="admin-page-actions">
+      <button type="button" class="btn btn-light admin-btn-light" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span>Actualizar</span>
+      </button>
+
+      <a routerLink="/panel/historias/nueva" class="ds-btn ds-btn-primary">
+        <fa-icon icon="plus"></fa-icon>
+        <span>Nueva historia</span>
+      </a>
+    </div>
+  </div>
+
+  @if (stateChangeError) {
+    <div class="alert alert-danger historias-admin__state-error" role="alert">
+      {{ stateChangeError }}
+    </div>
+  }
+
+  @if (isLoading) {
+    <div class="admin-empty-state">
+      <div class="spinner-border" role="status" aria-hidden="true"></div>
+      <p class="historias-admin__loading-text">Cargando historias...</p>
+    </div>
+  } @else if (hasError) {
+    <div class="admin-empty-state">
+      <h3>No se pudieron cargar las historias</h3>
+      <p>Se ha producido un error al consultar la información.</p>
+
+      <button type="button" class="btn btn-light admin-btn-light historias-admin__retry" (click)="loadPage()">Reintentar</button>
+    </div>
+  } @else if (historias.length === 0) {
+    <div class="admin-empty-state">
+      <h3>No hay historias</h3>
+      <p>No se han creado historias todavía.</p>
+    </div>
+  } @else {
+    <div class="admin-table-card">
+      <div class="table-responsive admin-table-wrapper">
+        <table class="table admin-table historias-admin__table">
+          <thead>
+            <tr>
+              <th>Historia</th>
+              <th>Estado</th>
+              <th>Actualizada</th>
+              <th>Publicada</th>
+              <th class="text-end">Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (historia of historias; track historia.id) {
+              <tr>
+                <td>
+                  <strong>{{ historia.titulo }}</strong>
+
+                  <div class="historias-admin__description">
+                    {{ historia.resumen }}
+                  </div>
+
+                  <small class="historias-admin__slug">/historias/{{ historia.slug }}</small>
+                </td>
+
+                <td>
+                  <span
+                    class="status-badge"
+                    [class.status-finished]="historia.estado === 'PUBLICADA'"
+                    [class.status-pending]="historia.estado === 'BORRADOR'"
+                  >
+                    {{ historia.estado === 'PUBLICADA' ? 'Publicada' : 'Borrador' }}
+                  </span>
+                </td>
+
+                <td>
+                  @if (historia.fechaActualizacion) {
+                    {{ historia.fechaActualizacion | date: 'dd/MM/yyyy HH:mm' }}
+                  } @else {
+                    —
+                  }
+                </td>
+
+                <td>
+                  @if (historia.fechaPublicacion) {
+                    {{ historia.fechaPublicacion | date: 'dd/MM/yyyy HH:mm' }}
+                  } @else {
+                    —
+                  }
+                </td>
+
+                <td class="text-end">
+                  <div class="admin-action-buttons">
+                    <button
+                      type="button"
+                      class="btn historias-admin__state-action"
+                      [class.historias-admin__state-action--publish]="historia.estado === 'BORRADOR'"
+                      [class.historias-admin__state-action--draft]="historia.estado === 'PUBLICADA'"
+                      [disabled]="changingStateId !== null"
+                      [title]="historia.estado === 'PUBLICADA' ? 'Pasar a borrador' : 'Publicar historia'"
+                      (click)="togglePublication(historia)"
+                    >
+                      @if (changingStateId === historia.id) {
+                        <fa-icon icon="sync" animation="spin"></fa-icon>
+                        <span>Cambiando...</span>
+                      } @else if (historia.estado === 'PUBLICADA') {
+                        <fa-icon icon="ban"></fa-icon>
+                        <span>Pasar a borrador</span>
+                      } @else {
+                        <fa-icon icon="check"></fa-icon>
+                        <span>Publicar</span>
+                      }
+                    </button>
+
+                    @if (historia.estado === 'PUBLICADA') {
+                      <a
+                        [routerLink]="['/historias', historia.slug]"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn admin-btn-view"
+                        title="Ver historia"
+                      >
+                        <fa-icon icon="eye"></fa-icon>
+                      </a>
+                    }
+
+                    <a [routerLink]="['/panel/historias', historia.id, 'editar']" class="btn admin-btn-edit" title="Editar historia">
+                      <fa-icon icon="pencil-alt"></fa-icon>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    @if (totalItems > itemsPerPage) {
+      <div class="admin-pagination-block historias-admin__pagination">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [(page)]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="loadPage($event)"
+        />
+      </div>
+    }
+  }
+</section>
