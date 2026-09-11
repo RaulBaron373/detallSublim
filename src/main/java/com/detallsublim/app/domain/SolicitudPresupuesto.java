@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 
 /**
@@ -58,8 +59,8 @@ public class SolicitudPresupuesto implements Serializable {
     @Column(name = "observaciones_internas")
     private String observacionesInternas;
 
-    @Column(name = "precio_presupuesto")
-    private Double precioPresupuesto;
+    @Column(name = "precio_presupuesto", precision = 12, scale = 2)
+    private BigDecimal precioPresupuesto;
 
     @Column(name = "tiempo_estimado")
     private String tiempoEstimado;
@@ -207,15 +208,15 @@ public class SolicitudPresupuesto implements Serializable {
         this.observacionesInternas = observacionesInternas;
     }
 
-    public Double getPrecioPresupuesto() {
+    public BigDecimal getPrecioPresupuesto() {
         return this.precioPresupuesto;
     }
 
-    public void setPrecioPresupuesto(Double precioPresupuesto) {
+    public void setPrecioPresupuesto(BigDecimal precioPresupuesto) {
         this.precioPresupuesto = precioPresupuesto;
     }
 
-    public SolicitudPresupuesto precioPresupuesto(Double precioPresupuesto) {
+    public SolicitudPresupuesto precioPresupuesto(BigDecimal precioPresupuesto) {
         this.setPrecioPresupuesto(precioPresupuesto);
         return this;
     }
