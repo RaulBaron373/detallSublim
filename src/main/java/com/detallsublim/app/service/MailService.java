@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -64,12 +65,27 @@ public class MailService {
     }
 
     private void sendEmailSync(String to, String subject, String content, boolean isMultipart, boolean isHtml) {
+        sendEmailSync(to, subject, content, isMultipart, isHtml, null, null);
+    }
+
+    private void sendEmailSync(
+        String to,
+        String subject,
+        String content,
+        boolean isMultipart,
+        boolean isHtml,
+        String attachmentFilename,
+        byte[] attachmentContent
+    ) {
         LOG.debug("Preparing email for delivery");
 
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
         try {
-            boolean multipart = isMultipart || isHtml;
+            boolean hasAttachment =
+                attachmentFilename != null && !attachmentFilename.isBlank() && attachmentContent != null && attachmentContent.length > 0;
+
+            boolean multipart = isMultipart || isHtml || hasAttachment;
 
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, multipart, StandardCharsets.UTF_8.name());
 
@@ -89,6 +105,11 @@ public class MailService {
                 if (darkLogo.exists()) {
                     message.addInline("detallSublimLogoDark", darkLogo, "image/png");
                 }
+            }
+
+            if (hasAttachment) {
+                ByteArrayResource attachment = new ByteArrayResource(attachmentContent);
+                message.addAttachment(attachmentFilename, attachment, "application/pdf");
             }
 
             javaMailSender.send(mimeMessage);
@@ -556,6 +577,35 @@ public class MailService {
         Map<String, String> details,
         String note
     ) {
+        sendBrandedDetailsEmailSync(to, subject, badge, title, intro, details, note, null, null);
+    }
+
+    @Async
+    public void sendBrandedDetailsEmailWithAttachment(
+        String to,
+        String subject,
+        String badge,
+        String title,
+        String intro,
+        Map<String, String> details,
+        String note,
+        String attachmentFilename,
+        byte[] attachmentContent
+    ) {
+        sendBrandedDetailsEmailSync(to, subject, badge, title, intro, details, note, attachmentFilename, attachmentContent);
+    }
+
+    private void sendBrandedDetailsEmailSync(
+        String to,
+        String subject,
+        String badge,
+        String title,
+        String intro,
+        Map<String, String> details,
+        String note,
+        String attachmentFilename,
+        byte[] attachmentContent
+    ) {
         StringBuilder rows = new StringBuilder();
 
         details.forEach((label, value) -> {
@@ -679,6 +729,12 @@ public class MailService {
             %s
             """.formatted(HtmlUtils.htmlEscape(badge), HtmlUtils.htmlEscape(title), HtmlUtils.htmlEscape(intro), rows, noteHtml);
 
-        sendEmailSync(to, subject, wrapInDetallSublimTemplate(body), true, true);
+        String content = wrapInDetallSublimTemplate(body);
+
+        if (attachmentFilename != null && attachmentContent != null) {
+            sendEmailSync(to, subject, content, true, true, attachmentFilename, attachmentContent);
+        } else {
+            sendEmailSync(to, subject, content, true, true);
+        }
     }
 }

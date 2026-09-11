@@ -17,8 +17,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,6 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.web.util.HtmlUtils;
 import tech.jhipster.config.JHipsterProperties;
 
 /**
@@ -239,6 +243,59 @@ class MailServiceIT {
         }
     }
 
+    @Test
+    void testSendBrandedDetailsEmailWithPdfAttachment() throws Exception {
+        Map<String, String> details = new LinkedHashMap<>();
+        details.put("Producto", "Camiseta personalizada");
+        details.put("Cantidad", "25");
+        details.put("Precio estimado", "350,00 €");
+        details.put("Tiempo estimado", "Por definir");
+        details.put("Referencia", "#1500");
+
+        byte[] pdf = "%PDF-1.7\nDetall Sublim test".getBytes(StandardCharsets.UTF_8);
+        String filename = "Presupuesto-DS-2026-001500.pdf";
+
+        mailService.sendBrandedDetailsEmailWithAttachment(
+            "cliente@example.com",
+            "Tu presupuesto - Detall Sublim",
+            "PRESUPUESTO",
+            "Tu presupuesto está preparado",
+            "Hemos preparado el presupuesto correspondiente a tu solicitud.",
+            details,
+            "Producción según diseño y cantidades confirmadas.",
+            filename,
+            pdf
+        );
+
+        verify(javaMailSender).send(messageCaptor.capture());
+
+        MimeMessage message = messageCaptor.getValue();
+        message.saveChanges();
+
+        assertThat(message.getSubject()).isEqualTo("Tu presupuesto - Detall Sublim");
+        assertThat(message.getAllRecipients()[0]).hasToString("cliente@example.com");
+
+        String html = extractTextContent(message);
+        String decodedHtml = HtmlUtils.htmlUnescape(html);
+
+        assertThat(decodedHtml)
+            .contains("PRESUPUESTO")
+            .contains("Tu presupuesto está preparado")
+            .contains("Camiseta personalizada")
+            .contains("350,00 €")
+            .contains("Tiempo estimado")
+            .contains("Producción según diseño y cantidades confirmadas.");
+
+        MimeBodyPart attachment = findAttachment(message, filename);
+
+        assertThat(attachment).isNotNull();
+        assertThat(attachment.getContentType()).startsWith("application/pdf");
+
+        try (var inputStream = attachment.getInputStream()) {
+            assertThat(inputStream.readAllBytes()).isEqualTo(pdf);
+        }
+    }
+
     /**
      * Convert a lang key to the Java locale.
      */
@@ -268,6 +325,30 @@ class MailServiceIT {
 
                 if (text != null && !text.isBlank()) {
                     return text;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private MimeBodyPart findAttachment(Part part, String filename) throws Exception {
+        if (
+            part instanceof MimeBodyPart bodyPart &&
+            Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition()) &&
+            filename.equals(bodyPart.getFileName())
+        ) {
+            return bodyPart;
+        }
+
+        Object content = part.getContent();
+
+        if (content instanceof Multipart multipart) {
+            for (int i = 0; i < multipart.getCount(); i++) {
+                MimeBodyPart attachment = findAttachment(multipart.getBodyPart(i), filename);
+
+                if (attachment != null) {
+                    return attachment;
                 }
             }
         }

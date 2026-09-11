@@ -48,6 +48,22 @@
     {
       "fieldName": "observacionesInternas",
       "fieldType": "TextBlob"
+    },
+    {
+      "fieldName": "precioPresupuesto",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "tiempoEstimado",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "observacionesPresupuesto",
+      "fieldType": "TextBlob"
+    },
+    {
+      "fieldName": "fechaEnvioPresupuesto",
+      "fieldType": "Instant"
     }
   ],
   "name": "SolicitudPresupuesto",

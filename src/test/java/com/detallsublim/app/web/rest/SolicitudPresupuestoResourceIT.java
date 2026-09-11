@@ -18,6 +18,7 @@ import com.detallsublim.app.service.dto.SolicitudPresupuestoDTO;
 import com.detallsublim.app.service.mapper.SolicitudPresupuestoMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -184,6 +185,33 @@ class SolicitudPresupuestoResourceIT {
         );
 
         insertedSolicitudPresupuesto = returnedSolicitudPresupuesto;
+    }
+
+    @Test
+    @Transactional
+    void createSolicitudPresupuestoShouldPreserveExactBudgetPrice() throws Exception {
+        solicitudPresupuesto.setPrecioPresupuesto(new BigDecimal("1234.56"));
+
+        SolicitudPresupuestoDTO solicitudPresupuestoDTO = solicitudPresupuestoMapper.toDto(solicitudPresupuesto);
+
+        var returnedSolicitudPresupuestoDTO = om.readValue(
+            restSolicitudPresupuestoMockMvc
+                .perform(
+                    post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(solicitudPresupuestoDTO))
+                )
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.precioPresupuesto").value(1234.56))
+                .andReturn()
+                .getResponse()
+                .getContentAsString(),
+            SolicitudPresupuestoDTO.class
+        );
+
+        SolicitudPresupuesto persisted = solicitudPresupuestoRepository.findById(returnedSolicitudPresupuestoDTO.getId()).orElseThrow();
+
+        assertThat(persisted.getPrecioPresupuesto()).isEqualByComparingTo("1234.56");
+
+        insertedSolicitudPresupuesto = persisted;
     }
 
     @Test

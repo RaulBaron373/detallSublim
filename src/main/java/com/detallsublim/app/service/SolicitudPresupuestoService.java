@@ -31,14 +31,18 @@ public class SolicitudPresupuestoService {
 
     private final MailService mailService;
 
+    private final PresupuestoPdfService presupuestoPdfService;
+
     public SolicitudPresupuestoService(
         SolicitudPresupuestoRepository solicitudPresupuestoRepository,
         SolicitudPresupuestoMapper solicitudPresupuestoMapper,
-        MailService mailService
+        MailService mailService,
+        PresupuestoPdfService presupuestoPdfService
     ) {
         this.solicitudPresupuestoRepository = solicitudPresupuestoRepository;
         this.solicitudPresupuestoMapper = solicitudPresupuestoMapper;
         this.mailService = mailService;
+        this.presupuestoPdfService = presupuestoPdfService;
     }
 
     /**
@@ -188,14 +192,19 @@ public class SolicitudPresupuestoService {
                 detalles.put("Tiempo estimado", tiempo);
                 detalles.put("Referencia", "#" + solicitud.getId());
 
-                mailService.sendBrandedDetailsEmail(
+                byte[] pdf = presupuestoPdfService.generar(solicitud);
+                String nombreArchivo = presupuestoPdfService.generarNombreArchivo(solicitud);
+
+                mailService.sendBrandedDetailsEmailWithAttachment(
                     email,
                     "Presupuesto disponible - Detall Sublim",
                     "PRESUPUESTO",
                     "Tu presupuesto está listo",
                     "Hola " + nombre + ", hemos preparado el presupuesto correspondiente a tu solicitud.",
                     detalles,
-                    observaciones
+                    observaciones,
+                    nombreArchivo,
+                    pdf
                 );
             }
             case ACEPTADO -> {

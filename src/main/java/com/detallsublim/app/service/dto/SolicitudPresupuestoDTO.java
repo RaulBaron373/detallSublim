@@ -4,6 +4,7 @@ import com.detallsublim.app.domain.enumeration.EstadoSolicitud;
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -50,7 +51,7 @@ public class SolicitudPresupuestoDTO implements Serializable {
     @Size(max = 5000)
     private String observacionesInternas;
 
-    private Double precioPresupuesto;
+    private BigDecimal precioPresupuesto;
 
     @Size(max = 100)
     private String tiempoEstimado;
@@ -143,11 +144,11 @@ public class SolicitudPresupuestoDTO implements Serializable {
         this.observacionesInternas = observacionesInternas;
     }
 
-    public Double getPrecioPresupuesto() {
+    public BigDecimal getPrecioPresupuesto() {
         return precioPresupuesto;
     }
 
-    public void setPrecioPresupuesto(Double precioPresupuesto) {
+    public void setPrecioPresupuesto(BigDecimal precioPresupuesto) {
         this.precioPresupuesto = precioPresupuesto;
     }
 
