@@ -3,7 +3,6 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ActivatedRoute } from '@angular/router';
 
 import SharedModule from 'app/shared/shared.module';
-import { LANGUAGES } from 'app/config/language.constants';
 import { IUser } from '../user-management.model';
 import { UserManagementService } from '../service/user-management.service';
 import { RouterLink } from '@angular/router';
@@ -22,7 +21,6 @@ const newUser: IUser = {
   imports: [SharedModule, FormsModule, ReactiveFormsModule, RouterLink],
 })
 export default class UserManagementUpdateComponent implements OnInit {
-  languages = LANGUAGES;
   authorities = signal<string[]>([]);
   isSaving = signal(false);
 
@@ -54,7 +52,10 @@ export default class UserManagementUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe(({ user }) => {
       if (user) {
-        this.editForm.reset(user);
+        this.editForm.reset({
+          ...user,
+          langKey: 'es',
+        });
       } else {
         this.editForm.reset(newUser);
       }

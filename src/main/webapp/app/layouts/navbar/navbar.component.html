@@ -60,28 +60,6 @@
           </a>
         </li>
 
-        @if (languages && languages.length > 1) {
-          <li ngbDropdown class="nav-item dropdown pointer">
-            <a class="nav-link nav-link-custom dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
-              {{ 'global.menu.language' | translate }}
-            </a>
-            <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
-              @for (language of languages; track $index) {
-                <li>
-                  <a
-                    class="dropdown-item"
-                    [jhiActiveMenu]="language"
-                    href="javascript:void(0);"
-                    (click)="changeLanguage(language); collapseNavbar()"
-                  >
-                    {{ language | findLanguageFromKey }}
-                  </a>
-                </li>
-              }
-            </ul>
-          </li>
-        }
-
         <!--<li ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active">
           @let accountRef = account();
           <a class="nav-link nav-link-custom dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">

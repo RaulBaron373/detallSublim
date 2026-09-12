@@ -17,7 +17,7 @@
     "entities": ["Categoria", "Producto", "SolicitudPresupuesto", "MensajeContacto"],
     "feignClient": null,
     "jhipsterVersion": "8.11.0",
-    "languages": ["es", "ca", "en"],
+    "languages": ["es"],
     "lastLiquibaseTimestamp": 1776182465000,
     "microfrontend": null,
     "microfrontends": [],
