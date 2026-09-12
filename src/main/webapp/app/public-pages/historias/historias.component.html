@@ -51,7 +51,14 @@
           <article class="historia-card" dsScrollReveal reveal="scale-up" [revealDelay]="(i % 6) * 80">
             <a class="historia-card-image" [routerLink]="['/historias', historia.slug]" [attr.aria-label]="'Leer ' + historia.titulo">
               @if (historia.portadaUrl) {
-                <img [src]="historia.portadaUrl" [alt]="historia.portadaTextoAlternativo || historia.titulo" loading="lazy" />
+                <img class="historia-card-image__background" [src]="historia.portadaUrl" alt="" aria-hidden="true" loading="lazy" />
+
+                <img
+                  class="historia-card-image__foreground"
+                  [src]="historia.portadaUrl"
+                  [alt]="historia.portadaTextoAlternativo || historia.titulo"
+                  loading="lazy"
+                />
               } @else {
                 <div class="historia-no-image" aria-hidden="true">
                   <span>Detall Sublim</span>
