@@ -205,6 +205,8 @@
 }
 
 .historia-card-image {
+  position: relative;
+
   display: block;
 
   width: 100%;
@@ -216,17 +218,33 @@
   text-decoration: none;
 }
 
-.historia-card-image img {
+.historia-card-image__background,
+.historia-card-image__foreground {
+  position: absolute;
+  inset: 0;
+
   width: 100%;
   height: 100%;
+}
 
+.historia-card-image__background {
   object-fit: cover;
+
+  filter: blur(16px);
+  opacity: 0.45;
+  transform: scale(1.12);
+}
+
+.historia-card-image__foreground {
+  z-index: 1;
+
+  object-fit: contain;
 
   transition: transform 0.4s ease;
 }
 
-.historia-card:hover .historia-card-image img {
-  transform: scale(1.05);
+.historia-card:hover .historia-card-image__foreground {
+  transform: scale(1.03);
 }
 
 .historia-no-image {
