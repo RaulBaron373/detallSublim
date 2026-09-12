@@ -132,32 +132,6 @@ describe('Account Service', () => {
       httpMock.expectOne({ method: 'GET' });
     });
 
-    describe('should change the language on authentication if necessary', () => {
-      it('should change language if user has not changed language manually', () => {
-        // GIVEN
-        mockStorageService.getLocale = mockFn(null);
-
-        // WHEN
-        service.identity().subscribe();
-        httpMock.expectOne({ method: 'GET' }).flush({ ...accountWithAuthorities([]), langKey: 'accountLang' });
-
-        // THEN
-        expect(mockTranslateService.use).toHaveBeenCalledWith('accountLang');
-      });
-
-      it('should not change language if user has changed language manually', () => {
-        // GIVEN
-        mockStorageService.getLocale = mockFn('sessionLang');
-
-        // WHEN
-        service.identity().subscribe();
-        httpMock.expectOne({ method: 'GET' }).flush({ ...accountWithAuthorities([]), langKey: 'accountLang' });
-
-        // THEN
-        expect(mockTranslateService.use).not.toHaveBeenCalled();
-      });
-    });
-
     describe('navigateToStoredUrl', () => {
       it('should navigate to the previous stored url post successful authentication', () => {
         // GIVEN
