@@ -236,10 +236,6 @@ public class SolicitudPresupuestoService {
                 );
             }
             case RECHAZADO -> {
-                String motivo = solicitud.getObservacionesInternas() != null && !solicitud.getObservacionesInternas().isBlank()
-                    ? solicitud.getObservacionesInternas()
-                    : "No se ha especificado un motivo.";
-
                 mailService.sendBrandedTextEmail(
                     email,
                     "Actualización de tu solicitud - Detall Sublim",
@@ -249,9 +245,6 @@ public class SolicitudPresupuestoService {
                     nombre +
                     ",\n\n" +
                     "En esta ocasión no podremos continuar con tu solicitud.\n\n" +
-                    "Motivo:\n" +
-                    motivo +
-                    "\n\n" +
                     "Si necesitas alguna aclaración, puedes ponerte en contacto con nosotros."
                 );
             }
