@@ -1,20 +1,20 @@
 package com.detallsublim.app.service;
 
 import com.detallsublim.app.domain.User;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
-import java.nio.charset.StandardCharsets;
+import com.resend.core.exception.ResendException;
+import com.resend.services.emails.model.Attachment;
+import com.resend.services.emails.model.CreateEmailOptions;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
@@ -38,25 +38,30 @@ public class MailService {
 
     private final JHipsterProperties jHipsterProperties;
 
-    private final JavaMailSender javaMailSender;
-
     private final MessageSource messageSource;
 
     private final SpringTemplateEngine templateEngine;
 
-    @Value("${spring.mail.username:}")
-    private String companyEmail;
+    private final ResendEmailClient resendEmailClient;
+
+    private final String fromEmail;
+
+    private final String companyEmail;
 
     public MailService(
         JHipsterProperties jHipsterProperties,
-        JavaMailSender javaMailSender,
         MessageSource messageSource,
-        SpringTemplateEngine templateEngine
+        SpringTemplateEngine templateEngine,
+        ResendEmailClient resendEmailClient,
+        @Value("${resend.from-email:Detall Sublim <info@mail.detallsublim.es>}") String fromEmail,
+        @Value("${resend.notification-email:}") String companyEmail
     ) {
         this.jHipsterProperties = jHipsterProperties;
-        this.javaMailSender = javaMailSender;
         this.messageSource = messageSource;
         this.templateEngine = templateEngine;
+        this.resendEmailClient = resendEmailClient;
+        this.fromEmail = fromEmail;
+        this.companyEmail = companyEmail;
     }
 
     @Async
@@ -77,45 +82,86 @@ public class MailService {
         String attachmentFilename,
         byte[] attachmentContent
     ) {
-        LOG.debug("Preparing email for delivery");
+        LOG.debug("Preparing email for delivery through Resend");
 
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        if (!resendEmailClient.isConfigured()) {
+            LOG.warn("Email could not be sent because RESEND_API_KEY is not configured");
+            return;
+        }
+
+        if (fromEmail == null || fromEmail.isBlank()) {
+            LOG.warn("Email could not be sent because RESEND_FROM_EMAIL is not configured");
+            return;
+        }
 
         try {
+            List<Attachment> attachments = new ArrayList<>();
+
+            if (isHtml) {
+                addInlineImage(
+                    attachments,
+                    "templates/mail/logo-detall-sublim-color.png",
+                    "logo-detall-sublim-color.png",
+                    "detallSublimLogoLight"
+                );
+
+                addInlineImage(
+                    attachments,
+                    "templates/mail/logo-detall-sublim-color-white.png",
+                    "logo-detall-sublim-color-white.png",
+                    "detallSublimLogoDark"
+                );
+            }
+
             boolean hasAttachment =
                 attachmentFilename != null && !attachmentFilename.isBlank() && attachmentContent != null && attachmentContent.length > 0;
 
-            boolean multipart = isMultipart || isHtml || hasAttachment;
+            if (hasAttachment) {
+                attachments.add(
+                    Attachment.builder()
+                        .fileName(attachmentFilename)
+                        .content(Base64.getEncoder().encodeToString(attachmentContent))
+                        .contentType("application/pdf")
+                        .build()
+                );
+            }
 
-            MimeMessageHelper message = new MimeMessageHelper(mimeMessage, multipart, StandardCharsets.UTF_8.name());
-
-            message.setTo(to);
-            message.setFrom(jHipsterProperties.getMail().getFrom());
-            message.setSubject(subject);
-            message.setText(content, isHtml);
+            CreateEmailOptions.Builder emailBuilder = CreateEmailOptions.builder().from(fromEmail).to(to).subject(subject);
 
             if (isHtml) {
-                ClassPathResource lightLogo = new ClassPathResource("templates/mail/logo-detall-sublim-color.png");
-                ClassPathResource darkLogo = new ClassPathResource("templates/mail/logo-detall-sublim-color-white.png");
-
-                if (lightLogo.exists()) {
-                    message.addInline("detallSublimLogoLight", lightLogo, "image/png");
-                }
-
-                if (darkLogo.exists()) {
-                    message.addInline("detallSublimLogoDark", darkLogo, "image/png");
-                }
+                emailBuilder.html(content);
+            } else {
+                emailBuilder.text(content);
             }
 
-            if (hasAttachment) {
-                ByteArrayResource attachment = new ByteArrayResource(attachmentContent);
-                message.addAttachment(attachmentFilename, attachment, "application/pdf");
+            if (!attachments.isEmpty()) {
+                emailBuilder.attachments(attachments);
             }
 
-            javaMailSender.send(mimeMessage);
-            LOG.debug("Email sent successfully");
-        } catch (MailException | MessagingException e) {
-            LOG.warn("Email could not be sent", e);
+            resendEmailClient.send(emailBuilder.build());
+
+            LOG.debug("Email sent successfully through Resend");
+        } catch (ResendException | IOException e) {
+            LOG.warn("Email could not be sent through Resend", e);
+        }
+    }
+
+    private void addInlineImage(List<Attachment> attachments, String resourcePath, String fileName, String contentId) throws IOException {
+        ClassPathResource resource = new ClassPathResource(resourcePath);
+
+        if (!resource.exists()) {
+            return;
+        }
+
+        try (var inputStream = resource.getInputStream()) {
+            attachments.add(
+                Attachment.builder()
+                    .fileName(fileName)
+                    .content(Base64.getEncoder().encodeToString(inputStream.readAllBytes()))
+                    .contentType("image/png")
+                    .contentId(contentId)
+                    .build()
+            );
         }
     }
 

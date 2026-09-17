@@ -60,9 +60,6 @@ management:
       mode: full
     env:
       enabled: true
-  health:
-    mail:
-      enabled: false # When using the MailService, configure an SMTP server and set this to true
   prometheus:
     metrics:
       export:
@@ -198,8 +195,6 @@ jhipster:
   #   exposed-headers: "Authorization,Link,X-Total-Count,X-${jhipster.clientApp.name}-alert,X-${jhipster.clientApp.name}-error,X-${jhipster.clientApp.name}-params"
   #   allow-credentials: true
   #   max-age: 1800
-  mail:
-    from: ${MAIL_USERNAME:detallSublim@localhost}
   api-docs:
     default-include-pattern: /api/**
     management-include-pattern: /management/**
@@ -227,3 +222,8 @@ jhipster:
 # ===================================================================
 
 # application:
+
+resend:
+  api-key: ${RESEND_API_KEY:}
+  from-email: ${RESEND_FROM_EMAIL:Detall Sublim <info@mail.detallsublim.es>}
+  notification-email: ${DETALL_SUBLIM_NOTIFICATION_EMAIL:}
