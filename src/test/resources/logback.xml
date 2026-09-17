@@ -13,7 +13,6 @@
     <logger name="com.github.dockerjava" level="WARN"/>
 
     <logger name="jakarta.activation" level="WARN"/>
-    <logger name="jakarta.mail" level="WARN"/>
     <logger name="jakarta.xml.bind" level="WARN"/>
     <logger name="ch.qos.logback" level="WARN"/>
     <logger name="com.jayway.jsonpath" level="WARN"/>

@@ -1,25 +1,28 @@
 package com.detallsublim.app.service;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.clearInvocations;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.timeout;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.detallsublim.app.IntegrationTest;
 import com.detallsublim.app.config.Constants;
 import com.detallsublim.app.domain.User;
-import jakarta.mail.Multipart;
-import jakarta.mail.Part;
-import jakarta.mail.Session;
-import jakarta.mail.internet.MimeBodyPart;
-import jakarta.mail.internet.MimeMessage;
-import jakarta.mail.internet.MimeMultipart;
-import java.io.ByteArrayOutputStream;
+import com.resend.core.exception.ResendException;
+import com.resend.services.emails.model.Attachment;
+import com.resend.services.emails.model.CreateEmailOptions;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Base64;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -30,11 +33,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSendException;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.web.util.HtmlUtils;
-import tech.jhipster.config.JHipsterProperties;
 
 /**
  * Integration tests for {@link MailService}.
@@ -48,87 +48,77 @@ class MailServiceIT {
         "en",
         // jhipster-needle-i18n-language-constant - JHipster will add/remove languages in this array
     };
+
     private static final Pattern PATTERN_LOCALE_3 = Pattern.compile("([a-z]{2})-([a-zA-Z]{4})-([a-z]{2})");
+
     private static final Pattern PATTERN_LOCALE_2 = Pattern.compile("([a-z]{2})-([a-z]{2})");
 
-    @Autowired
-    private JHipsterProperties jHipsterProperties;
-
     @MockitoBean
-    private JavaMailSender javaMailSender;
+    private ResendEmailClient resendEmailClient;
 
     @Captor
-    private ArgumentCaptor<MimeMessage> messageCaptor;
+    private ArgumentCaptor<CreateEmailOptions> messageCaptor;
 
     @Autowired
     private MailService mailService;
 
     @BeforeEach
     void setup() {
-        doNothing().when(javaMailSender).send(any(MimeMessage.class));
-        when(javaMailSender.createMimeMessage()).thenReturn(new MimeMessage((Session) null));
+        reset(resendEmailClient);
+        when(resendEmailClient.isConfigured()).thenReturn(true);
     }
 
     @Test
     void testSendEmail() throws Exception {
-        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, false);
-        verify(javaMailSender).send(messageCaptor.capture());
-        MimeMessage message = messageCaptor.getValue();
-        assertThat(message.getSubject()).isEqualTo("testSubject");
-        assertThat(message.getAllRecipients()[0]).hasToString("john.doe@example.com");
-        assertThat(message.getFrom()[0]).hasToString(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getContent()).isInstanceOf(String.class);
-        assertThat(message.getContent()).hasToString("testContent");
-        assertThat(message.getDataHandler().getContentType()).isEqualTo("text/plain; charset=UTF-8");
+        CreateEmailOptions email = captureSentEmail(() ->
+            mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, false)
+        );
+
+        assertThat(email.getSubject()).isEqualTo("testSubject");
+        assertThat(email.getTo()).containsExactly("john.doe@example.com");
+        assertThat(email.getFrom()).contains("info@mail.detallsublim.es");
+        assertThat(email.getText()).isEqualTo("testContent");
+        assertThat(email.getHtml()).isNull();
+        assertThat(email.getAttachments()).isNullOrEmpty();
     }
 
     @Test
     void testSendHtmlEmail() throws Exception {
-        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, true);
-        verify(javaMailSender).send(messageCaptor.capture());
-        MimeMessage message = messageCaptor.getValue();
-        message.saveChanges();
-        String html = extractTextContent(message);
-        assertThat(message.getSubject()).isEqualTo("testSubject");
-        assertThat(message.getAllRecipients()[0]).hasToString("john.doe@example.com");
-        assertThat(message.getFrom()[0]).hasToString(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getContent()).isInstanceOf(Multipart.class);
-        assertThat(html).isEqualTo("testContent");
-        assertThat(message.getContentType()).startsWith("multipart/");
+        CreateEmailOptions email = captureSentEmail(() ->
+            mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, true)
+        );
+
+        assertThat(email.getSubject()).isEqualTo("testSubject");
+        assertThat(email.getTo()).containsExactly("john.doe@example.com");
+        assertThat(email.getFrom()).contains("info@mail.detallsublim.es");
+        assertThat(email.getHtml()).isEqualTo("testContent");
+        assertThat(email.getText()).isNull();
+
+        assertThat(email.getAttachments()).extracting(Attachment::getContentId).contains("detallSublimLogoLight", "detallSublimLogoDark");
     }
 
     @Test
     void testSendMultipartEmail() throws Exception {
-        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", true, false);
-        verify(javaMailSender).send(messageCaptor.capture());
-        MimeMessage message = messageCaptor.getValue();
-        MimeMultipart mp = (MimeMultipart) message.getContent();
-        MimeBodyPart part = (MimeBodyPart) ((MimeMultipart) mp.getBodyPart(0).getContent()).getBodyPart(0);
-        ByteArrayOutputStream aos = new ByteArrayOutputStream();
-        part.writeTo(aos);
-        assertThat(message.getSubject()).isEqualTo("testSubject");
-        assertThat(message.getAllRecipients()[0]).hasToString("john.doe@example.com");
-        assertThat(message.getFrom()[0]).hasToString(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getContent()).isInstanceOf(Multipart.class);
-        assertThat(aos).hasToString("\r\ntestContent");
-        assertThat(part.getDataHandler().getContentType()).isEqualTo("text/plain; charset=UTF-8");
+        CreateEmailOptions email = captureSentEmail(() ->
+            mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", true, false)
+        );
+
+        assertThat(email.getSubject()).isEqualTo("testSubject");
+        assertThat(email.getTo()).containsExactly("john.doe@example.com");
+        assertThat(email.getText()).isEqualTo("testContent");
     }
 
     @Test
     void testSendMultipartHtmlEmail() throws Exception {
-        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", true, true);
-        verify(javaMailSender).send(messageCaptor.capture());
-        MimeMessage message = messageCaptor.getValue();
-        MimeMultipart mp = (MimeMultipart) message.getContent();
-        MimeBodyPart part = (MimeBodyPart) ((MimeMultipart) mp.getBodyPart(0).getContent()).getBodyPart(0);
-        ByteArrayOutputStream aos = new ByteArrayOutputStream();
-        part.writeTo(aos);
-        assertThat(message.getSubject()).isEqualTo("testSubject");
-        assertThat(message.getAllRecipients()[0]).hasToString("john.doe@example.com");
-        assertThat(message.getFrom()[0]).hasToString(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getContent()).isInstanceOf(Multipart.class);
-        assertThat(aos).hasToString("\r\ntestContent");
-        assertThat(part.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
+        CreateEmailOptions email = captureSentEmail(() ->
+            mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", true, true)
+        );
+
+        assertThat(email.getSubject()).isEqualTo("testSubject");
+        assertThat(email.getTo()).containsExactly("john.doe@example.com");
+        assertThat(email.getHtml()).isEqualTo("testContent");
+
+        assertThat(email.getAttachments()).extracting(Attachment::getContentId).contains("detallSublimLogoLight", "detallSublimLogoDark");
     }
 
     @Test
@@ -137,20 +127,12 @@ class MailServiceIT {
         user.setLangKey(Constants.DEFAULT_LANGUAGE);
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
-        mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title");
-        verify(javaMailSender).send(messageCaptor.capture());
-        MimeMessage message = messageCaptor.getValue();
-        message.saveChanges();
-        String html = extractTextContent(message);
-        assertThat(message.getSubject()).isEqualTo("test title");
-        assertThat(message.getAllRecipients()[0]).hasToString(user.getEmail());
-        assertThat(message.getFrom()[0]).hasToString(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getSubject()).isEqualTo("test title");
-        assertThat(message.getAllRecipients()[0]).hasToString(user.getEmail());
-        assertThat(message.getFrom()[0]).hasToString(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getContent()).isInstanceOf(Multipart.class);
-        assertThat(html).contains("test title").contains("http://127.0.0.1:8080").contains("john").contains("Detall Sublim");
-        assertThat(message.getContentType()).startsWith("multipart/");
+
+        CreateEmailOptions email = captureSentEmail(() -> mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title"));
+
+        assertThat(email.getSubject()).isEqualTo("test title");
+        assertThat(email.getTo()).containsExactly(user.getEmail());
+        assertThat(email.getHtml()).contains("test title").contains("http://127.0.0.1:8080").contains("john").contains("Detall Sublim");
     }
 
     @Test
@@ -159,16 +141,11 @@ class MailServiceIT {
         user.setLangKey(Constants.DEFAULT_LANGUAGE);
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
-        mailService.sendActivationEmail(user);
-        verify(javaMailSender).send(messageCaptor.capture());
-        MimeMessage message = messageCaptor.getValue();
-        message.saveChanges();
-        String html = extractTextContent(message);
-        assertThat(message.getAllRecipients()[0]).hasToString(user.getEmail());
-        assertThat(message.getFrom()[0]).hasToString(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getContent()).isInstanceOf(Multipart.class);
-        assertThat(html).isNotBlank().contains("Detall Sublim");
-        assertThat(message.getContentType()).startsWith("multipart/");
+
+        CreateEmailOptions email = captureSentEmail(() -> mailService.sendActivationEmail(user));
+
+        assertThat(email.getTo()).containsExactly(user.getEmail());
+        assertThat(email.getHtml()).isNotBlank().contains("Detall Sublim");
     }
 
     @Test
@@ -177,16 +154,11 @@ class MailServiceIT {
         user.setLangKey(Constants.DEFAULT_LANGUAGE);
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
-        mailService.sendCreationEmail(user);
-        verify(javaMailSender).send(messageCaptor.capture());
-        MimeMessage message = messageCaptor.getValue();
-        message.saveChanges();
-        String html = extractTextContent(message);
-        assertThat(message.getAllRecipients()[0]).hasToString(user.getEmail());
-        assertThat(message.getFrom()[0]).hasToString(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getContent()).isInstanceOf(Multipart.class);
-        assertThat(html).isNotBlank().contains("Detall Sublim");
-        assertThat(message.getContentType()).startsWith("multipart/");
+
+        CreateEmailOptions email = captureSentEmail(() -> mailService.sendCreationEmail(user));
+
+        assertThat(email.getTo()).containsExactly(user.getEmail());
+        assertThat(email.getHtml()).isNotBlank().contains("Detall Sublim");
     }
 
     @Test
@@ -195,26 +167,21 @@ class MailServiceIT {
         user.setLangKey(Constants.DEFAULT_LANGUAGE);
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
-        mailService.sendPasswordResetMail(user);
-        verify(javaMailSender).send(messageCaptor.capture());
-        MimeMessage message = messageCaptor.getValue();
-        message.saveChanges();
-        String html = extractTextContent(message);
-        assertThat(message.getAllRecipients()[0]).hasToString(user.getEmail());
-        assertThat(message.getFrom()[0]).hasToString(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getContent()).isInstanceOf(Multipart.class);
-        assertThat(html).isNotBlank().contains("Detall Sublim");
-        assertThat(message.getContentType()).startsWith("multipart/");
+
+        CreateEmailOptions email = captureSentEmail(() -> mailService.sendPasswordResetMail(user));
+
+        assertThat(email.getTo()).containsExactly(user.getEmail());
+        assertThat(email.getHtml()).isNotBlank().contains("Detall Sublim");
     }
 
     @Test
-    void testSendEmailWithException() {
-        doThrow(MailSendException.class).when(javaMailSender).send(any(MimeMessage.class));
-        try {
-            mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, false);
-        } catch (Exception e) {
-            fail("Exception shouldn't have been thrown");
-        }
+    void testSendEmailWithException() throws Exception {
+        doThrow(new ResendException("Simulated Resend failure")).when(resendEmailClient).send(any(CreateEmailOptions.class));
+
+        assertThatCode(() -> mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, false)
+        ).doesNotThrowAnyException();
+
+        verify(resendEmailClient, timeout(1000)).send(any(CreateEmailOptions.class));
     }
 
     @Test
@@ -222,24 +189,27 @@ class MailServiceIT {
         User user = new User();
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
+
         for (String langKey : languages) {
             user.setLangKey(langKey);
-            mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title");
-            verify(javaMailSender, atLeastOnce()).send(messageCaptor.capture());
-            MimeMessage message = messageCaptor.getValue();
+
+            CreateEmailOptions email = captureSentEmail(() -> mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title")
+            );
 
             String propertyFilePath = "i18n/messages_" + getMessageSourceSuffixForLanguage(langKey) + ".properties";
             URL resource = this.getClass().getClassLoader().getResource(propertyFilePath);
+
+            assertThat(resource).isNotNull();
+
             Path filePath = Path.of(resource.toURI());
             Properties properties = new Properties();
+
             properties.load(new InputStreamReader(Files.newInputStream(filePath), Charset.forName("UTF-8")));
 
             String emailTitle = (String) properties.get("email.test.title");
-            assertThat(message.getSubject()).isEqualTo(emailTitle);
-            String html = extractTextContent(message);
-            assertThat(message.getSubject()).isEqualTo(emailTitle);
-            assertThat(html).contains(emailTitle).contains("http://127.0.0.1:8080").contains("john").contains("Detall Sublim");
-            assertThat(message.getContent()).isInstanceOf(Multipart.class);
+
+            assertThat(email.getSubject()).isEqualTo(emailTitle);
+            assertThat(email.getHtml()).contains(emailTitle).contains("http://127.0.0.1:8080").contains("john").contains("Detall Sublim");
         }
     }
 
@@ -255,28 +225,24 @@ class MailServiceIT {
         byte[] pdf = "%PDF-1.7\nDetall Sublim test".getBytes(StandardCharsets.UTF_8);
         String filename = "Presupuesto-DS-2026-001500.pdf";
 
-        mailService.sendBrandedDetailsEmailWithAttachment(
-            "cliente@example.com",
-            "Tu presupuesto - Detall Sublim",
-            "PRESUPUESTO",
-            "Tu presupuesto está preparado",
-            "Hemos preparado el presupuesto correspondiente a tu solicitud.",
-            details,
-            "Producción según diseño y cantidades confirmadas.",
-            filename,
-            pdf
+        CreateEmailOptions email = captureSentEmail(() ->
+            mailService.sendBrandedDetailsEmailWithAttachment(
+                "cliente@example.com",
+                "Tu presupuesto - Detall Sublim",
+                "PRESUPUESTO",
+                "Tu presupuesto está preparado",
+                "Hemos preparado el presupuesto correspondiente a tu solicitud.",
+                details,
+                "Producción según diseño y cantidades confirmadas.",
+                filename,
+                pdf
+            )
         );
 
-        verify(javaMailSender).send(messageCaptor.capture());
+        assertThat(email.getSubject()).isEqualTo("Tu presupuesto - Detall Sublim");
+        assertThat(email.getTo()).containsExactly("cliente@example.com");
 
-        MimeMessage message = messageCaptor.getValue();
-        message.saveChanges();
-
-        assertThat(message.getSubject()).isEqualTo("Tu presupuesto - Detall Sublim");
-        assertThat(message.getAllRecipients()[0]).hasToString("cliente@example.com");
-
-        String html = extractTextContent(message);
-        String decodedHtml = HtmlUtils.htmlUnescape(html);
+        String decodedHtml = HtmlUtils.htmlUnescape(email.getHtml());
 
         assertThat(decodedHtml)
             .contains("PRESUPUESTO")
@@ -286,14 +252,29 @@ class MailServiceIT {
             .contains("Tiempo estimado")
             .contains("Producción según diseño y cantidades confirmadas.");
 
-        MimeBodyPart attachment = findAttachment(message, filename);
+        Attachment pdfAttachment = email
+            .getAttachments()
+            .stream()
+            .filter(attachment -> filename.equals(attachment.getFileName()))
+            .findFirst()
+            .orElse(null);
 
-        assertThat(attachment).isNotNull();
-        assertThat(attachment.getContentType()).startsWith("application/pdf");
+        assertThat(pdfAttachment).isNotNull();
+        assertThat(pdfAttachment.getContentType()).isEqualTo("application/pdf");
 
-        try (var inputStream = attachment.getInputStream()) {
-            assertThat(inputStream.readAllBytes()).isEqualTo(pdf);
-        }
+        byte[] decodedPdf = Base64.getDecoder().decode(pdfAttachment.getContent());
+
+        assertThat(decodedPdf).isEqualTo(pdf);
+    }
+
+    private CreateEmailOptions captureSentEmail(Runnable sendAction) throws ResendException {
+        clearInvocations(resendEmailClient);
+
+        sendAction.run();
+
+        verify(resendEmailClient, timeout(1000)).send(messageCaptor.capture());
+
+        return messageCaptor.getValue();
     }
 
     /**
@@ -301,58 +282,19 @@ class MailServiceIT {
      */
     private String getMessageSourceSuffixForLanguage(String langKey) {
         String javaLangKey = langKey;
+
         Matcher matcher2 = PATTERN_LOCALE_2.matcher(langKey);
+
         if (matcher2.matches()) {
             javaLangKey = matcher2.group(1) + "_" + matcher2.group(2).toUpperCase();
         }
+
         Matcher matcher3 = PATTERN_LOCALE_3.matcher(langKey);
+
         if (matcher3.matches()) {
             javaLangKey = matcher3.group(1) + "_" + matcher3.group(2) + "_" + matcher3.group(3).toUpperCase();
         }
+
         return javaLangKey;
-    }
-
-    private String extractTextContent(Part part) throws Exception {
-        Object content = part.getContent();
-
-        if (content instanceof String text) {
-            return text;
-        }
-
-        if (content instanceof Multipart multipart) {
-            for (int i = 0; i < multipart.getCount(); i++) {
-                String text = extractTextContent(multipart.getBodyPart(i));
-
-                if (text != null && !text.isBlank()) {
-                    return text;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    private MimeBodyPart findAttachment(Part part, String filename) throws Exception {
-        if (
-            part instanceof MimeBodyPart bodyPart &&
-            Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition()) &&
-            filename.equals(bodyPart.getFileName())
-        ) {
-            return bodyPart;
-        }
-
-        Object content = part.getContent();
-
-        if (content instanceof Multipart multipart) {
-            for (int i = 0; i < multipart.getCount(); i++) {
-                MimeBodyPart attachment = findAttachment(multipart.getBodyPart(i), filename);
-
-                if (attachment != null) {
-                    return attachment;
-                }
-            }
-        }
-
-        return null;
     }
 }

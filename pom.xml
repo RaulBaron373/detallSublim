@@ -86,6 +86,7 @@
         <commons-lang3.version>3.18.0</commons-lang3.version>
         <log4j2.version>2.25.5</log4j2.version>
         <openhtmltopdf.version>1.1.85</openhtmltopdf.version>
+        <resend-java.version>4.25.0</resend-java.version>
     </properties>
 
     <dependencyManagement>
@@ -144,8 +145,9 @@
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
+            <groupId>com.resend</groupId>
+            <artifactId>resend-java</artifactId>
+            <version>${resend-java.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
