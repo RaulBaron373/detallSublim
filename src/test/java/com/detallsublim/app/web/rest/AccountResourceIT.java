@@ -419,46 +419,17 @@ class AccountResourceIT {
     }
 
     @Test
-    @Transactional
-    void testRequestPasswordReset() throws Exception {
-        User user = new User();
-        user.setPassword(RandomStringUtils.insecure().nextAlphanumeric(60));
-        user.setActivated(true);
-        user.setLogin("password-reset");
-        user.setEmail("password-reset@example.com");
-        user.setLangKey("en");
-        userRepository.saveAndFlush(user);
-
+    @WithUnauthenticatedMockUser
+    void testPublicPasswordResetInitIsNotAccessibleAnonymously() throws Exception {
         restAccountMockMvc
-            .perform(post("/api/account/reset-password/init").content("password-reset@example.com"))
-            .andExpect(status().isNoContent());
-
-        userService.deleteUser("password-reset");
+            .perform(post("/api/account/reset-password/init").content("test@example.com"))
+            .andExpect(status().isUnauthorized());
     }
 
     @Test
-    @Transactional
-    void testRequestPasswordResetUpperCaseEmail() throws Exception {
-        User user = new User();
-        user.setPassword(RandomStringUtils.insecure().nextAlphanumeric(60));
-        user.setActivated(true);
-        user.setLogin("password-reset-upper-case");
-        user.setEmail("password-reset-upper-case@example.com");
-        user.setLangKey("en");
-        userRepository.saveAndFlush(user);
-
-        restAccountMockMvc
-            .perform(post("/api/account/reset-password/init").content("password-reset-upper-case@EXAMPLE.COM"))
-            .andExpect(status().isNoContent());
-
-        userService.deleteUser("password-reset-upper-case");
-    }
-
-    @Test
-    void testRequestPasswordResetWrongEmail() throws Exception {
-        restAccountMockMvc
-            .perform(post("/api/account/reset-password/init").content("password-reset-wrong-email@example.com"))
-            .andExpect(status().isNoContent());
+    @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
+    void testPublicPasswordResetInitIsDisabledEvenForAdmin() throws Exception {
+        restAccountMockMvc.perform(post("/api/account/reset-password/init").content("test@example.com")).andExpect(status().isForbidden());
     }
 
     @Test
