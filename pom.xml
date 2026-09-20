@@ -5,7 +5,7 @@
 
     <groupId>com.detallsublim.app</groupId>
     <artifactId>detall-sublim</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
     <name>Detall Sublim</name>
     <description>Description for Detall Sublim</description>
