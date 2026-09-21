@@ -16,7 +16,7 @@ WORKDIR /app
 RUN useradd --system --uid 10001 --create-home detallsublim
 
 COPY --from=builder \
-    /workspace/target/detall-sublim-0.0.1-SNAPSHOT.jar \
+    /workspace/target/detall-sublim-*.jar \
     /app/app.jar
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
