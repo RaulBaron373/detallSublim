@@ -6,7 +6,7 @@ import java.util.Base64;
 
 public class ValidProductImageValidator implements ConstraintValidator<ValidProductImage, String> {
 
-    private static final int MAX_FILE_BYTES = 1024 * 1024;
+    private static final int MAX_FILE_BYTES = 3 * 1024 * 1024;
 
     private static final int MAX_BASE64_CHARS = ((MAX_FILE_BYTES + 2) / 3) * 4;
 

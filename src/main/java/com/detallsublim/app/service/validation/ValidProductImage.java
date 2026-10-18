@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Target({ FIELD })
 @Retention(RUNTIME)
 public @interface ValidProductImage {
-    String message() default "La imagen debe ser JPEG, PNG o WebP y no superar 1 MB.";
+    String message() default "La imagen debe ser JPEG, PNG o WebP y no superar 3 MB.";
 
     Class<?>[] groups() default {};
 

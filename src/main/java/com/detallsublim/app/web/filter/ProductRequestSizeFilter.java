@@ -16,7 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Order(Ordered.HIGHEST_PRECEDENCE + 1)
 public class ProductRequestSizeFilter extends OncePerRequestFilter {
 
-    private static final long MAX_REQUEST_SIZE = 2L * 1024L * 1024L;
+    private static final long MAX_REQUEST_SIZE = 5L * 1024L * 1024L;
 
     private static final Set<String> LIMITED_METHODS = Set.of("POST", "PUT", "PATCH");
 
