@@ -47,7 +47,7 @@ export class ProductoUpdateComponent implements OnInit {
   protected productoFormService = inject(ProductoFormService);
   protected categoriaService = inject(CategoriaService);
   protected activatedRoute = inject(ActivatedRoute);
-  private readonly maxImageSize = 1024 * 1024;
+  private readonly maxImageSize = 3 * 1024 * 1024;
   private readonly allowedImageTypes = new Set(['image/jpeg', 'image/png', 'image/webp']);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -127,7 +127,7 @@ export class ProductoUpdateComponent implements OnInit {
     }
 
     if (file.size > this.maxImageSize) {
-      this.imageError = 'La imagen no puede superar 1 MB.';
+      this.imageError = 'La imagen no puede superar 3 MB.';
 
       input.value = '';
 
