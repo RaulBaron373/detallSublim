@@ -448,3 +448,26 @@
     white-space: nowrap;
   }
 }
+
+/* Detall Sublim - unified line SVG icons */
+.service-icon svg {
+  display: block;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.service-card.pink .service-icon {
+  background: rgba(216, 75, 138, 0.18);
+  color: var(--ds-color-primary);
+}
+
+.service-card.cyan .service-icon {
+  background: rgba(0, 217, 192, 0.18);
+  color: var(--ds-color-secondary);
+}
+
+.service-card.yellow .service-icon {
+  background: rgba(248, 213, 69, 0.24);
+  color: #c9a400;
+}
