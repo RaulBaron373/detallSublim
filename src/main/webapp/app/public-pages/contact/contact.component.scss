@@ -602,3 +602,11 @@
   color: #ffffff;
   border-color: var(--ds-color-primary);
 }
+
+/* Detall Sublim - unified line SVG icons */
+.contact-info-icon svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
