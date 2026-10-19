@@ -55,6 +55,29 @@
   animation-delay: 4s;
 }
 
+/* Iconos SVG de tecnologías */
+
+.technology-icon svg {
+  display: block;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+/* Colores según la tecnología */
+
+.technology-card.pink .technology-icon {
+  color: var(--ds-color-primary);
+}
+
+.technology-card.cyan .technology-icon {
+  color: var(--ds-color-secondary);
+}
+
+.technology-card.yellow .technology-icon {
+  color: #c9a400;
+}
+
 .technologies-header {
   position: relative;
   z-index: 2;
@@ -392,6 +415,11 @@
   .technology-card p {
     font-size: 0.92rem;
     line-height: 1.6;
+  }
+
+  .technology-icon svg {
+    width: 24px;
+    height: 24px;
   }
 
   /* =====================================================

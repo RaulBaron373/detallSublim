@@ -70,8 +70,76 @@
       @for (tech of t.technologies; track tech; let i = $index) {
         <article class="ds-tech-card" dsScrollReveal reveal="scale-up" [revealDelay]="i * 110">
           <div class="ds-tech-icon" [ngClass]="tech.iconClass">
-            {{ tech.icon }}
+            @switch (tech.icon) {
+              @case ('sparkles') {
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 3 13.9 8.8 20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3Z" />
+                  <path d="m19 17 .6 1.4L21 19l-1.4.6L19 21l-.6-1.4L17 19l1.4-.6L19 17Z" />
+                </svg>
+              }
+
+              @case ('shirt') {
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M8 4 4 6l-2 5 4 2v8h12v-8l4-2-2-5-4-2" />
+                  <path d="M8 4a4 4 0 0 0 8 0" />
+                </svg>
+              }
+
+              @case ('printer') {
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M6 9V2h12v7" />
+                  <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                  <rect x="6" y="14" width="12" height="8" />
+                </svg>
+              }
+
+              @case ('file-text') {
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" />
+                  <path d="M14 2v6h6" />
+                  <path d="M8 13h8" />
+                  <path d="M8 17h8" />
+                </svg>
+              }
+            }
           </div>
+
           <h3>
             {{ tech.title }}
           </h3>
@@ -134,10 +202,25 @@
 
     <div class="catalog-grid">
       @for (producto of featuredProducts; track producto; let i = $index) {
-        <article class="catalog-card" dsScrollReveal reveal="scale-up" [revealDelay]="i * 120">
+        <a
+          class="catalog-card"
+          [routerLink]="['/solicitar-presupuesto']"
+          [queryParams]="{ producto: producto.id }"
+          [attr.aria-label]="'Solicitar presupuesto para ' + (producto.nombre ?? 'este producto')"
+          dsScrollReveal
+          reveal="scale-up"
+          [revealDelay]="i * 120"
+        >
           <div class="catalog-card-image">
             @if (producto.imagenUrl) {
-              <img class="ds-product-image" [src]="producto.imagenUrl" [alt]="producto.nombre ?? 'Producto Detall Sublim'" />
+              <img class="catalog-card-image__background" [src]="producto.imagenUrl" alt="" aria-hidden="true" loading="lazy" />
+
+              <img
+                class="catalog-card-image__foreground"
+                [src]="producto.imagenUrl"
+                [alt]="producto.nombre ?? 'Producto Detall Sublim'"
+                loading="lazy"
+              />
             } @else {
               <div class="catalog-no-image">Sin imagen</div>
             }
@@ -154,10 +237,10 @@
             </p>
             <div class="catalog-card-footer">
               <span class="catalog-price"> Desde {{ producto.precioBase }} € </span>
-              <a [routerLink]="['/solicitar-presupuesto']" [queryParams]="{ producto: producto.id }" class="catalog-link"> Solicitar </a>
+              <span class="catalog-link">Solicitar</span>
             </div>
           </div>
-        </article>
+        </a>
       }
     </div>
 
