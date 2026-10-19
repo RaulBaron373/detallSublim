@@ -36,12 +36,20 @@
     <!-- PRODUCTOS -->
     <section class="catalog-grid">
       @for (producto of productosFiltrados; track producto; let i = $index) {
-        <article class="catalog-card" dsScrollReveal reveal="scale-up" [revealDelay]="(i % 6) * 80">
+        <a
+          class="catalog-card"
+          [routerLink]="['/solicitar-presupuesto']"
+          [queryParams]="{ producto: producto.id }"
+          [attr.aria-label]="'Solicitar presupuesto para ' + (producto.nombre ?? 'este producto')"
+          dsScrollReveal
+          reveal="scale-up"
+          [revealDelay]="(i % 6) * 80"
+        >
           <div class="catalog-card-image">
             @if (producto.imagenUrl) {
-              <img [src]="producto.imagenUrl" [alt]="producto.nombre" />
-            }
-            @if (!producto.imagenUrl) {
+              <img class="catalog-card-image__background" [src]="producto.imagenUrl" alt="" aria-hidden="true" loading="lazy" />
+              <img class="catalog-card-image__foreground" [src]="producto.imagenUrl" [alt]="producto.nombre" loading="lazy" />
+            } @else {
               <div class="catalog-no-image">Sin imagen</div>
             }
           </div>
@@ -57,18 +65,10 @@
             </p>
             <div class="catalog-card-footer">
               <span class="catalog-price"> Desde {{ producto.precioBase }} € </span>
-              <a
-                [routerLink]="['/solicitar-presupuesto']"
-                [queryParams]="{
-                  producto: producto.id,
-                }"
-                class="catalog-link"
-              >
-                Solicitar
-              </a>
+              <span class="catalog-link">Solicitar</span>
             </div>
           </div>
-        </article>
+        </a>
       }
     </section>
 

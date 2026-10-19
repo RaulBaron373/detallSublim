@@ -144,6 +144,11 @@
   transition:
     transform 0.28s ease,
     box-shadow 0.28s ease;
+  display: block;
+  width: 100%;
+  color: var(--ds-color-text);
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .catalog-card:hover {
@@ -152,18 +157,42 @@
 }
 
 .catalog-card-image {
+  position: relative;
+
+  width: 100%;
   height: 250px;
+
   overflow: hidden;
+
+  background: #f3f4f6;
 }
 
-.catalog-card-image img {
+.catalog-card-image__background,
+.catalog-card-image__foreground {
+  position: absolute;
+  inset: 0;
+
   width: 100%;
   height: 100%;
+}
+
+.catalog-card-image__background {
   object-fit: cover;
+
+  filter: blur(16px);
+  opacity: 0.45;
+  transform: scale(1.12);
+}
+
+.catalog-card-image__foreground {
+  z-index: 1;
+
+  object-fit: contain;
+
   transition: transform 0.4s ease;
 }
 
-.catalog-card:hover .catalog-card-image img {
+.catalog-card:hover .catalog-card-image__foreground {
   transform: scale(1.05);
 }
 
@@ -212,8 +241,14 @@
   transition: color 0.25s ease;
 }
 
-.catalog-link:hover {
+.catalog-card:hover .catalog-link,
+.catalog-card:focus-visible .catalog-link {
   color: var(--ds-color-primary);
+}
+
+.catalog-card:focus-visible {
+  outline: 3px solid var(--ds-color-primary);
+  outline-offset: 3px;
 }
 
 .catalog-cta {
@@ -364,13 +399,7 @@
     min-height: 165px;
   }
 
-  .catalog-card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .catalog-card:hover .catalog-card-image img {
+  .catalog-card:hover .catalog-card-image__foreground {
     transform: none;
   }
 
